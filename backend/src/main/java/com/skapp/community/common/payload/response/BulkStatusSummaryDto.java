@@ -16,12 +16,4 @@ public class BulkStatusSummaryDto {
 		this.failedCount.incrementAndGet();
 	}
 
-	public int getSuccessCount() {
-		return successCount.get();
-	}
-
-	public int getFailedCount() {
-		return failedCount.get();
-	}
-
 }

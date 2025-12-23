@@ -235,8 +235,8 @@ public class DocumentLinkServiceImpl implements DocumentLinkService {
 			.isResend(false)
 			.build();
 
-		DocumentAccessData documentAccessData = new DocumentAccessData(userId, envelope.getId(),
-				document.getId(), recipient.getId(), userType.name());
+		DocumentAccessData documentAccessData = new DocumentAccessData(userId, envelope.getId(), document.getId(),
+				recipient.getId(), userType.name());
 
 		String token;
 		if (documentAccessUrlDto.getPermissionType().equals(DocumentPermissionType.WRITE)) {
@@ -593,8 +593,7 @@ public class DocumentLinkServiceImpl implements DocumentLinkService {
 
 		String encodedEncryptedUUID = URLEncoder.encode(uuid, StandardCharsets.UTF_8);
 
-		return protocol + "://" + parentDomain + URL_PATH + encodedEncryptedUUID + STATE_STRING
-				+ encodedState;
+		return protocol + "://" + parentDomain + URL_PATH + encodedEncryptedUUID + STATE_STRING + encodedState;
 	}
 
 	private record DocumentAccessData(Long userId, Long envelopeId, Long documentId, Long recipientId,

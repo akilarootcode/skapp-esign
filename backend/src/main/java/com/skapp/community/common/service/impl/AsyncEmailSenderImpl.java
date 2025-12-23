@@ -2,98 +2,145 @@ package com.skapp.community.common.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
+import com.skapp.community.common.constant.CommonConstants;
 import com.skapp.community.common.constant.CommonMessageConstant;
+import com.skapp.community.common.constant.ApiUriConstants;
 import com.skapp.community.common.exception.ModuleException;
-import com.skapp.community.common.model.OrganizationConfig;
-import com.skapp.community.common.payload.response.EmailServerConfigResponseDto;
-import com.skapp.community.common.repository.OrganizationConfigDao;
+import com.skapp.community.common.exception.TooManyRequestsException;
 import com.skapp.community.common.service.AsyncEmailSender;
-import com.skapp.community.common.service.EncryptionDecryptionService;
-import com.skapp.community.common.type.OrganizationConfigType;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import com.skapp.community.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class AsyncEmailSenderImpl implements AsyncEmailSender {
 
-	private final OrganizationConfigDao organizationConfigDao;
+	@Value("${sendgrid.api.key}")
+	private String sendGridApiKey;
 
-	private final EncryptionDecryptionService encryptionDecryptionService;
-
-	private final ObjectMapper objectMapper;
-
-	@Value("${encryptDecryptAlgorithm.secret}")
-	private String encryptSecret;
+	@Value("${organization.email}")
+	private String organizationEmail;
 
 	@Override
 	public void sendMail(String to, String subject, String htmlBody, Map<String, String> placeholders) {
 		try {
-			JavaMailSender emailSender = createJavaMailSender();
-			MimeMessage mimeMessage = emailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-			helper.setTo(to);
-			helper.setSubject(subject);
-			helper.setText(htmlBody, true);
+			Mail mail = buildMail(to, subject, htmlBody, placeholders);
+			SendGrid sendGrid = new SendGrid(sendGridApiKey);
+			Request request = new Request();
+			request.setMethod(Method.POST);
+			request.setEndpoint(ApiUriConstants.SENDGRID_POST_API);
+			request.setBody(mail.build());
 
-			emailSender.send(mimeMessage);
-			log.info("Email sent successfully to {}", to);
+			Response response = sendGrid.api(request);
 
+			if (response.getStatusCode() == 429) {
+				throw new TooManyRequestsException(CommonMessageConstant.COMMON_ERROR_TOO_MANY_REQUESTS_EXCEPTION);
+			}
 		}
-		catch (MessagingException e) {
-			log.error("Error sending email: {}", e.getMessage());
+		catch (IOException e) {
+			log.error("Error sending email to {}: {}", to, e.getMessage());
 		}
 	}
 
-	private JavaMailSender createJavaMailSender() {
-		Optional<OrganizationConfig> optionalOrganizationConfig = organizationConfigDao
-			.findOrganizationConfigByOrganizationConfigType(OrganizationConfigType.EMAIL_CONFIGS.name());
+	private Mail buildMail(String to, String subject, String htmlBody, Map<String, String> placeholders) {
+		String senderName = CommonConstants.APPLICATION_NAME;
+		if (placeholders != null) {
+			String module = placeholders.get(CommonConstants.MODULE);
+			if (CommonConstants.ESIGNATURE.equalsIgnoreCase(module)) {
+				String sender = placeholders.getOrDefault(CommonConstants.SENDER, "");
+				if (!StringUtils.isNullOrBlank(sender)) {
+					senderName = sender + CommonConstants.VIA + CommonConstants.APPLICATION_NAME;
+				}
+			}
+		}
+		Email from = new Email(organizationEmail, senderName);
+		Email toEmail = new Email(to);
+		Content content = new Content("text/html", htmlBody);
 
-		if (optionalOrganizationConfig.isEmpty()) {
-			log.error("Email configuration not found");
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_EMAIL_CONFIG_NOT_FOUND);
+		Mail mail = new Mail();
+		mail.setFrom(from);
+		mail.setSubject(Objects.requireNonNull(placeholders).containsKey("envelopeSubject")
+				&& !placeholders.get("envelopeSubject").equalsIgnoreCase("null")
+						? subject + " " + placeholders.get("envelopeSubject") : subject);
+		mail.addContent(content);
+
+		if (placeholders.containsKey("sendAt") && !placeholders.get("sendAt").equalsIgnoreCase("null")) {
+			mail.setSendAt(Long.parseLong(placeholders.get("sendAt")));
+			mail.setBatchId(placeholders.get("batchId"));
+		}
+
+		Personalization personalization = new Personalization();
+		personalization.addTo(toEmail);
+
+		mail.addPersonalization(personalization);
+
+		return mail;
+	}
+
+	@Override
+	public String getSendGridEmailBatchId() {
+		String batchId;
+		try {
+			SendGrid sendGrid = new SendGrid(sendGridApiKey);
+			Request request = new Request();
+			request.setMethod(Method.POST);
+			request.setEndpoint(ApiUriConstants.SENDGRID_CREATE_BACTH_ID_API);
+
+			Response response = sendGrid.api(request);
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			JsonNode jsonNode = objectMapper.readTree(response.getBody());
+
+			batchId = jsonNode.has("batch_id") ? jsonNode.get("batch_id").asText() : null;
+
+		}
+		catch (IOException e) {
+			throw new ModuleException(CommonMessageConstant.EP_COMMON_ERROR_EMAIL_BATCH_ID_NOT_OBTAINED);
+		}
+
+		return batchId;
+	}
+
+	@Override
+	public void cancelScheduledEmails(String batchId, String status) {
+		if (batchId == null) {
+			throw new ModuleException(
+					CommonMessageConstant.EP_COMMON_ERROR_EMAIL_CANCEL_SCHEDULED_BATCH_ID_NOT_PRESENT);
+		}
+
+		if (status == null) {
+			throw new ModuleException(CommonMessageConstant.EP_COMMON_ERROR_EMAIL_CANCEL_SCHEDULED_STATUS_NOT_PRESENT);
 		}
 
 		try {
-			OrganizationConfig emailConfig = optionalOrganizationConfig.get();
-			JsonNode configNode = objectMapper.readTree(emailConfig.getOrganizationConfigValue());
 
-			EmailServerConfigResponseDto emailConfigDto = objectMapper.treeToValue(configNode,
-					EmailServerConfigResponseDto.class);
+			SendGrid sendGrid = new SendGrid(sendGridApiKey);
+			Request request = new Request();
+			request.setMethod(Method.POST);
+			request.setEndpoint(ApiUriConstants.SENDGRID_CANCEL_SCHEDULED_EMAIL);
+			String requestBody = String.format("{\"batch_id\": \"%s\", \"status\": \"%s\"}", batchId, status);
+			request.setBody(requestBody);
 
-			if (Boolean.FALSE.equals(emailConfigDto.getIsEnabled())) {
-				log.error("Email service is not enabled");
-				throw new ModuleException(CommonMessageConstant.COMMON_ERROR_EMAIL_CONFIG_NOT_FOUND);
-			}
-
-			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-			mailSender.setHost(emailConfigDto.getEmailServiceProvider());
-			mailSender.setPort(emailConfigDto.getPortNumber());
-			mailSender.setUsername(emailConfigDto.getUsername());
-			mailSender.setPassword(encryptionDecryptionService.decrypt(emailConfigDto.getAppPassword(), encryptSecret));
-
-			Properties props = mailSender.getJavaMailProperties();
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.starttls.enable", "true");
-			props.put("mail.smtp.ssl.trust", emailConfigDto.getEmailServiceProvider());
-
-			return mailSender;
+			sendGrid.api(request);
 		}
-		catch (Exception e) {
-			log.error("Error parsing email configuration", e);
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_EMAIL_CONFIG_NOT_FOUND);
+		catch (IOException e) {
+			throw new ModuleException(CommonMessageConstant.EP_COMMON_ERROR_EMAIL_CANCEL_SCHEDULED_FAILED);
 		}
 	}
 

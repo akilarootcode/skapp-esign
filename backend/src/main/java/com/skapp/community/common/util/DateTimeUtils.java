@@ -3,9 +3,6 @@ package com.skapp.community.common.util;
 import com.skapp.community.common.constant.CommonMessageConstant;
 import com.skapp.community.common.exception.ModuleException;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -14,15 +11,10 @@ import java.time.LocalTime;
 import java.time.Year;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.format.TextStyle;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
-
-import static org.aspectj.bridge.Version.SIMPLE_DATE_FORMAT;
 
 /**
  * Utility class for handling UTC date and time operations.
@@ -30,26 +22,6 @@ import static org.aspectj.bridge.Version.SIMPLE_DATE_FORMAT;
 public class DateTimeUtils {
 
 	public static final int JANUARY = 1;
-
-	public static final int FEBRUARY = 2;
-
-	public static final int MARCH = 3;
-
-	public static final int APRIL = 4;
-
-	public static final int MAY = 5;
-
-	public static final int JUNE = 6;
-
-	public static final int JULY = 7;
-
-	public static final int AUGUST = 8;
-
-	public static final int SEPTEMBER = 9;
-
-	public static final int OCTOBER = 10;
-
-	public static final int NOVEMBER = 11;
 
 	public static final int DECEMBER = 12;
 
@@ -65,20 +37,12 @@ public class DateTimeUtils {
 	// Default UTC ZoneId
 	private static final ZoneId UTC_ZONE_ID = ZoneOffset.UTC;
 
-	// DateTimeFormatter for parsing and formatting
-	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-
 	private static final DateTimeFormatter AM_PM_FORMATTER = DateTimeFormatter.ofPattern("hh:mm a");
 
 	public static final String TIMESTAMP_POSTFIX = "_";
 
 	private static final DateTimeFormatter ESIGN_CERT_FORMATTER = DateTimeFormatter
 		.ofPattern("MM/dd/yyyy | hh:mm:ss a");
-
-	private static final DateTimeFormatter INSTANT_ESIGN_CERT_FORMATTER = DateTimeFormatter
-		.ofPattern("MM/dd/yyyy hh:mm:ss a");
 
 	private DateTimeUtils() {
 		throw new UnsupportedOperationException("Utility class");
@@ -116,161 +80,6 @@ public class DateTimeUtils {
 		}
 		catch (DateTimeParseException ex) {
 			throw new DateTimeParseException("Incorrect date format", dateStr, ex.getErrorIndex());
-		}
-	}
-
-	/**
-	 * Convert a UTC date-time string to LocalDateTime.
-	 * @param dateTimeStr Date-time string in "yyyy-MM-dd'T'HH:mm:ss'Z'" format.
-	 * @return LocalDateTime instance.
-	 * @throws DateTimeParseException If the date-time string is invalid.
-	 * @throws IllegalArgumentException If the input string is null.
-	 */
-	public static LocalDateTime parseUtcDateTime(String dateTimeStr) {
-		if (dateTimeStr == null) {
-			throw new IllegalArgumentException("Date-time string cannot be null");
-		}
-		try {
-			return LocalDateTime.parse(dateTimeStr, DATE_TIME_FORMATTER);
-		}
-		catch (DateTimeParseException ex) {
-			throw new DateTimeParseException("Failed to parse date-time string: " + dateTimeStr, dateTimeStr,
-					ex.getErrorIndex());
-		}
-	}
-
-	/**
-	 * Format a LocalDate to a UTC date string.
-	 * @param date LocalDate instance.
-	 * @return Date string in "yyyy-MM-dd" format.
-	 * @throws ModuleException If the date is null.
-	 */
-	public static String formatUtcDate(LocalDate date) {
-		if (date == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_CANNOT_BE_NULL);
-		}
-		return date.format(DATE_FORMATTER);
-	}
-
-	/**
-	 * Format a LocalDateTime to a UTC date-time string.
-	 * @param dateTime LocalDateTime instance.
-	 * @return Date-time string in "yyyy-MM-dd'T'HH:mm:ss'Z'" format.
-	 * @throws ModuleException If the dateTime is null.
-	 */
-	public static String formatUtcDateTime(LocalDateTime dateTime) {
-		if (dateTime == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_TIME_CANNOT_BE_NULL);
-		}
-		return dateTime.format(DATE_TIME_FORMATTER);
-	}
-
-	/**
-	 * Format a LocalDateTime to a UTC time string.
-	 * @param time LocalDateTime instance.
-	 * @return Time string in "HH:mm:ss" format.
-	 * @throws ModuleException If the time is null.
-	 */
-	public static String formatUtcTime(LocalDateTime time) {
-		if (time == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_TIME_CANNOT_BE_NULL);
-		}
-		return time.format(TIME_FORMATTER);
-	}
-
-	/**
-	 * Convert a java.util.Date to Instant in UTC.
-	 * @param date java.util.Date instance.
-	 * @return Instant in UTC.
-	 * @throws ModuleException If the date is null.
-	 */
-	public static Instant toUtcInstant(Date date) {
-		if (date == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_CANNOT_BE_NULL);
-		}
-		return date.toInstant().atZone(UTC_ZONE_ID).toInstant();
-	}
-
-	/**
-	 * Convert an Instant to java.util.Date.
-	 * @param instant Instant instance.
-	 * @return java.util.Date in UTC.
-	 * @throws IllegalArgumentException If the instant is null.
-	 */
-	public static Date fromUtcInstant(Instant instant) {
-		if (instant == null) {
-			throw new IllegalArgumentException("Instant cannot be null");
-		}
-		return Date.from(instant);
-	}
-
-	/**
-	 * Converts an Instant to a LocalDate in UTC.
-	 * @param instant the Instant to convert; must not be null
-	 * @return the corresponding LocalDate in UTC
-	 * @throws IllegalArgumentException if the instant is null
-	 */
-	public static LocalDate fromUtcInstantToLocaldate(Instant instant) {
-		if (instant == null) {
-			throw new IllegalArgumentException("Instant cannot be null");
-		}
-		return instant.atZone(UTC_ZONE_ID).toLocalDate();
-	}
-
-	/**
-	 * Convert a UTC date-time to another time zone.
-	 * @param dateTime LocalDateTime in UTC.
-	 * @param targetZoneId The target time zone ID.
-	 * @return LocalDateTime in the target time zone.
-	 * @throws ModuleException If the dateTime or targetZoneId is null.
-	 */
-	public static LocalDateTime convertToTimeZone(LocalDateTime dateTime, ZoneId targetZoneId) {
-		if (dateTime == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_TIME_CANNOT_BE_NULL);
-		}
-		if (targetZoneId == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_TIME_ZONE_CANNOT_BE_NULL);
-		}
-		return dateTime.atZone(UTC_ZONE_ID).withZoneSameInstant(targetZoneId).toLocalDateTime();
-	}
-
-	/**
-	 * Convert a LocalDateTime in another time zone to UTC.
-	 * @param dateTime LocalDateTime in the source time zone.
-	 * @param sourceZoneId The source time zone ID.
-	 * @return LocalDateTime in UTC.
-	 * @throws ModuleException If the dateTime or sourceZoneId is null.
-	 */
-	public static LocalDateTime convertToUtc(LocalDateTime dateTime, ZoneId sourceZoneId) {
-		if (dateTime == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_TIME_CANNOT_BE_NULL);
-		}
-		if (sourceZoneId == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_TIME_ZONE_CANNOT_BE_NULL);
-		}
-		return dateTime.atZone(sourceZoneId).withZoneSameInstant(UTC_ZONE_ID).toLocalDateTime();
-	}
-
-	/**
-	 * Advances the given date by one day, skipping the weekend if the date is Friday. If
-	 * the date is a Friday, this method returns the date for the following Monday. For
-	 * any other day, it returns the next day.
-	 * @param currentDate The date to be adjusted. Cannot be null.
-	 * @return The adjusted date.
-	 * @throws ModuleException If the currentDate is null.
-	 */
-	public static LocalDate skipWeekendsIfFriday(LocalDate currentDate) {
-		if (currentDate == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_CANNOT_BE_NULL);
-		}
-		DayOfWeek friday = DayOfWeek.FRIDAY;
-		DayOfWeek currentDayOfWeek = currentDate.getDayOfWeek();
-
-		if (currentDayOfWeek == friday) {
-			return currentDate.plusDays(3); // Skip Saturday and Sunday
-		}
-		else {
-			return currentDate.plusDays(1); // Move to the next day
 		}
 	}
 
@@ -390,21 +199,6 @@ public class DateTimeUtils {
 	}
 
 	/**
-	 * Output a string from LocalDate object with the format "{day}th of {month}"
-	 * @param date LocalDate that is needed to be formatted. Cannot be null.
-	 * @return the string output.
-	 * @throws ModuleException If the date is null.
-	 */
-	public static String getTextTimeFromDate(LocalDate date) {
-		if (date == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_CANNOT_BE_NULL);
-		}
-		int day = date.getDayOfMonth();
-		String month = date.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
-		return String.format("%d%s of %s", day, getDayOfMonthSuffix(day), month);
-	}
-
-	/**
 	 * Return the Suffix of the given date.
 	 * @param day date that is needed to be formatted (1-31).
 	 * @return the string Suffix.
@@ -426,21 +220,6 @@ public class DateTimeUtils {
 	}
 
 	/**
-	 * Checks if the given LocalDate is in the current year or the next year.
-	 * @param date The LocalDate to check. Cannot be null.
-	 * @return true if the date is in the current year or next year, otherwise false.
-	 * @throws ModuleException If the date is null.
-	 */
-	public static boolean isCurrentYearOrNext(LocalDate date) {
-		if (date == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_CANNOT_BE_NULL);
-		}
-		int year = date.getYear();
-		int currentYear = Year.now().getValue();
-		return (year == currentYear || year == currentYear + 1);
-	}
-
-	/**
 	 * Validates whether the provided time zone ID is valid.
 	 * @param timeZone The time zone ID to validate. Cannot be null.
 	 * @return true if the time zone ID is valid, otherwise false.
@@ -452,38 +231,6 @@ public class DateTimeUtils {
 		}
 		Set<String> validIDs = ZoneId.getAvailableZoneIds();
 		return validIDs.contains(timeZone);
-	}
-
-	/**
-	 * Retrieves the current time as a string in the given time zone.
-	 * @param zoneId The ZoneId representing the target time zone. Cannot be null.
-	 * @return the formatted time string.
-	 * @throws ModuleException If the zoneId is null.
-	 */
-	public static String getTimeStringByTimeZone(ZoneId zoneId) {
-		if (zoneId == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_TIME_ZONE_CANNOT_BE_NULL);
-		}
-		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH.mm a");
-		ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
-		LocalTime localTime = zonedDateTime.toLocalTime();
-		return localTime.format(timeFormatter);
-	}
-
-	/**
-	 * Retrieves the current date as a string in the given time zone.
-	 * @param zoneId The ZoneId representing the target time zone. Cannot be null.
-	 * @return the formatted date string.
-	 * @throws ModuleException If the zoneId is null.
-	 */
-	public static String getDateStringByTimeZone(ZoneId zoneId) {
-		if (zoneId == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_TIME_ZONE_CANNOT_BE_NULL);
-		}
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-		ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
-		LocalDate localDate = zonedDateTime.toLocalDate();
-		return localDate.format(dateFormatter);
 	}
 
 	/**
@@ -507,15 +254,6 @@ public class DateTimeUtils {
 	 */
 	public static LocalDate epochMillisToUtcLocalDate(Long epochMillis) {
 		return Instant.ofEpochMilli(epochMillis).atZone(ZoneOffset.UTC).toLocalDate();
-	}
-
-	/**
-	 * Converts epoch seconds to UTC LocalDate.
-	 * @param epochMillis the epoch milliseconds to convert
-	 * @return the corresponding LocalDate in UTC, or null if epochMillis is null
-	 */
-	public static LocalDate epochSecondToUtcLocalDate(Long epochMillis) {
-		return Instant.ofEpochSecond(epochMillis).atZone(ZoneOffset.UTC).toLocalDate();
 	}
 
 	/**
@@ -570,23 +308,6 @@ public class DateTimeUtils {
 		return Instant.ofEpochMilli(epochDateTime).atZone(ZoneOffset.UTC).toLocalDate();
 	}
 
-	public static boolean isValidDate(String dateStr) {
-		if (dateStr != null && !dateStr.isBlank()) {
-			DateFormat sdf = new SimpleDateFormat(SIMPLE_DATE_FORMAT);
-			sdf.setLenient(false);
-			try {
-				sdf.parse(dateStr);
-			}
-			catch (ParseException e) {
-				return false;
-			}
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	public static long getLongValueOfDate(LocalDate date) {
 		return date.atStartOfDay().toEpochSecond(ZoneOffset.UTC);
 	}
@@ -611,13 +332,6 @@ public class DateTimeUtils {
 		return dayOfMonth + suffix + " " + date.format(monthFormatter);
 	}
 
-	public static String formatDateWithDaySuffixAndYear(LocalDate date) {
-		int dayOfMonth = date.getDayOfMonth();
-		DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MMM yyyy", Locale.ENGLISH);
-		String suffix = getDayOfMonthSuffix(dayOfMonth);
-		return dayOfMonth + suffix + " " + date.format(monthYearFormatter);
-	}
-
 	public static String concatPrefixWithTimestamp(String prefix) {
 		return prefix + localDateTimeToEpochMillis(getCurrentUtcDateTime()) + TIMESTAMP_POSTFIX;
 	}
@@ -633,20 +347,6 @@ public class DateTimeUtils {
 			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_TIME_CANNOT_BE_NULL);
 		}
 		return dateTime.format(ESIGN_CERT_FORMATTER);
-	}
-
-	/**
-	 * Formats an Instant to a string with pattern "MM/dd/yyyy hh:mm:ss a".
-	 * @param instant The Instant to format. Cannot be null.
-	 * @return The formatted date-time string.
-	 * @throws ModuleException If the instant is null.
-	 */
-	public static String formatInstantEsignCert(Instant instant) {
-		if (instant == null) {
-			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_DATE_TIME_CANNOT_BE_NULL);
-		}
-		LocalDateTime dateTime = LocalDateTime.ofInstant(instant, DateTimeUtils.UTC_ZONE_ID);
-		return dateTime.format(INSTANT_ESIGN_CERT_FORMATTER);
 	}
 
 }

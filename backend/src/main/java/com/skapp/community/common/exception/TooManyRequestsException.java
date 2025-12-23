@@ -21,11 +21,6 @@ public class TooManyRequestsException extends RuntimeException {
 		this.messageKey = messageKey;
 	}
 
-	public TooManyRequestsException(MessageConstant messageKey, Object[] args) {
-		super(getMessageUtil().getMessage(messageKey.getMessageKey(), args));
-		this.messageKey = messageKey;
-	}
-
 	private static MessageUtil getMessageUtil() {
 		MessageUtil util = messageUtil.get();
 		if (util == null) {

@@ -130,8 +130,6 @@ CREATE TABLE IF NOT EXISTS `module_config`
     `leave_module`      bit(1)          DEFAULT b'1',
     `attendance_module` bit(1)          DEFAULT b'1',
     `esign_module`      bit(1)          DEFAULT b'1',
-    `invoice_module`    bit(1)          DEFAULT b'1',
-    `pm_module`         bit(1)          DEFAULT b'1',
     PRIMARY KEY (`id`)
 );
 
@@ -389,8 +387,6 @@ CREATE TABLE IF NOT EXISTS `employee_role`
     `role_changed_by`         bigint       DEFAULT NULL,
     `esign_role`              varchar(255) DEFAULT NULL,
     `okr_role`                varchar(255) DEFAULT 'OKR_EMPLOYEE',
-    `pm_role`                 varchar(255) DEFAULT 'PM_EMPLOYEE',
-    `invoice_role`            varchar(255) DEFAULT 'INVOICE_NONE',
     PRIMARY KEY (`employee_id`),
     KEY `IDX_employee_role_role_changed_by` (`role_changed_by`),
     CONSTRAINT `FK_employee_role_employee_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`),

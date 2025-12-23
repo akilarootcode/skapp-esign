@@ -12,8 +12,6 @@ public class ValidationConstant {
 
 	public static final String HEXA_DECIMAL_VALIDATION_PATTERN = "^#([A-Fa-f0-9]{6,8})$";
 
-	public static final String TIME_ZONE_VALIDATION_PATTERN = "^[a-zA-Z]+/[a-zA-Z]+$";
-
 	/**
 	 * this regex is designed to match a sequence of one or more characters that consists
 	 * of alphabets (both uppercase & lowercase), numbers (0-9), whitespaces and
