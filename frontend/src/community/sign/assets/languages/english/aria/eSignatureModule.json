@@ -1,0 +1,193 @@
+{
+  "components": {
+    "pdfViewer": {
+      "documentViewer": "Document viewer",
+      "documentApplication": "PDF document application",
+      "documentViewerArea": "PDF document viewer",
+      "pagesContainer": "PDF pages container",
+      "documentViewerCore": "PDF document viewer",
+      "documentPageSummary": "Document contains {{pageCount}} pages"
+    },
+    "ConsentModalWithOverlay": {
+      "documentPageLoaded": "Sign document page loaded. You can now sign the document."
+    },
+    "pdfTopBar": {
+      "toolbar": "PDF document controls",
+      "zoomControls": "Zoom controls",
+      "toggleThumbnails": "Toggle PDF page thumbnails",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "toggleFullscreen": "Toggle fullscreen mode",
+      "download": "Download PDF document"
+    },
+    "pdfThumbnail": {
+      "navigation": "PDF page thumbnails navigation",
+      "pageButton": "Go to page {{pageNumber}}"
+    },
+    "signatureField": {
+      "field": "{{fieldType}} field",
+      "deleteButton": "Delete signature field",
+      "clickToSign": "{{fieldType}} field - click to sign"
+    },
+    "signatureFieldRenderer": {
+      "dateField": "Date field",
+      "emailField": "Email field",
+      "nameField": "Name field",
+      "approvalField": "Approval field"
+    },
+    "signatureDisplay": {
+      "signatureField": "{{fieldType}} signature field",
+      "viewEditSignature": "View or edit {{fieldType}} signature"
+    },
+    "recipientRows": {
+      "recipientInfo": "Recipient information for {{recipientName}}"
+    },
+    "filePreviewModal": {
+      "modalTitle": "File preview modal"
+    },
+    "contactTableFilterModal": {
+      "dialog": "Contact filter dialog"
+    },
+    "recipientSections": {
+      "signingOrderSection": "Signing order section",
+      "recipientsSection": "Recipients section"
+    },
+    "recipientRowDetails": {
+      "dragToReorder": "Drag to reorder recipient",
+      "deleteRecipient": "Delete recipient",
+      "recipient": "Recipient {{id}}"
+    },
+    "signaturePlaceholder": {
+      "fieldPlaceholder": "{{fieldType}} field placeholder - click to sign"
+    },
+    "documentSummary": {
+      "documentPreview": "Document preview area",
+      "documentDetailsForm": "Document details and configuration form"
+    },
+    "recipients": {
+      "nudgeRecipient": "Send reminder to {{recipientName}}",
+      "recipientRow": "{{position}} | Name - {{name}} | Email - {{email}} | Role - {{role}} | Status - {{status}}",
+      "recipientTable": "Recipients details"
+    },
+    "typeSignature": {
+      "selectFont": "Select font style for signature",
+      "selectColor": "Select color {{colorName}}",
+      "colorSelected": "Color {{colorName}} selected",
+      "fontStyle": "{{fontStyle}} font style"
+    },
+    "drawSignature": {
+      "drawHere": "Draw your signature here"
+    },
+    "typeInitials": {
+      "selectColor": "Select color {{colorName}}",
+      "colorSelected": "Color {{colorName}} selected"
+    },
+    "documentPreview": {
+      "openDocument": "Open document in new window"
+    },
+    "createDocument": {
+      "stepperNavigation": "Document creation steps navigation",
+      "closeCreateDocument": "Close Create Document window"
+    },
+    "PDFViewFieldContainer": {
+      "recipientsDropdown": "Recipients dropdown for selecting recipient"
+    },
+    "defineFieldsSection": {
+      "pdfViewerMain": "PDF viewer for defining signature fields"
+    },
+    "recipientDetailsSection": {
+      "recipientDetailsConfiguration": "Recipient details configuration section",
+      "signingOrderToggle": "Enable signing order toggle",
+      "recipientsList": "Recipients list",
+      "addRecipientButtonSection": "Add recipient button section",
+      "recipientDetailsForm": "Recipient details form",
+      "documentUploadSection": "Document upload section",
+      "uploadDocuments": "Upload documents area",
+      "uploadedDocuments": "Uploaded documents list",
+      "signingOrderSwitch": "Toggle signing order switch",
+      "signingOrderEnabledSwitch": "Signing order",
+      "uploadDocumentsDragAndDrop": "Drag and drop area for uploading documents",
+      "uploadSuccess": {
+        "screenReaderAnnouncement": "Uploaded file : {{fileName}}"
+      }
+    },
+    "recipientSearch": {
+      "searchField": "Recipient search field",
+      "recipientSearchInput": "Search for recipient by email",
+      "searchIcon": "Search icon",
+      "suggestionList": "Recipient suggestions",
+      "loadingSuggestions": "Loading recipient suggestions",
+      "recipientSuggestion": "Recipient: {{email}}",
+      "addNewRecipient": "Add new external recipient"
+    },
+    "timeline": {
+      "container": "Timeline of document activities",
+      "item": "{{title}} on {{timestamp}}"
+    },
+    "envelopeTableStatusFilter": {
+      "removeAllFilters": "Remove all filters",
+      "filterByStatus": "Filter by document status",
+      "activeFiltersContext": "Active filters: {{filters}}. Press to remove all filters.",
+      "noActiveFilters": "No active filters",
+      "filterButtonWithFilters": "Filter documents - open filter options for filter by Document Status. Currently filtered by: {{filters}}",
+      "filterButtonNoFilters": "Filter documents - open filter options for filter by Document Status",
+      "selectOptionsInstructions": "Select options to filter documents by status",
+      "selectedFilters": "Selected filters: {{filters}}",
+      "optionSelectedFormat": "{{status}} - currently selected. Press to deselect this filter option.",
+      "optionUnselectedFormat": "{{status}} - not selected. Press to select this filter option.",
+      "resetButtonDisabled": "Reset filters - no filters selected to reset",
+      "resetButtonEnabled": "Reset filters - clear all {{count}} selected filter",
+      "resetButtonEnabledPlural": "Reset filters - clear all {{count}} selected filters",
+      "applyButtonDisabled": "Apply filters - no filters selected to apply",
+      "applyButtonEnabled": "Apply {{count}} selected filter to document list",
+      "applyButtonEnabledPlural": "Apply {{count}} selected filters to document list",
+      "filterRegion": "Document status filters",
+      "filterDialog": "Filter options dialog"
+    },
+    "envelopeTable": {
+      "sortInbox": "Sort by received date",
+      "sortSent": "Sort by created date",
+      "itemsPerPage": "Items per page",
+      "receivedOn": "Received on",
+      "createdOn": "Created on",
+      "rowDescription": "Record {{rowIndex}}: Name - {{subject}} | Sender - {{sender}} | {{dateLabel}} - {{date}} | Expires on - {{expiryDate}} | Status - {{status}}"
+    },
+    "interactiveFileNameHolder": {
+      "fileNameInput": "File name input field",
+      "fileNameContainer": "File name container",
+      "kebabMenu": "File options for {{fileName}}",
+      "kebabMenuOptions": {
+        "view": "View file {{fileName}}",
+        "replace": "Replace file {{fileName}}",
+        "rename": "Rename file {{fileName}}",
+        "delete": "Delete file {{fileName}}"
+      }
+    },
+    "kpi": {
+      "documentCard": "{{count}}-{{title}} Documents"
+    },
+    "inboxSignCard": {
+      "viewSignatureCard": "Manage your signature. Click the view button to edit your signature.",
+      "addSignatureCard": "Manage your signature. Click add button to add your signature",
+      "addSignatureButton": "Add signature",
+      "viewSignatureButton": "View signature"
+    },
+    "contactTable": {
+      "rowDescription": "Record {{rowIndex}}: Name - {{name}} | Email - {{email}} | Contact number - {{phone}} | Type - {{type}}",
+      "empty": "empty"
+    },
+    "ContactTableFilters": {
+      "filterButton": "Filter contacts"
+    },
+    "addExternalUserModal": {
+      "editContactDescription": "Edit contact information",
+      "addContactDescription": "Add Contact - fill in name, phone number, and email. Required fields marked.",
+      "contactNoAriaLabel": "Enter contact number"
+    }
+  },
+  "pages": {
+    "envelopeDetails": {
+      "detailsSection": "Envelope details section"
+    }
+  }
+}

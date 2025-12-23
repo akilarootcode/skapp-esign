@@ -10,6 +10,7 @@ import { accountPageTestId } from "~community/common/constants/testIds";
 import { ZIndexEnums } from "~community/common/enums/CommonEnums";
 import { ToastType } from "~community/common/enums/ComponentEnums";
 import useGetProfileDetails from "~community/common/hooks/useGetProfileDetails";
+import useS3Download from "~community/common/hooks/useS3Download";
 import { useTranslator } from "~community/common/hooks/useTranslator";
 import { useToast } from "~community/common/providers/ToastProvider";
 import { EditAllInfoErrorTypes } from "~community/common/types/ErrorTypes";
@@ -34,13 +35,11 @@ import {
   contractStates
 } from "~community/people/types/EmployeeTypes";
 import uploadImage from "~community/people/utils/image/uploadImage";
-import { useGetEnvironment } from "~enterprise/common/hooks/useGetEnvironment";
-import useS3Download from "~enterprise/common/hooks/useS3Download";
 
 const Account: NextPage = () => {
   const router = useRouter();
 
-  const environment = useGetEnvironment();
+  const environment = "COMMUNITY";
 
   const { forceRefetch } = useS3Download();
 

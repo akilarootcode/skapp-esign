@@ -58,3 +58,11 @@ export const applicationVersionEndpoints = {
 export const storageAvailabilityEndpoints = {
   GET_STORAGE_AVAILABILITY: `/file/storage/availability`
 };
+
+export const s3Endpoints = {
+  GET_SIGNED_URL: `/ep/s3/files/signed-url`,
+  GET_ESIGN_SIGNED_URL: `/ep/s3/esign/files/signed-url`,
+  DELETE_FILE: `/ep/s3/files`,
+  GET_ORGANIZATION_SETUP_SIGNED_URL: `/ep/s3/files/organization-setup/signed-url`,
+  GET_INVOICE_SIGNED_URL: `/ep/s3/invoice/files/signed-url`
+};

@@ -4,6 +4,7 @@ export enum TableNames {
   PEOPLE = "Directory",
   HOLIDAYS = "Holidays",
   JOB_FAMILY = "Job family",
+  ENVELOPE = "Envelope",
 
   // Community Attendance Module
   EMPLOYEE_TIMESHEET_REQUEST = "Employee timesheet request",

@@ -59,3 +59,12 @@ export enum HalfDayType {
   MORNING = "morning",
   EVENING = "evening"
 }
+
+export enum SkappModuleLinkEnum {
+  PEOPLE = "https://skapp.com/people",
+  LEAVE = "https://skapp.com/leave",
+  ATTENDANCE = "https://skapp.com/attendance",
+  ESIGNATURE = "https://skapp.com/e-signature",
+  INVOICE = "https://skapp.com/invoice",
+  PROJECTS = "https://skapp.com/projects"
+}
