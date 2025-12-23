@@ -1,0 +1,27 @@
+package com.skapp.community.esignature.repository;
+
+import com.skapp.community.esignature.model.DocumentLink;
+import com.skapp.community.esignature.model.Envelope;
+import com.skapp.community.esignature.model.Recipient;
+import com.skapp.community.esignature.type.DocumentPermissionType;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface DocumentLinkRepository extends JpaRepository<DocumentLink, Long> {
+
+	Optional<DocumentLink> findByToken(String token);
+
+	Optional<DocumentLink> findFirstByRecipientIdAndEnvelopeIdAndPermissionTypeOrderByCreatedAtDesc(Recipient recipient,
+			Envelope envelope, DocumentPermissionType permissionType);
+
+	List<DocumentLink> findByEnvelopeIdAndRecipientId(Envelope envelope, Recipient recipient);
+
+	Optional<DocumentLink> findByUuid(String uuid);
+
+	boolean existsByUuid(String uuid);
+
+}

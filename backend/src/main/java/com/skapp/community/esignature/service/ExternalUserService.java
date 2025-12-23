@@ -1,0 +1,23 @@
+package com.skapp.community.esignature.service;
+
+import com.skapp.community.common.payload.response.ResponseEntityDto;
+import com.skapp.community.esignature.model.ExternalUser;
+import com.skapp.community.esignature.payload.request.ExternalPatchUserDto;
+import com.skapp.community.esignature.payload.request.ExternalUserDto;
+
+public interface ExternalUserService {
+
+	/**
+	 * Creates a new ExternalUser.
+	 * @param externalUser The external user to be created.
+	 * @return The created ExternalUser.
+	 */
+	ExternalUser createExternalUser(ExternalUserDto externalUser);
+
+	ResponseEntityDto editExternalUser(Long id, ExternalPatchUserDto externalPatchUserDto);
+
+	ResponseEntityDto deleteExternalUser(Long id);
+
+	ExternalUser loadUserByEmail(String email);
+
+}

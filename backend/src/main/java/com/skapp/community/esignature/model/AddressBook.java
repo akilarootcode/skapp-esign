@@ -1,0 +1,96 @@
+package com.skapp.community.esignature.model;
+
+import com.skapp.community.common.model.User;
+import com.skapp.community.esignature.type.MySignatureMethods;
+import com.skapp.community.esignature.type.UserType;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "es_address_book")
+public class AddressBook {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, updatable = false)
+	private Long id;
+
+	@OneToOne
+	@JoinColumn(name = "internal_user_id")
+	private User internalUser;
+
+	@OneToOne
+	@JoinColumn(name = "external_user_id")
+	private ExternalUser externalUser;
+
+	@Enumerated(EnumType.STRING)
+	private UserType type;
+
+	@Column(name = "is_active")
+	private Boolean isActive = true;
+
+	@Column(name = "my_signature_link")
+	private String mySignatureLink;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "my_signature_method")
+	private MySignatureMethods mySignatureMethod;
+
+	@Column(name = "font_family")
+	private String fontFamily;
+
+	@Column(name = "font_color")
+	private String fontColor;
+
+	public Long getUserId() {
+		if (type == UserType.EXTERNAL) {
+			return externalUser.getId();
+		}
+
+		return internalUser.getUserId();
+	}
+
+	public String getName() {
+		if (type == UserType.EXTERNAL) {
+			return externalUser.getFirstName() + " " + externalUser.getLastName();
+		}
+
+		return internalUser.getEmployee().getFirstName() + " " + internalUser.getEmployee().getLastName();
+	}
+
+	public String getFirstName() {
+		if (type == UserType.EXTERNAL) {
+			return externalUser.getFirstName();
+		}
+
+		return internalUser.getEmployee().getFirstName();
+	}
+
+	public String getLastName() {
+		if (type == UserType.EXTERNAL) {
+			return externalUser.getLastName();
+		}
+
+		return internalUser.getEmployee().getLastName();
+	}
+
+	public String getEmail() {
+		if (type == UserType.EXTERNAL) {
+			return externalUser.getEmail();
+		}
+
+		return internalUser.getEmail();
+	}
+
+	public String getPhone() {
+		if (type == UserType.EXTERNAL) {
+			return externalUser.getPhone();
+		}
+
+		return internalUser.getEmployee().getPhone();
+	}
+
+}

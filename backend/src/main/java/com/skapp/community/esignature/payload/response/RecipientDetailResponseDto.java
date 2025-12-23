@@ -1,0 +1,42 @@
+package com.skapp.community.esignature.payload.response;
+
+import com.skapp.community.esignature.type.EmailReminderStatus;
+import com.skapp.community.esignature.type.EmailStatus;
+import com.skapp.community.esignature.type.MemberRole;
+import com.skapp.community.esignature.type.RecipientStatus;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+public class RecipientDetailResponseDto {
+
+	private Long id;
+
+	private String name;
+
+	private AddressBookBasicResponseDto addressBook;
+
+	private String email;
+
+	private MemberRole memberRole;
+
+	private RecipientStatus status;
+
+	private int signingOrder;
+
+	private String color;
+
+	private List<FieldDetailResponseDto> fields;
+
+	private Long addressBookId;
+
+	private String reminderBatchId;
+
+	private EmailReminderStatus reminderStatus;
+
+	private EmailStatus emailStatus;
+
+}

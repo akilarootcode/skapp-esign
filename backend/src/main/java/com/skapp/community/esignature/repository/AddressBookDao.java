@@ -1,0 +1,29 @@
+package com.skapp.community.esignature.repository;
+
+import com.skapp.community.common.model.User;
+import com.skapp.community.esignature.model.AddressBook;
+import com.skapp.community.esignature.model.ExternalUser;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface AddressBookDao extends JpaRepository<AddressBook, Long>, AddressBookRepository {
+
+	void deleteByInternalUserUserId(Long internalUserId);
+
+	Optional<AddressBook> findByInternalUser(User internalUser);
+
+	Optional<AddressBook> findByExternalUser(ExternalUser externalUser);
+
+	Optional<AddressBook> findByInternalUserEmail(String email);
+
+	Optional<AddressBook> findByExternalUserEmail(String email);
+
+	List<AddressBook> findByInternalUserIn(List<User> users);
+
+	Optional<AddressBook> findByInternalUserUserId(Long userId);
+
+}

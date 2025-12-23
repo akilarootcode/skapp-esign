@@ -1,0 +1,227 @@
+@import "@rootcodelabs/skapp-ui";
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  line-height: 1.5;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#__next {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+.input-phone-number input:focus {
+  outline: none !important;
+  /* border:none !important; */
+  box-shadow: none !important;
+}
+
+.react-tel-input .selected-flag:focus-visible {
+  outline: 0.125rem solid #000000;
+  outline-offset: 0.0625rem;
+  box-shadow: none;
+}
+
+.react-tel-input .selected-flag:focus-visible .arrow {
+  border-top: 0.3125rem solid #000000 !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e4e4e7;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a1a1aa;
+  border-radius: 8px;
+}
+
+.signup-layout-content-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.signup-layout-content-section--centered {
+  justify-content: safe center;
+}
+
+.signup-layout-content-section--top {
+  justify-content: flex-start;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .signup-layout-content-section {
+    max-width: 100%;
+    padding: 20px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1440px) {
+  .signup-layout-content-section {
+    padding: 40px;
+  }
+}
+
+@media (min-width: 1441px) {
+  .signup-layout-content-section {
+    max-width: 800px;
+    padding: 80px;
+  }
+}
+
+.driver-popover .driver-popover-title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%;
+  font-family: "Poppins", sans-serif;
+}
+
+.driver-popover .driver-popover-description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 140%;
+  font-family: "Poppins", sans-serif;
+}
+
+.full-day-border {
+  border: 0.0625rem solid red;
+}
+
+.half-day-morning-border {
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.half-day-morning-border::before,
+.half-day-morning-border::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 0.0625rem solid red;
+  clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%);
+  box-sizing: border-box;
+}
+
+.half-day-evening-border {
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.half-day-evening-border::before,
+.half-day-evening-border::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 0.0625rem solid red;
+  clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+  box-sizing: border-box;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.sticky-table {
+  border-collapse: collapse; /* keeps cell borders tidy */
+  width: 100%;
+}
+
+.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 2; /* stay above scrolling cells */
+  box-shadow: 2px 0 2px -2px #eee;
+  background: #fafafa; /* header background */
+}
+
+/* Optional: give the header a higher stacking context */
+thead .sticky-col {
+  z-index: 3;
+  background: #f4f4f5;
+}
+
+/**
+ * CSS styles for TextArea component dynamic styling
+ */
+
+/* Apply hover styles when the hover-active class is present */
+.textarea-hover-active:hover {
+  background-color: var(--hover-bg-color) !important;
+  border-color: var(--hover-border-color) !important;
+}
+
+/* Apply focus styles when the focus-active class is present */
+.textarea-focus-active {
+  border-color: var(--focus-border-color) !important;
+  box-shadow: 0px 0px 4px 0px var(--focus-shadow-color) !important;
+}
+
+.hover-active:hover {
+  background-color: var(--hover-bg-color) !important;
+  border-color: var(--hover-border-color) !important;
+}
+/* Apply focus styles when the focus-active class is present */
+.focus-active {
+  border-color: var(--focus-border-color) !important;
+  box-shadow: 0px 0px 4px 0px var(--focus-shadow-color) !important;
+}

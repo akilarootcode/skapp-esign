@@ -1,0 +1,7 @@
+package com.skapp.community.esignature.type;
+
+public enum RecipientStatus {
+
+	NEED_TO_SIGN, COMPLETED, DECLINED, VOID, EMPTY, EXPIRED
+
+}

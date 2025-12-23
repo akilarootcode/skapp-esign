@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: classpath:community/db/changelog/ddl-script/common-ddl-script-v1-create-tables.sql
+  - include:
+      file: classpath:community/db/changelog/ddl-script/common-ddl-script-v1-create-table-company-objective.sql
+  - include:
+      file: classpath:community/db/changelog/ddl-script/00027_alter_table_in_customer_document_add_auditable_columns.sql

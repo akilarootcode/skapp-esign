@@ -1,0 +1,81 @@
+package com.skapp.community.esignature.controller.v1;
+
+import com.skapp.community.common.payload.response.ResponseEntityDto;
+import com.skapp.community.esignature.payload.request.ResendAccessUrlDto;
+import com.skapp.community.esignature.service.DocumentLinkService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("v1/ep/esign/document-link")
+public class DocumentLinkController {
+
+	private final DocumentLinkService documentLinkService;
+
+	@Operation(summary = "Create  sign or view document access link",
+			description = "Generates a document access link which can view or sign for the given document Id and recipient Id")
+	@PostMapping(value = "/resend", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseEntityDto> resendDocumentAccessURL(
+			@Valid @RequestBody ResendAccessUrlDto resendAccessUrlDto) {
+
+		documentLinkService.resendDocumentAccessURL(resendAccessUrlDto);
+
+		return new ResponseEntity<>(new ResponseEntityDto(false, "Email successfully resent to the recipient"),
+				HttpStatus.CREATED);
+	}
+
+	@Operation(summary = "Get data for sign or view link",
+			description = "Fetches the sign or view related data for a given document and recipient using a document access token.")
+	@PostMapping(value = "/access", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_DOC_ACCESS','ESIGN_EMPLOYEE')")
+	public ResponseEntity<ResponseEntityDto> getRecipientDocumentData(@RequestParam Long documentId,
+			@RequestParam Long recipientId) {
+
+		ResponseEntityDto responseEntityDto = documentLinkService.getRecipientDocumentData(documentId, recipientId,
+				true);
+
+		return new ResponseEntity<>(responseEntityDto, HttpStatus.OK);
+	}
+
+	@Operation(summary = "Retrieve Data for Internal Document Access",
+			description = "Retrieves data required for signing or viewing a document internally for a given document and recipient, using internal access privileges.")
+	@PostMapping(value = "/internal/access", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasAnyRole('ESIGN_EMPLOYEE')")
+	public ResponseEntity<ResponseEntityDto> getRecipientDocumentDataInternal(@RequestParam Long documentId,
+			@RequestParam Long recipientId) {
+
+		ResponseEntityDto responseEntityDto = documentLinkService.getRecipientDocumentData(documentId, recipientId,
+				false);
+
+		return new ResponseEntity<>(responseEntityDto, HttpStatus.OK);
+	}
+
+	@Operation(summary = "Exchange UUID for Document Access Token",
+			description = "Exchanges a decrypted and validated UUID for an internal access token used to sign or view a document. "
+					+ "The token is only returned if the document link is available.")
+	@GetMapping(value = "/token-exchange", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseEntityDto> getTokenFromUuid(@RequestParam String uuid, @RequestParam String state) {
+
+		ResponseEntityDto responseEntityDto = documentLinkService.getTokenFromUuid(uuid, state);
+
+		return new ResponseEntity<>(responseEntityDto, HttpStatus.OK);
+	}
+
+	@Operation(summary = "Check Resend Status of Document Access Token",
+			description = "Retrieves the current resend status of a document access token.")
+	@GetMapping(value = "/token/resend-status", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseEntityDto> getTokenResendStatus(@RequestParam String token) {
+
+		ResponseEntityDto responseEntityDto = documentLinkService.getTokenResendStatus(token);
+
+		return new ResponseEntity<>(responseEntityDto, HttpStatus.OK);
+	}
+
+}

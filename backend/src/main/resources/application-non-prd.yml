@@ -1,0 +1,109 @@
+server:
+  port: 8008
+
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    show-sql: true
+
+  liquibase:
+    change-log: classpath:community/db/changelog/db.changelog.yml
+    enabled: true
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+
+  messages:
+    basename: community/messages/common-messages, community/messages/leave-messages, community/messages/people-messages, community/messages/time-messages, community/messages/okr-messages
+
+file:
+  storage:
+    folders:
+      - organization-logos
+      - user-image
+      - leave-attachments
+    base: storage
+    encryption-key: ${FILE_ENCRYPT_KEY}
+
+logging:
+  level:
+    ROOT: INFO
+    org:
+      hibernate:
+        SQL: INFO
+        type: WARN
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+
+jwt:
+  access-token:
+    esign:
+      doc-access-key: ${ESIGN_DOC_ACCESS_KEY}
+      expiration-time: 172800000 # Expiration time in milliseconds (48 hours)
+      max-clicks: 5
+    signing-key: ${SIGN_IN_KEY}
+    expiration-time: 3600000 # Expiration time in milliseconds (1 hour)
+  refresh-token:
+    long-duration:
+      expiration-time: 2592000000 # Expiration time in milliseconds (30 days)
+    short-duration:
+      expiration-time: 21600000 # Expiration time in milliseconds (6 hours)
+
+encryptDecryptAlgorithm:
+  secret: ${ENCRYPT_DECRYPT_SECRET}
+
+aws:
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}
+  route53:
+    parent-domain: ${AWS_ROUTE53_PARENT_DOMAIN}
+  s3:
+    region: ${AWS_S3_REGION}
+    bucket-name: ${AWS_BUCKET_NAME}
+    max-attempts: 3
+  cloudfront:
+    sign-cookies-expiration: ${AWS_CF_SIGN_COOKIES_EXPIRATION} # Expiration time in seconds
+    cookie-domain: ${AWS_CF_COOKIE_DOMAIN}
+    s3-default:
+      domain-name: ${AWS_CF_S3_DEFAULT_DOMAIN_NAME}
+      key-pair-id: ${AWS_CF_S3_DEFAULT_KEY_PAIR_ID}
+      private-key: ${AWS_CF_PRIVATE_KEY}
+
+sendgrid:
+  api:
+    key: ${SENDGRID_API_KEY}
+
+organization:
+  email: ${ORGANIZATION_EMAIL}
+
+esign:
+  private-key:
+    aes-secret-key: ${AES_SECRET_KEY}
+
+app:
+  parent-domain: ${PARENT_DOMAIN}
+  protocol: ${PROTOCOL}
+
+retry:
+  max-attempts: 3
+  backoff-delay: 200 # Expiration time in milliseconds (200 ms)
