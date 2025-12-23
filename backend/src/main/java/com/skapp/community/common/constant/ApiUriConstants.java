@@ -3,7 +3,7 @@ package com.skapp.community.common.constant;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class EpApiUriConstants {
+public class ApiUriConstants {
 
 	public static final String SENDGRID_POST_API = "mail/send";
 

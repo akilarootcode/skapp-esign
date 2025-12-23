@@ -1,9 +1,9 @@
 package com.skapp.community.common.service.impl;
 
+import com.skapp.community.common.constant.CommonConstants;
+import com.skapp.community.common.constant.CommonMessageConstant;
 import com.skapp.community.common.exception.ModuleException;
 import com.skapp.community.common.payload.response.ResponseEntityDto;
-import com.skapp.community.common.constant.EPCommonMessageConstant;
-import com.skapp.community.common.constant.EpCommonConstants;
 import com.skapp.community.common.payload.request.AmazonS3DeleteItemRequestDto;
 import com.skapp.community.common.payload.request.AmazonS3SignedUrlRequestDto;
 import com.skapp.community.common.payload.request.AmazonS3SignedUrlValidatedRequestDto;
@@ -101,13 +101,13 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 			AmazonS3SignedUrlResponseDto responseDto = new AmazonS3SignedUrlResponseDto();
 			responseDto.setSignedUrl(generateSignedUrl(amazonS3SignedUrlRequestDto.getAction(),
 					amazonS3SignedUrlRequestDto.getFolderPath(), amazonS3SignedUrlRequestDto.getFileType(),
-					EpCommonConstants.S3_SIGNED_URL_DURATION));
+					CommonConstants.S3_SIGNED_URL_DURATION));
 
 			return new ResponseEntityDto(false, responseDto);
 		}
 		catch (Exception e) {
 			log.error("Error generating signed URL: {}", e.getMessage(), e);
-			throw new ModuleException(EPCommonMessageConstant.EP_COMMON_ERROR_SIGNED_URL_GENERATION_FAILED,
+			throw new ModuleException(CommonMessageConstant.EP_COMMON_ERROR_SIGNED_URL_GENERATION_FAILED,
 					new String[] { e.getMessage() });
 		}
 	}
@@ -116,7 +116,7 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 	public String generateSignedUrl(AmazonS3ActionType amazonS3Action, String folderPath, String fileType,
 			int durationInMinutes) {
 		if (folderPath == null || folderPath.isEmpty()) {
-			throw new ModuleException(EPCommonMessageConstant.EP_COMMON_ERROR_INVALID_S3_FOLDER_PATH);
+			throw new ModuleException(CommonMessageConstant.EP_COMMON_ERROR_INVALID_S3_FOLDER_PATH);
 		}
 
 		String objectKey = bucketName + "/" + folderPath;
@@ -146,7 +146,7 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 		try {
 			String objectKey = amazonS3DeleteItemRequestDto.getFolderPath();
 			if (objectKey == null || objectKey.isEmpty()) {
-				throw new ModuleException(EPCommonMessageConstant.EP_COMMON_ERROR_INVALID_S3_FOLDER_PATH);
+				throw new ModuleException(CommonMessageConstant.EP_COMMON_ERROR_INVALID_S3_FOLDER_PATH);
 			}
 
 			DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
@@ -168,7 +168,7 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 		}
 		catch (Exception e) {
 			log.error("Error deleting file: {}", e.getMessage(), e);
-			throw new ModuleException(EPCommonMessageConstant.EP_COMMON_ERROR_SIGNED_URL_GENERATION_FAILED,
+			throw new ModuleException(CommonMessageConstant.EP_COMMON_ERROR_SIGNED_URL_GENERATION_FAILED,
 					new String[] { e.getMessage() });
 		}
 	}

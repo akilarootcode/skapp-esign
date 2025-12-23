@@ -17,6 +17,6 @@ public class EmailServerRequestDto {
 
 	private Integer portNumber;
 
-	private Boolean isEnabled = true;
+	private Boolean isEnabled;
 
 }

@@ -3,9 +3,9 @@ package com.skapp.community.esignature.service.impl;
 import com.skapp.community.common.model.Organization;
 import com.skapp.community.common.repository.OrganizationDao;
 import com.skapp.community.common.service.EmailService;
-import com.skapp.community.common.type.EpEmailBodyTemplates;
-import com.skapp.community.common.type.EpEmailButtonText;
-import com.skapp.community.common.type.EpEmailMainTemplates;
+import com.skapp.community.common.type.EmailBodyTemplates;
+import com.skapp.community.common.type.EmailButtonText;
+import com.skapp.community.common.type.EmailMainTemplates;
 import com.skapp.community.esignature.constant.EsignEmailTitleConstant;
 import com.skapp.community.esignature.mapper.EsignMapper;
 import com.skapp.community.esignature.model.Document;
@@ -68,8 +68,8 @@ public class EsignEmailServiceImpl implements EsignEmailService {
 				EsignEmailTitleConstant.ESIGN_ENVELOPE_COMPLETED_EMAIL_TITLE, documentAccessUrl,
 				envelope.getOwner().getName(), envelope.getOwner().getEmail());
 
-		emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
-				EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_COMPLETED_RECEIVER_EMAIL, recipientEmailFields,
+		emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
+				EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_COMPLETED_RECEIVER_EMAIL, recipientEmailFields,
 				mailRecipient.getAddressBook().getEmail());
 
 		log.info("sendEmailsToRecipient: execution ended");
@@ -87,14 +87,14 @@ public class EsignEmailServiceImpl implements EsignEmailService {
 				EsignEmailTitleConstant.ESIGN_ENVELOPE_COMPLETED_EMAIL_TITLE, null, envelope.getOwner().getName(),
 				envelope.getOwner().getEmail());
 
-		senderEmailFields.setButtonText(EpEmailButtonText.ESIGN_EMAIL_SENDER_BUTTON_TEXT.name());
+		senderEmailFields.setButtonText(EmailButtonText.ESIGN_EMAIL_SENDER_BUTTON_TEXT.name());
 		Optional<Organization> organization = organizationDao.findTopByOrderByOrganizationIdDesc();
 		organization.ifPresent(value -> {
 			senderEmailFields.setDocumentAccessUrl(getDocumentAccessUrlForSender(envelope));
 		});
 
-		emailService.sendEmail(EpEmailMainTemplates.ESIGN_SENDER_TEMPLATE_V1,
-				EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_COMPLETED_SENDER_EMAIL, senderEmailFields,
+		emailService.sendEmail(EmailMainTemplates.ESIGN_SENDER_TEMPLATE_V1,
+				EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_COMPLETED_SENDER_EMAIL, senderEmailFields,
 				envelope.getOwner().getInternalUser().getEmail());
 
 		log.info("sendEmailToSender: execution ended");
@@ -117,24 +117,24 @@ public class EsignEmailServiceImpl implements EsignEmailService {
 
 		if ((MemberRole.CC).toString().equalsIgnoreCase(memberRole)) {
 			epEsignEnvelopeRecipientEmailDynamicFields.setTitle(EsignEmailTitleConstant.ESIGN_ENVELOPE_CC_EMAIL_TITLE);
-			emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
-					EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_CC_EMAIL,
-					epEsignEnvelopeRecipientEmailDynamicFields, userEmail);
+			emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
+					EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_CC_EMAIL, epEsignEnvelopeRecipientEmailDynamicFields,
+					userEmail);
 
 		}
 		else {
 			if (recipient.getEnvelope().getStatus() == EnvelopeStatus.COMPLETED) {
 				epEsignEnvelopeRecipientEmailDynamicFields
 					.setTitle(EsignEmailTitleConstant.ESIGN_ENVELOPE_COMPLETED_EMAIL_TITLE);
-				emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
-						EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_COMPLETED_RECEIVER_EMAIL,
+				emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
+						EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_COMPLETED_RECEIVER_EMAIL,
 						epEsignEnvelopeRecipientEmailDynamicFields, userEmail);
 			}
 			else {
 				epEsignEnvelopeRecipientEmailDynamicFields
 					.setTitle(EsignEmailTitleConstant.ESIGN_ENVELOPE_RECIEVER_EMAIL_TITLE);
-				emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
-						EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_SIGNER_EMAIL,
+				emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
+						EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_SIGNER_EMAIL,
 						epEsignEnvelopeRecipientEmailDynamicFields, userEmail);
 			}
 		}
@@ -153,8 +153,8 @@ public class EsignEmailServiceImpl implements EsignEmailService {
 				recipient.getEnvelope().getOwner().getName(), recipient.getEnvelope().getOwner().getEmail());
 		emailFields.setTitle(EsignEmailTitleConstant.ESIGN_ENVELOPE_RECIEVER_EMAIL_TITLE);
 
-		emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
-				EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_EMAIL_REMINDER, emailFields,
+		emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
+				EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_EMAIL_REMINDER, emailFields,
 				recipient.getAddressBook().getEmail());
 
 		log.info("sendReminderEmail: Reminder email sent successfully to recipient with ID {}", recipient.getId());
@@ -218,8 +218,7 @@ public class EsignEmailServiceImpl implements EsignEmailService {
 
 	@Override
 	public String getDocumentAccessUrlForSender(Envelope envelope) {
-		return protocol + "://" + parentDomain + ENVELOP_LINK
-				+ envelope.getId();
+		return protocol + "://" + parentDomain + ENVELOP_LINK + envelope.getId();
 	}
 
 }

@@ -69,9 +69,10 @@ import static com.skapp.community.esignature.util.EnvelopeUuidGenerator.generate
 public class EnvelopeServiceImpl implements EnvelopeService {
 
 	private final UserDao userDao;
-    private final EmployeeRoleDao employeeRoleDao;
 
-    @Value("${aws.s3.bucket-name}")
+	private final EmployeeRoleDao employeeRoleDao;
+
+	@Value("${aws.s3.bucket-name}")
 	private String bucketName;
 
 	@Value("${aws.cloudfront.s3-default.domain-name}")
@@ -1212,8 +1213,8 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 		// Find the address book of the oldest active super admin in the tenant
 		List<AccountStatus> validStatuses = Arrays.asList(AccountStatus.PENDING, AccountStatus.ACTIVE);
-		List<EmployeeRole> superAdmins = employeeRoleDao
-			.findEmployeeRoleByIsSuperAdminAndEmployeeAccountStatusIn(true, validStatuses);
+		List<EmployeeRole> superAdmins = employeeRoleDao.findEmployeeRoleByIsSuperAdminAndEmployeeAccountStatusIn(true,
+				validStatuses);
 
 		// Sort by creation date (oldest first)
 		superAdmins.sort(Comparator.comparing(role -> role.getEmployee().getCreatedDate()));
@@ -1345,4 +1346,5 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 		}
 
 	}
+
 }

@@ -27,4 +27,24 @@ public class CommonConstants {
 
 	public static final String NOTIFICATION_MESSAGE = "message";
 
+	public static final String APPLICATION_NAME = "Skapp";
+
+	public static final String VIA = " via ";
+
+	public static final String ESIGNATURE = "esignature";
+
+	public static final String MODULE = "module";
+
+	public static final String SENDER = "sender";
+
+	public static final String NAME = "name";
+
+	public static final int SENDGRID_EMAIL_SCHEDULE_MAX_HOURS = 72;
+
+	public static final int HOURS_A_DAY = 24;
+
+	public static final String SENDGRID_CANCEL_SCHEDULED_MAIL = "cancel";
+
+	public static final int S3_SIGNED_URL_DURATION = 15;
+
 }

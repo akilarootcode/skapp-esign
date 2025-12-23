@@ -7,6 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum EmailButtonText {
 
-	COMMON_EMAIL_BUTTON_TEXT
+	COMMON_EMAIL_BUTTON_TEXT, ESIGN_EMAIL_BUTTON_TEXT, ESIGN_EMAIL_SENDER_BUTTON_TEXT
 
 }

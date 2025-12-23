@@ -1,7 +1,7 @@
 package com.skapp.community.common.service.impl;
 
+import com.skapp.community.common.constant.CommonMessageConstant;
 import com.skapp.community.common.exception.ValidationException;
-import com.skapp.community.common.constant.EPCommonMessageConstant;
 import com.skapp.community.common.payload.request.AmazonS3SignedUrlValidatedRequestDto;
 import com.skapp.community.common.service.AmazonS3FileValidationService;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +25,11 @@ public class AmazonS3FileValidationServiceImpl implements AmazonS3FileValidation
 		Long fileSize = amazonS3SignedUrlValidatedRequestDto.getFileSize();
 
 		if (!CUSTOMER_DOCUMENT_ALLOWED_FILE_TYPE.equalsIgnoreCase(trimmedFileType)) {
-			throw new ValidationException(EPCommonMessageConstant.EP_COMMON_ERROR_INVALID_FILE_TYPE);
+			throw new ValidationException(CommonMessageConstant.EP_COMMON_ERROR_INVALID_FILE_TYPE);
 		}
 
 		if (fileSize > CUSTOMER_DOCUMENT_MAX_SIZE_BYTES) {
-			throw new ValidationException(EPCommonMessageConstant.EP_COMMON_ERROR_FILE_SIZE_EXCEEDED);
+			throw new ValidationException(CommonMessageConstant.EP_COMMON_ERROR_FILE_SIZE_EXCEEDED);
 		}
 	}
 

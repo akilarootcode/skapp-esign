@@ -4,10 +4,9 @@ import com.skapp.community.common.model.Organization;
 import com.skapp.community.common.payload.email.EmailTemplateMetadata;
 import com.skapp.community.common.repository.OrganizationDao;
 import com.skapp.community.common.service.AsyncEmailSender;
+import com.skapp.community.common.type.EmailBodyTemplates;
 import com.skapp.community.common.type.EmailTemplates;
-import com.skapp.community.common.service.EpAsyncEmailSender;
 import com.skapp.community.common.service.EpEmailService;
-import com.skapp.community.common.type.EpEmailBodyTemplates;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -23,13 +22,12 @@ public class EpEmailServiceImpl extends EmailServiceImpl implements EpEmailServi
 
 	private final OrganizationDao organizationDao;
 
-	private final EpAsyncEmailSender epAsyncEmailSender;
+	private final AsyncEmailSender asyncEmailSender;
 
-	public EpEmailServiceImpl(AsyncEmailSender asyncEmailSender, OrganizationDao organizationDao,
-                              EpAsyncEmailSender epAsyncEmailSender) {
+	public EpEmailServiceImpl(AsyncEmailSender asyncEmailSender, OrganizationDao organizationDao) {
 		super(asyncEmailSender);
 		this.organizationDao = organizationDao;
-		this.epAsyncEmailSender = epAsyncEmailSender;
+		this.asyncEmailSender = asyncEmailSender;
 	}
 
 	@Override
@@ -79,15 +77,15 @@ public class EpEmailServiceImpl extends EmailServiceImpl implements EpEmailServi
 			EmailTemplateMetadata templateDetails, String module) {
 		super.setTemplatePlaceholderData(emailTemplate, placeholders, templateDetails, module);
 		placeholders.put("module", module);
-		if (emailTemplate != EpEmailBodyTemplates.COMMON_MODULE_EMAIL_VERIFY
-				&& emailTemplate != EpEmailBodyTemplates.COMMON_MODULE_GOOGLE_SSO_CREATION_TENANT_URL
-				&& emailTemplate != EpEmailBodyTemplates.COMMON_MODULE_MICROSOFT_SSO_CREATION_TENANT_URL
-				&& emailTemplate != EpEmailBodyTemplates.COMMON_MODULE_CREDENTIAL_BASED_CREATION_TENANT_URL
-				&& emailTemplate != EpEmailBodyTemplates.DASHBOARD_MODULE_NEW_ORGANIZATION_CREATED
-				&& emailTemplate != EpEmailBodyTemplates.DASHBOARD_MODULE_NEW_ORGANIZATION_STARTED_CORE_FREE_TRIAL
-				&& emailTemplate != EpEmailBodyTemplates.DASHBOARD_MODULE_TRIAL_ORGANIZATION_CONVERTED_TO_CORE
-				&& emailTemplate != EpEmailBodyTemplates.DASHBOARD_MODULE_ORGANIZATION_CANCELLED_CORE
-				&& emailTemplate != EpEmailBodyTemplates.GUEST_MODULE_INVITATION) {
+		if (emailTemplate != EmailBodyTemplates.COMMON_MODULE_EMAIL_VERIFY
+				&& emailTemplate != EmailBodyTemplates.COMMON_MODULE_GOOGLE_SSO_CREATION_TENANT_URL
+				&& emailTemplate != EmailBodyTemplates.COMMON_MODULE_MICROSOFT_SSO_CREATION_TENANT_URL
+				&& emailTemplate != EmailBodyTemplates.COMMON_MODULE_CREDENTIAL_BASED_CREATION_TENANT_URL
+				&& emailTemplate != EmailBodyTemplates.DASHBOARD_MODULE_NEW_ORGANIZATION_CREATED
+				&& emailTemplate != EmailBodyTemplates.DASHBOARD_MODULE_NEW_ORGANIZATION_STARTED_CORE_FREE_TRIAL
+				&& emailTemplate != EmailBodyTemplates.DASHBOARD_MODULE_TRIAL_ORGANIZATION_CONVERTED_TO_CORE
+				&& emailTemplate != EmailBodyTemplates.DASHBOARD_MODULE_ORGANIZATION_CANCELLED_CORE
+				&& emailTemplate != EmailBodyTemplates.GUEST_MODULE_INVITATION) {
 			Optional<Organization> organization = organizationDao.findTopByOrderByOrganizationIdDesc();
 			organization.ifPresent(value -> {
 				placeholders.put("appUrl", value.getAppUrl());
@@ -95,7 +93,7 @@ public class EpEmailServiceImpl extends EmailServiceImpl implements EpEmailServi
 			});
 		}
 
-		if (emailTemplate == EpEmailBodyTemplates.GUEST_MODULE_INVITATION) {
+		if (emailTemplate == EmailBodyTemplates.GUEST_MODULE_INVITATION) {
 			Optional<Organization> organization = organizationDao.findTopByOrderByOrganizationIdDesc();
 			organization.ifPresent(value -> placeholders.put("organizationName", value.getOrganizationName()));
 		}
@@ -103,77 +101,12 @@ public class EpEmailServiceImpl extends EmailServiceImpl implements EpEmailServi
 
 	@Override
 	public String obtainSendGridBatchId() {
-		return epAsyncEmailSender.getSendGridEmailBatchId();
+		return asyncEmailSender.getSendGridEmailBatchId();
 	}
 
 	@Override
 	public void cancelScheduledEmail(String batchId, String status) {
-		epAsyncEmailSender.cancelScheduledEmails(batchId, status);
-	}
-
-	@Override
-	public void sendEmailWithAttachment(EmailTemplates emailMainTemplate, EmailTemplates emailTemplate,
-			Object dynamicFieldObject, String recipient, byte[] attachmentData, String attachmentName,
-			String attachmentContentType, List<String> ccEmails) {
-
-		processEmailDetailsWithAttachment(emailMainTemplate, emailTemplate, dynamicFieldObject, recipient,
-				attachmentData, attachmentName, attachmentContentType, ccEmails);
-	}
-
-	private void processEmailDetailsWithAttachment(EmailTemplates emailMainTemplate, EmailTemplates emailTemplate,
-			Object dynamicFieldObject, String recipient, byte[] attachmentData, String attachmentName,
-			String attachmentContentType, List<String> ccEmails) {
-
-		try {
-			if (emailTemplate == null || recipient == null) {
-				log.error("Email template or recipient is null");
-				return;
-			}
-
-			EmailTemplateMetadata templateDetails = getTemplateDetails(emailTemplate.getTemplateId());
-			if (templateDetails == null) {
-				log.error("Template not found for ID: {}", emailTemplate.getTemplateId());
-				return;
-			}
-
-			String module = findModuleForTemplate(emailTemplate.getTemplateId());
-			if (module == null) {
-				log.error("Module not found for template ID: {}", emailTemplate.getTemplateId());
-				return;
-			}
-
-			if (attachmentData == null) {
-				throw new IllegalArgumentException("attachmentData must not be null");
-			}
-			if (attachmentName == null) {
-				throw new IllegalArgumentException("attachmentName must not be null");
-			}
-			if (attachmentContentType == null) {
-				throw new IllegalArgumentException("attachmentContentType must not be null");
-			}
-
-			Map<String, String> placeholders = convertDtoToMap(dynamicFieldObject);
-			placeholders.replaceAll(this::getLocalizedEnumValue);
-
-			setTemplatePlaceholderData(emailTemplate, placeholders, templateDetails, module);
-
-			String emailBody = buildEmailBody(templateDetails, module, placeholders, emailMainTemplate);
-
-			String subject = templateDetails.getSubject();
-
-			java.lang.reflect.Method getSubjectMethod = dynamicFieldObject.getClass().getMethod("getSubject");
-			Object subjectValue = getSubjectMethod.invoke(dynamicFieldObject);
-			if (subjectValue instanceof String && !((String) subjectValue).isEmpty()) {
-				subject = (String) subjectValue;
-			}
-
-			epAsyncEmailSender.sendMailWithAttachment(recipient, subject, emailBody, placeholders, attachmentData,
-					attachmentName, attachmentContentType, ccEmails);
-
-		}
-		catch (Exception e) {
-			log.error("Unexpected error in email sending process: {}", e.getMessage(), e);
-		}
+		asyncEmailSender.cancelScheduledEmails(batchId, status);
 	}
 
 }
