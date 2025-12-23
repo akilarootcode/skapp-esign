@@ -1,5 +1,6 @@
 package com.skapp.community.esignature.service.impl;
 
+import com.skapp.community.common.constant.CommonConstants;
 import com.skapp.community.common.constant.CommonMessageConstant;
 import com.skapp.community.common.exception.EntityNotFoundException;
 import com.skapp.community.common.exception.ModuleException;
@@ -7,11 +8,10 @@ import com.skapp.community.common.model.User;
 import com.skapp.community.common.payload.response.ResponseEntityDto;
 import com.skapp.community.common.service.EmailService;
 import com.skapp.community.common.service.UserService;
-import com.skapp.community.common.constant.EpCommonConstants;
 import com.skapp.community.common.service.EpEmailService;
-import com.skapp.community.common.type.EpEmailBodyTemplates;
-import com.skapp.community.common.type.EpEmailButtonText;
-import com.skapp.community.common.type.EpEmailMainTemplates;
+import com.skapp.community.common.type.EmailBodyTemplates;
+import com.skapp.community.common.type.EmailButtonText;
+import com.skapp.community.common.type.EmailMainTemplates;
 import com.skapp.community.esignature.constant.EsignEmailTitleConstant;
 import com.skapp.community.esignature.constant.EsignMessageConstant;
 import com.skapp.community.esignature.mapper.EsignMapper;
@@ -279,17 +279,17 @@ public class RecipientServiceImpl implements RecipientService {
 		if ((MemberRole.CC).toString().equalsIgnoreCase(memberRole)) {
 			// Handle CC recipient email
 			epEsignEnvelopeRecipientEmailDynamicFields.setTitle(EsignEmailTitleConstant.ESIGN_ENVELOPE_CC_EMAIL_TITLE);
-			emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
-					EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_CC_EMAIL,
-					epEsignEnvelopeRecipientEmailDynamicFields, userEmail);
+			emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
+					EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_CC_EMAIL, epEsignEnvelopeRecipientEmailDynamicFields,
+					userEmail);
 
 			recipientUpdateDto = initializerecipientDtoData(null, null, null, EmailStatus.SENT);
 		}
 		else {
 			epEsignEnvelopeRecipientEmailDynamicFields
 				.setTitle(EsignEmailTitleConstant.ESIGN_ENVELOPE_RECIEVER_EMAIL_TITLE);
-			emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
-					EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_SIGNER_EMAIL,
+			emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
+					EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_SIGNER_EMAIL,
 					epEsignEnvelopeRecipientEmailDynamicFields, userEmail);
 
 			if (epEsignEmailDataDto.getReminderDays() != null) {
@@ -309,9 +309,9 @@ public class RecipientServiceImpl implements RecipientService {
 	private void handleReminderScheduling(EpEsignEnvelopeRecipientEmailDynamicFields emailFields,
 			EpEsignEmailEnvelopeDataDto emailDataDto, String userEmail, RecipientUpdateDto recipientUpdateDto) {
 		// Calculate Unix timestamp for scheduling
-		Long initialUnixTimestamp = Instant.now().getEpochSecond();
+		long initialUnixTimestamp = Instant.now().getEpochSecond();
 
-		int emailCount = EpCommonConstants.SENDGRID_EMAIL_SCHEDULE_MAX_HOURS / EpCommonConstants.HOURS_A_DAY;
+		int emailCount = CommonConstants.SENDGRID_EMAIL_SCHEDULE_MAX_HOURS / CommonConstants.HOURS_A_DAY;
 		int scheduledEmailCount = 1;
 
 		// Obtain SendGrid batch ID for tracking scheduled emails
@@ -330,8 +330,8 @@ public class RecipientServiceImpl implements RecipientService {
 			emailFields.setSendAt(sendAt);
 
 			// Send scheduled reminder email
-			emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
-					EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_SIGNER_EMAIL, emailFields, userEmail);
+			emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_V1,
+					EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_SIGNER_EMAIL, emailFields, userEmail);
 
 			scheduledEmailCount++;
 		}
@@ -404,7 +404,7 @@ public class RecipientServiceImpl implements RecipientService {
 
 			if (recipient.getReminderBatchId() != null && MemberRole.SIGNER == recipient.getMemberRole()) {
 				epEmailService.cancelScheduledEmail(recipient.getReminderBatchId(),
-						EpCommonConstants.SENDGRID_CANCEL_SCHEDULED_MAIL);
+						CommonConstants.SENDGRID_CANCEL_SCHEDULED_MAIL);
 
 				RecipientUpdateDto recipientUpdateDto = initializerecipientDtoData(null, null,
 						EmailReminderStatus.CANCELLED, null);
@@ -493,7 +493,7 @@ public class RecipientServiceImpl implements RecipientService {
 						envelope.getOwner().getName(), envelopeId, envelope.getSubject(), envelope.getMessage(),
 						documentName, voidOrDeclinedReason, declinedBy, title, null, senderName, senderEmail);
 				epEsignEnvelopeRecipientEmailDynamicFields
-					.setButtonText(EpEmailButtonText.ESIGN_EMAIL_SENDER_BUTTON_TEXT.name());
+					.setButtonText(EmailButtonText.ESIGN_EMAIL_SENDER_BUTTON_TEXT.name());
 
 				epEsignEnvelopeRecipientEmailDynamicFields
 					.setDocumentAccessUrl(esignEmailService.getDocumentAccessUrlForSender(envelope));
@@ -643,14 +643,14 @@ public class RecipientServiceImpl implements RecipientService {
 			if (MemberRole.SIGNER == memberRole || MemberRole.CC == memberRole) {
 				switch (envelopeStatus) {
 					case EnvelopeStatus.VOIDED:
-						emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_NO_BUTTON_V1,
-								EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_VOIDED_RECIEVER_EMAIL,
+						emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_NO_BUTTON_V1,
+								EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_VOIDED_RECIEVER_EMAIL,
 								epEsignEnvelopeRecipientEmailDynamicFields, userEmail);
 						break;
 
 					case EnvelopeStatus.DECLINED:
-						emailService.sendEmail(EpEmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_NO_BUTTON_V1,
-								EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_DECLINED_RECIEVER_EMAIL,
+						emailService.sendEmail(EmailMainTemplates.ESIGN_RECEIVER_TEMPLATE_NO_BUTTON_V1,
+								EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_DECLINED_RECIEVER_EMAIL,
 								epEsignEnvelopeRecipientEmailDynamicFields, userEmail);
 						break;
 				}
@@ -659,14 +659,14 @@ public class RecipientServiceImpl implements RecipientService {
 				// Send email to the Sender
 				switch (envelopeStatus) {
 					case EnvelopeStatus.VOIDED:
-						emailService.sendEmail(EpEmailMainTemplates.ESIGN_SENDER_TEMPLATE_V1,
-								EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_VOIDED_SENDER_EMAIL,
+						emailService.sendEmail(EmailMainTemplates.ESIGN_SENDER_TEMPLATE_V1,
+								EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_VOIDED_SENDER_EMAIL,
 								epEsignEnvelopeRecipientEmailDynamicFields, userEmail);
 						break;
 
 					case EnvelopeStatus.DECLINED:
-						emailService.sendEmail(EpEmailMainTemplates.ESIGN_SENDER_TEMPLATE_V1,
-								EpEmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_DECLINED_SENDER_EMAIL,
+						emailService.sendEmail(EmailMainTemplates.ESIGN_SENDER_TEMPLATE_V1,
+								EmailBodyTemplates.ESIGNATURE_MODULE_ENVELOPE_DECLINED_SENDER_EMAIL,
 								epEsignEnvelopeRecipientEmailDynamicFields, userEmail);
 						break;
 				}

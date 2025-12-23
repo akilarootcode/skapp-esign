@@ -4,7 +4,6 @@ import com.skapp.community.common.constant.AuthConstants;
 import com.skapp.community.common.constant.CommonMessageConstant;
 import com.skapp.community.common.exception.AuthenticationException;
 import com.skapp.community.common.exception.ModuleException;
-import com.skapp.community.common.constant.EpAuthConstants;
 import com.skapp.community.esignature.constant.EsignMessageConstant;
 import com.skapp.community.esignature.model.ExternalUser;
 import com.skapp.community.esignature.service.ExternalDocumentJwtService;
@@ -108,7 +107,8 @@ public class DocumentLinkAuthFilter extends OncePerRequestFilter {
 			if (!TokenType.DOCUMENT_ACCESS.toString().equals(tokenType)) {
 				throw new AuthenticationException(CommonMessageConstant.COMMON_ERROR_UNAUTHORIZED_ACCESS);
 			}
-			log.warn("DocumentLinkAuthFilter: URI: " + request.getRequestURI() + "Tenant id: " + "Time: " + System.currentTimeMillis());
+			log.warn("DocumentLinkAuthFilter: URI: " + request.getRequestURI() + "Tenant id: " + "Time: "
+					+ System.currentTimeMillis());
 
 			boolean isDocumentAccessCheck = request.getRequestURI().equals(DOCUMENT_LINK_ACCESS_URL);
 			boolean isAccessDenied = isDocumentAccessCheck && !jwtService.isDocumentAccessAllowed(token);
@@ -120,8 +120,6 @@ public class DocumentLinkAuthFilter extends OncePerRequestFilter {
 
 			String userEmail = jwtService.extractUserEmail(token);
 			Long userId = jwtService.extractUserId(token);
-			String tenantId = jwtService.extractClaim(token,
-					claims -> claims.get(EpAuthConstants.TENANT_ID, String.class));
 			Long documentId = jwtService.extractClaim(token, claims -> claims.get(DOCUMENT_ID_PARAM, Long.class));
 			Long recipientId = jwtService.extractClaim(token, claims -> claims.get(RECIPIENT_ID_PARAM, Long.class));
 
