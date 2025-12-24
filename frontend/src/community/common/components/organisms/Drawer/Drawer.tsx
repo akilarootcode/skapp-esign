@@ -44,7 +44,7 @@ import getDrawerRoutes from "~community/common/utils/getDrawerRoutes";
 import { shouldActivateLink } from "~community/common/utils/keyboardUtils";
 import { MyRequestModalEnums } from "~community/leave/enums/MyRequestEnums";
 import { useLeaveStore } from "~community/leave/store/store";
-import { useGetOrganizationCalendarStatus } from "~enterprise/common/api/CalendarApi";
+// import { useGetOrganizationCalendarStatus } from "~enterprise/common/api/CalendarApi";
 import Badge from "~enterprise/common/components/atoms/Badge/Badge";
 import SubmitRequestModalController from "~enterprise/common/components/organisms/SubmitRequestModalController/SubmitRequestModalController";
 import { SubmitRequestModalEnums } from "~enterprise/common/enums/Common";
@@ -100,12 +100,10 @@ const Drawer = (): JSX.Element => {
     setOrgData: state.setOrgData
   }));
 
-  const { globalLoginMethod } = useCommonEnterpriseStore((state) => ({
-    globalLoginMethod: state.globalLoginMethod
-  }));
+  const { globalLoginMethod } = useCommonEnterpriseStore();
 
-  const { data: organizationCalendarStatusData } =
-    useGetOrganizationCalendarStatus();
+  // const { data: organizationCalendarStatusData } =
+  //   useGetOrganizationCalendarStatus();
 
   const { setMyLeaveRequestModalType } = useLeaveStore((state) => ({
     setMyLeaveRequestModalType: state.setMyLeaveRequestModalType
@@ -123,17 +121,10 @@ const Drawer = (): JSX.Element => {
         isEnterprise,
         globalLoginMethod,
         tenantID: sessionData?.user?.tenantId,
-        organizationCalendarGoogleStatus:
-          organizationCalendarStatusData?.isGoogleCalendarEnabled ?? false,
-        organizationCalendarMicrosoftStatus:
-          organizationCalendarStatusData?.isMicrosoftCalendarEnabled ?? false
+        organizationCalendarGoogleStatus: false,
+        organizationCalendarMicrosoftStatus: false
       }),
-    [
-      sessionData,
-      isEnterprise,
-      globalLoginMethod,
-      organizationCalendarStatusData
-    ]
+    [sessionData, isEnterprise, globalLoginMethod]
   );
 
   const updatedTheme = themeSelector(

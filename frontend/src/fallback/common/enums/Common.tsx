@@ -22,3 +22,9 @@ export enum TenantStatusEnums {
   TRIAL_ENDED_USER_LIMIT_EXCEEDED = "",
   SUBSCRIPTION_CANCELED_USER_LIMIT_EXCEEDED = ""
 }
+
+export enum SubmitRequestModalEnums {
+  SUBMIT_REQUEST = "",
+  ADD_ATTACHMENT = "",
+  NONE = ""
+}

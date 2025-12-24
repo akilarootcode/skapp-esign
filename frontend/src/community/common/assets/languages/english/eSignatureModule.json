@@ -1,0 +1,632 @@
+{
+  "inbox": {
+    "pageHead": "Documents | Skapp",
+    "title": "Inbox",
+    "createDoc": "Create document",
+    "createSign": "Create your signature",
+    "mySignature": "My signature",
+    "signImgAltText": "Your signature",
+    "sentBy": "Sent by",
+    "emailMessage": "Message",
+    "view": "View",
+    "add": "Add",
+    "left": "left",
+    "kpiTitles": {
+      "needToSign": "Need to sign"
+    },
+    "cookies": {
+      "errorSignatureTitle": "Oops! Something went wrong.",
+      "errorSignatureDesc": "Failed to load the signature, please try again."
+    },
+    "tableHeaders": {
+      "documentName": "Name",
+      "recipients": "Recipients",
+      "recievedDate": "Recieved on",
+      "expireDate": "Expires on",
+      "status": "Status",
+      "sender": "Sender",
+      "position": "Position"
+    },
+    "buttonText": {
+      "sign": "Sign"
+    },
+    "emptyTable": {
+      "title": "No documents to be displayed",
+      "description": "Your Inbox is empty. Once you receive documents, they will be displayed here."
+    },
+    "rowsPerPage": "Results per page",
+    "searchPlaceholder": "Search documents",
+    "documentStatus": {
+      "needToSign": "Need to sign",
+      "waitingForOthers": "Waiting",
+      "completed": "Completed",
+      "declined": "Declined",
+      "voided": "Void",
+      "expired": "Expired"
+    },
+    "dateSort": {
+      "receivedClose": "Received date : newest to oldest",
+      "receivedFar": "Received date : oldest to newest"
+    },
+    "statusFilter": {
+      "statusHeader": "Document Status",
+      "resetFilters": "Reset filters",
+      "applyFilters": "Apply filters"
+    },
+    "signatureModal": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "title": "Add signature",
+      "successTitle": "Signature saved",
+      "successMessage": "Your signature was saved successfully.",
+      "errorTitle": "Oops! Something went wrong",
+      "errorMessage": "Your signature has not been saved, please try again"
+    }
+  },
+  "sent": {
+    "pageHead": "Documents | Skapp",
+    "title": "Sent",
+    "createDoc": "Create document",
+    "sentBy": "Sent by",
+    "envelopeCount": "envelopes remaining",
+
+    "tableHeaders": {
+      "documentName": "Name",
+      "recipients": "Recipients",
+      "createdDate": "Created on",
+      "expireDate": "Expires on",
+      "status": "Status"
+    },
+    "dateSort": {
+      "createdClose": "Created date : newest to oldest",
+      "createdFar": "Created date : oldest to newest"
+    },
+    "documentStatus": {
+      "needToSign": "Need to sign",
+      "waitingForOthers": "Waiting",
+      "completed": "Completed",
+      "declined": "Declined",
+      "voided": "Void",
+      "expired": "Expired"
+    },
+    "kpiTitles": {
+      "waiting": "Waiting",
+      "completed": "Completed"
+    },
+    "searchPlaceholder": "Search documents",
+    "emptyTable": {
+      "title": "No documents",
+      "description": "No documents have been created yet. Once you create documents, they will be displayed here.",
+      "createButton": "Create document"
+    },
+    "rowsPerPage": "Results per page",
+    "left": "left"
+  },
+  "page": {
+    "button": {
+      "saveCopyBtn": "Save a copy",
+      "sendLinkBtn": "Send New link",
+      "backToHomeBtn": "Back to home"
+    },
+    "signAnotherDocument": "Sign another document?",
+    "skipButton": "Skip this document",
+    "signNextCard": {
+      "signButton": "Sign",
+      "sentBy": "Sent by",
+      "sentOn": "Sent on"
+    },
+    "signFailed": {
+      "title": "Oops! Something went wrong",
+      "description": "Failed to load the document, please try again"
+    },
+    "allDone": {
+      "title": "You are all done!",
+      "description": "The sender will be notified and you will receive a copy once everyone completes signing."
+    },
+    "completedDocument": {
+      "title": "You've completed the document",
+      "description": "The document has been signed successfully by your end and the sender will be notified."
+    },
+    "declinedDocument": {
+      "title": "You've declined to sign",
+      "description": "You declined signing the agreement and the sender will be notified. If you have any questions, please contact the sender."
+    },
+    "documentNotFound": {
+      "title": "Document doesn't exist",
+      "description": "This document is no longer available. Please contact the sender if you need further assistance."
+    },
+    "expiredLink": {
+      "title": "Link expired",
+      "description": "The link has expired to keep your document safe. Request for a new link by clicking the 'Send new link' button to receive a new link."
+    },
+    "sessionExpired": {
+      "title": "Your session has expired",
+      "description": "For security reasons, your session has expired. Please access your session again clicking the button in the email."
+    },
+    "updatedLink": {
+      "title": "Updated Link is on the way",
+      "description": "We've sent you a new link. Please check your inbox and use the updated link to continue."
+    },
+    "documentNotFoundLink": {
+      "title": "Something went wrong",
+      "description": "Failed to load document. Please try again later or contact the sender for assistance."
+    },
+    "subHeading": "Learn more on ",
+    "subHeadingLink": "skapp.com",
+    "signatureImageAlt": "Signature Image"
+  },
+  "configurations": {
+    "pageHead": "Sign Configurations | Skapp",
+    "title": "Sign Configurations",
+    "dateFormat": {
+      "title": "Date format",
+      "description": "Define the standard date format, which will automatically reflect in documents"
+    },
+    "expirations": {
+      "title": "Expirations",
+      "defaultExpDescription": "Specify the number of days until the documents expires by default",
+      "warnDescription": "Specify the number of days before expiration to warn signer"
+    },
+    "validationMessages": {
+      "expDuration": "Please enter a value between 1-999",
+      "expReminder": " Please enter a valid value",
+      "required": "This field is required"
+    },
+    "toastContent": {
+      "success": "Configuration Updated",
+      "successMessage": "Sign Configuration updated successfully",
+      "error": "Oops! Something went wrong",
+      "errorMessage": "Failed to save changes. Please try again"
+    },
+    "buttons": {
+      "save": "Save changes",
+      "cancel": "Cancel"
+    }
+  },
+  "create": {
+    "pageHead": "Documents | Skapp",
+    "title": "Create Document",
+    "createDoc": "Create document",
+    "of": "of",
+    "next": "Next",
+    "back": "Back",
+    "send": "Send",
+    "noAttachmentCustomError": "Please upload a document.",
+    "noRecipientError": "Please include at least one recipient.",
+    "emptyFieldError": "Please enter a recipient email",
+    "createSuccessToastTitle": "Document Sent",
+    "createSuccessToastDesc": "The document has been sent successfully.",
+    "createFailToastTitle": "Oops! Something went wrong. Please try again.",
+    "createFailToastDesc": "Failed to create the document.",
+    "emailSubjectRequired": "Please enter the email subject",
+    "emailSubjectLimitError": "The title can only have {{limit}} characters, please update the title.",
+    "showLess": "Show less",
+    "showMore": "Show more",
+    "stepper": {
+      "recipientDetails": "Recipient",
+      "defineFields": "Fields",
+      "summary": "Summary"
+    },
+    "emailPreFillInitialText": "Complete via Skapp - ",
+    "recipientDetails": {
+      "uploadDoc": {
+        "uploadTitle": "Upload document",
+        "replaceTitle": "Replace document",
+        "head": "Documents | Skapp",
+        "upload": "Upload",
+        "cancel": "Cancel",
+        "loadingPdf": "Loading PDF...",
+        "errorLoadingPdf": "Failed to load PDF file.",
+        "modalAriaLabel": "file-preview-modal-title",
+        "modalAriaDescription": "file-preview-modal-description",
+        "kebabMenuOptions": {
+          "view": "View",
+          "replace": "Replace",
+          "delete": "Delete",
+          "rename": "Rename"
+        },
+        "errors": {
+          "fileTypeNotSupported": {
+            "title": "File type not supported",
+            "description": "The uploaded file type is not supported. Please try again.",
+            "validationMessage": "Invalid file type. Please upload a .pdf file"
+          },
+          "fileTooLarge": {
+            "title": "Allowed file size exceeded",
+            "description": "The file size should be less than 25 MB. Please try again.",
+            "validationMessage": "Max file size exceeded. Please upload a file less than 25 MB"
+          },
+          "uploadFailed": {
+            "title": "Oops! Something went wrong",
+            "description": "Failed to upload the document. Please try again."
+          }
+        }
+      },
+      "recipientDetails": {
+        "title": "Recipient details",
+        "head": "Documents | Skapp",
+        "addRecipientButton": "Add recipient",
+        "searchPlaceholder": "Enter recipient email",
+        "subTitle": "Add recipients that should receive the document by entering their email.",
+        "setSigningOrder": "Set signing order",
+        "recipients": "Recipients",
+        "signingOrder": "Signing order",
+        "bulkSend": "Bulk send",
+        "duplicateEmailError": "This recipient is duplicated, please add a different recipient.",
+        "disabledTooltip": "You can only add up to 50 recipients per one document",
+        "newRecipientModal": {
+          "name": "Name",
+          "email": "Email",
+          "contactNo": "Contact no",
+          "namePlaceholder": "Enter name",
+          "emailPlaceholder": "Enter recipient email",
+          "contactNoPlaceholder": "Enter contact number",
+          "requireNameError": "Please enter recipient's name.",
+          "validNameError": "Only Letters are Allowed",
+          "validContactNumberError": "Please enter a valid contact number",
+          "requireEmailError": "Please enter recipient's email.",
+          "validEmailError": "Please enter a valid email",
+          "savesChanges": "Save changes",
+          "save": "Save",
+          "cancel": "Cancel",
+          "delete": "Delete"
+        },
+        "newExternalRecipient": "New External Recipient",
+        "recipientNotInContacts": "This recipient is not in contacts"
+      },
+      "roles": {
+        "signer": "Signer",
+        "cc": "CC"
+      }
+    },
+    "defineField": {
+      "unAssignUserFieldError": "Define fields",
+      "unAssignUserFieldErrorDescription": "Please assign fields for {{recipientNames}}",
+      "fields": {
+        "signature": "Signature",
+        "initial": "Initials",
+        "date": "Date",
+        "dateSigned": "Date Signed",
+        "approve": "Approve",
+        "decline": "Decline",
+        "stamp": "Stamp",
+        "name": "Name",
+        "email": "Email",
+        "recipients": "Recipient",
+        "fields": "Fields",
+        "fillableFields": "Fillable fields",
+        "autoFilledFields": "Auto filled fields",
+        "buttonLabel": "Reminders & expirations",
+        "nextBtnLabel": "Next",
+        "backBtnLabel": "Back"
+      }
+    },
+    "reminders": {
+      "title": "Reminders & Expirations",
+      "reminderFrequency": {
+        "label": "Reminder Frequency (Days)",
+        "placeholder": "Select frequency",
+        "tooltip": "Set a reminder frequency to send reminders to signers.",
+        "oneDay": "1 Day",
+        "twoDays": "2 Days",
+        "threeDays": "3 Days",
+        "fourDays": "4 Days",
+        "fiveDays": "5 Days"
+      },
+      "expirationDate": {
+        "label": "Expiration Date",
+        "placeholder": "Select expiration date",
+        "tooltip": "Set a custom expiration date for the document."
+      },
+      "buttons": {
+        "save": "Save",
+        "cancel": "Cancel"
+      }
+    },
+    "summary": {
+      "documentSummary": "Document Summary",
+      "emailSubject": "Email subject",
+      "emailMessage": "Email message",
+      "addEmailSubject": "Add email subject",
+      "addMessage": "Add message",
+      "signingOrder": "Signing order",
+      "recipients": "Recipients",
+      "signer": "Signer",
+      "cc": "CC",
+      "remindersAndExpirations": "Reminders & expirations",
+      "expirationDate": "Expiration date",
+      "send": "Send",
+      "back": "Back",
+      "reminderDays": "Reminder frequency",
+      "addReminderDays": "Add reminder frequency",
+      "externalConfirmation": {
+        "title": "Are you sure?",
+        "infoSubtitle": "The document recipients contain external users.",
+        "description": "Do you wish to confirm & send the document to all the internal & external recipients?",
+        "confirmBtn": "Confirm & send",
+        "cancelBtn": "Cancel"
+      },
+      "internalConfirmation": {
+        "title": "Are you sure?",
+        "description": "You are about to send your document to the recipients. Do you wish to confirm & send the document or cancel?",
+        "confirmBtn": "Confirm & send",
+        "cancelBtn": "Cancel"
+      },
+      "emailMessageLimitError": "Messages can’t be longer than {{limit}} characters."
+    }
+  },
+  "modals": {
+    "deleteDocumentTitle": "Confirm deletion",
+    "previewTitle": "Upload document",
+    "deleteDocumentDesc": "Are you sure you want to delete this uploaded document? You will not be able to revoke this decision.",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "addExternalUser": "Add new recipient",
+    "unsavedChangesModalTitle": "Are you sure?",
+    "voidEnvelopeModal": {
+      "title": "Are you sure?",
+      "description": {
+        "part1": "You are about to ",
+        "part2": "void",
+        "part3": " this document. This action cannot be revoked. Do you wish to void anyway?"
+      },
+      "inputLabel": "Please provide a reason:",
+      "confirmBtn": "Void",
+      "cancelBtn": "Cancel",
+      "successTitle": "Document voided",
+      "inputPlaceholder": "Add message",
+      "successMessage": "The document has been voided successfully",
+      "errorTitle": "Oops! Something went wrong",
+      "errorMessage": "Failed to void the document. Please try again",
+      "requiredError": "Please enter the void reason",
+      "characterLimitExceeded": "Character limit of 255 has been exceeded"
+    },
+    "transferOwnership": {
+      "title": "Transfer ownership",
+      "selectNewOwner": "New owner",
+      "searchPlaceholder": "Search people",
+      "noUsersFound": "No users found",
+      "confirmBtn": "Confirm",
+      "cancelBtn": "Cancel",
+      "roles": {
+        "superAdmin": "Super Admin",
+        "esignAdmin": "Admin",
+        "esignSender": "Sender"
+      },
+      "successTitle": "Ownership transferred",
+      "successMessage": "The ownership has been transferred successfully.",
+      "errorTitle": "Oops! Something went wrong",
+      "errorMessage": "Failed to transfer the ownership. Please try again."
+    }
+  },
+  "contact": {
+    "pageHead": "Documents | Skapp",
+    "title": "Contacts",
+    "contactsSearchPlaceholder": "Search by contact name",
+    "statusFilterTitle": "Type",
+    "applyBtnTxt": "Apply Filters",
+    "resetBtnTxt": "Reset Filters",
+    "filterLabel": "Filter :",
+    "filters": {
+      "internal": "Internal",
+      "external": "External"
+    },
+    "sortBy": "Sort by : {{sortBy}}",
+    "sort": {
+      "AlphabeticalDesc": "Z to A",
+      "AlphabeticalAsc": "A to Z",
+      "sortAlphabeticalDesc": "Alphabetical : Z to A",
+      "sortAlphabeticalAsc": "Alphabetical : A to Z"
+    },
+    "tableHeaders": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Contact No.",
+      "type": "Type"
+    },
+    "emptySearchResult": {
+      "title": "No results found",
+      "description": "We couldn't find any matches for your search. Please try using a different term."
+    },
+    "emptyFilterResult": {
+      "title": "No results found",
+      "description": "We couldn't find any matches for your search. Please adjust your filter criteria and try again"
+    },
+    "emptyContactData": {
+      "title": "No Contact data yet!",
+      "description": "Please proceed to add Contact data. Then you can see their details here!"
+    },
+    "editContact": "Edit contact",
+    "addContact": "Add new contact",
+    "deleteConfirmationTitle": "Confirm deletion",
+    "deleteContactConfirmation": "Are you sure you want to delete this contact? You will not be able to revoke this decision.",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "deleteSuccessTitle": "Contact deleted",
+    "deleteSuccessDescription": "The contact has been deleted successfully.",
+    "unsavedChangesModalTitle": "Are you sure?",
+    "deleteErrorTitle": "Oops! Something went wrong",
+    "deleteErrorDescription": "Failed to save the changes. Please try again.",
+    "updateSuccessTitle": "Contact Updated",
+    "updateSuccessDescription": "The contact has been updated successfully.",
+    "updateErrorTitle": "Oops! Something went wrong",
+    "updateErrorDescription": "Failed to save the changes. Please try again.",
+    "emailAlreadyExists": "A user with this email already exists.",
+    "createSuccessTitle": "Contact Added",
+    "createSuccessDescription": "Contact has been added successfully."
+  },
+  "sign": {
+    "head": "Documents | Skapp",
+    "title": "Sign Document",
+    "titleWithView": "View document",
+    "close": "Close",
+    "start": "Start",
+    "clear": "Clear",
+    "add": "Add",
+    "finish": "Finish",
+    "signedBy": "Signed by",
+    "cancel": "Cancel",
+    "sign": "Sign",
+    "approved": "Approved",
+    "documents": "Documents",
+    "page": "page",
+    "pages": "pages",
+    "drawSignature": "Draw your sign",
+    "name": "Name",
+    "uploadStampAltText": "Uploaded Stamp",
+    "kebabOptions": {
+      "decline": "Decline to sign",
+      "view": "View certificate (PDF)",
+      "download": "Download document"
+    },
+    "concentModal": {
+      "consentFailedTitle": "Oops! Something went wrong",
+      "consentFailedDesc": "Failed to start signing the document.",
+      "from": "From : ",
+      "read": "Please read the",
+      "disclosureLink": "Electronic signature disclosure",
+      "agreeText": "I agree to use electronic records and signatures.",
+      "description": "By clicking on the Start button, you acknowledge that you have read and understood the terms of this document. You agree to sign this document electronically acknowledging your intent to proceed with the process using digital means and to recognize the contents of the document as reviewed and received."
+    },
+    "toast": {
+      "generalErrorTitle": "Oops! Something went wrong.",
+      "generalErrorDesc": "Please try again later.",
+      "generalPdfLoadErrorDes": "Failed to load the document.",
+      "declineErrorTitle": "Oops! Something went wrong",
+      "declineErrorDesc": "Failed to decline signing. Please try again",
+      "failedToSignDocumentDesc": "Failed to sign the document. Please try again.",
+      "alreadyDeclinedDesc": "The envelope has been declined by a recipient.",
+      "alreadySignedDesc": "You've already signed this document.",
+      "sessionWarning": {
+        "title": "Session Expiring Soon",
+        "description": "Your session will expire in 2 minutes due to inactivity."
+      }
+    },
+    "modals": {
+      "titles": {
+        "stamp": "Add stamp",
+        "cancel": "Are you sure?",
+        "sign": "Add Signature",
+        "initial": "Add Initials"
+      },
+      "content": {
+        "adoptSign": {
+          "fileTypeError": "The stamp must be either JPG or PNG. Please try again",
+          "fileSizeError": "The uploaded stamp exceeds the allowed file size of 5MB. Please try again"
+        },
+        "cancel": {
+          "text": "You are about to leave your current task, and any unsaved changes will be lost. Do you wish to resume your task or leave anyway?",
+          "resume": "Resume task",
+          "leave": "Leave anyway"
+        },
+        "decline": {
+          "text": "You are about to decline signing the document.",
+          "textBoxLabel": "Please provide a reason:",
+          "errorText": "Declining reason can’t be longer than 500 characters.",
+          "textBoxPlaceholder": "Add message",
+          "decline": "Decline",
+          "cancel": "Cancel"
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Sign, Manage, Succeed With Skapp E-Signature",
+    "description": "Effortless E-Signatures and more. Sign securely and manage People, Time, and Projects all with Skapp.",
+    "learnMore": "Learn More",
+    "alsoOffers": "also offers",
+    "modules": {
+      "leave": "Leave",
+      "time": "Time & Attendance",
+      "assets": "Assets",
+      "finance": "Finance",
+      "projectManagement": "Project Management",
+      "helpDesk": "Help Desk",
+      "people": "People",
+      "crm": "CRM"
+    },
+    "envelopeLimitReached": {
+      "title": "Envelope Limit Has Been Reached",
+      "descriptionAdminFreeTier": "Your current plan includes only 5 envelopes per year. Please upgrade to Skapp Core to create more envelopes.",
+      "descriptionNonAdminFreeTier": "Your current plan includes only 5 envelopes per year. Please contact your organization's super admin.",
+      "descriptionNonAdminProTier": "Your organization has reached the envelope limit. Please contact your organization's super admin.",
+      "descriptionProTier": "Your organization has reached the envelope limit. Please contact us for more information.",
+      "upgradeButton": "Upgrade plan",
+      "contactButton": "Contact us"
+    }
+  },
+  "envelopeDetails": {
+    "pageHead": "Documents | Skapp",
+    "title": "Envelope details",
+    "kebabOptions": {
+      "void": "Void",
+      "transferOwnership": "Transfer ownership",
+      "downloadHistory": "Download history",
+      "auditlog": "Audit log"
+    },
+    "areaLabels": {
+      "kebabMenu": "Envelope actions"
+    },
+    "sentBy": "Sent by",
+    "from": "From",
+    "emailMessage": "Message",
+    "timeline": {
+      "header": "Timeline",
+      "actions": {
+        "envelope_created": "created the document",
+        "envelope_sent": "sent the document",
+        "envelope_viewed": "viewed the document",
+        "envelope_signed": "signed the document",
+        "envelope_completed": "Document is completed",
+        "envelope_voided": "Document made void",
+        "envelope_declined": "Declined to sign",
+        "envelope_expired": "Document expired",
+        "envelope_downloaded": "downloaded the document",
+        "envelope_ownership_transferred": "transferred ownership to"
+      }
+    },
+    "recipients": {
+      "header": "Recipients",
+      "roles": {
+        "signer": "Signer",
+        "cc": "CC"
+      },
+      "status": {
+        "completed": "Completed",
+        "need_to_sign": "Need to Sign",
+        "declined": "Declined",
+        "empty": "",
+        "waiting": "Waiting"
+      },
+      "nudgeSuccess": {
+        "title": "Nudged Successfully",
+        "description": "The recipient has been nudged successfully!"
+      },
+      "nudgeError": {
+        "title": "Oops! Something went wrong",
+        "description": "Failed to nudge the signer. Please try again."
+      }
+    },
+    "documents": {
+      "header": "Documents",
+      "page": "page",
+      "pages": "pages"
+    },
+    "status": {
+      "need_to_sign": "Need to Sign",
+      "waiting": "Waiting",
+      "completed": "Completed",
+      "declined": "Declined",
+      "voided": "Void",
+      "expired": "Expired",
+      "void": "Void"
+    },
+    "downloadHistory": {
+      "error": {
+        "title": "Oops! Something went wrong",
+        "description": "Failed to download the document, please try again."
+      },
+      "fileName": "Document History"
+    }
+  }
+}

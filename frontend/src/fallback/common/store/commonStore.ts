@@ -12,11 +12,11 @@ interface CommonEnterpriseStore {
   };
   setQuickSetupModalType: (value: string) => void;
   stopAllOngoingQuickSetup: () => void;
+  setSubmitRequestModalType: (value: string) => void;
+  submitRequestModalType: string;
 }
 
-export const useCommonEnterpriseStore = (
-  arg0: (state: any) => any
-): CommonEnterpriseStore => {
+export const useCommonEnterpriseStore = (): CommonEnterpriseStore => {
   return {
     setGlobalLoginMethod: () => {},
     globalLoginMethod: GlobalLoginMethod.NONE,
@@ -28,6 +28,7 @@ export const useCommonEnterpriseStore = (
       SETUP_LEAVE_TYPES: false
     },
     setQuickSetupModalType: () => {},
-    stopAllOngoingQuickSetup: () => {}
+    stopAllOngoingQuickSetup: () => {},
+    setSubmitRequestModalType: () => {}
   };
 };

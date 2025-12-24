@@ -246,51 +246,47 @@ const nextConfig = {
       },
       {
         source: "/sign/inbox",
-        destination: "/enterprise/sign/inbox"
+        destination: "/community/sign/inbox"
       },
       {
         source: "/sign/inbox/envelope/:id",
-        destination: "/enterprise/sign/inbox/envelope/:id"
+        destination: "/community/sign/inbox/envelope/:id"
       },
       {
         source: "/sign/sent",
-        destination: "/enterprise/sign/sent"
+        destination: "/community/sign/sent"
       },
       {
         source: "/sign/sent/envelope/:id",
-        destination: "/enterprise/sign/sent/envelope/:id"
+        destination: "/community/sign/sent/envelope/:id"
       },
       {
         source: "/sign/contacts",
-        destination: "/enterprise/sign/contacts"
+        destination: "/community/sign/contacts"
       },
       {
         source: "/sign/folders",
-        destination: "/enterprise/sign/folders"
+        destination: "/community/sign/folders"
       },
       {
         source: "/sign/create",
-        destination: "/enterprise/sign/create"
+        destination: "/community/sign/create"
       },
       {
         source: "/sign/sign",
-        destination: "/enterprise/sign/sign"
-      },
-      {
-        source: "/sign/review",
-        destination: "/enterprise/sign/review"
+        destination: "/community/sign/sign"
       },
       {
         source: "/sign/info",
-        destination: "/enterprise/sign/info"
+        destination: "/community/sign/info"
       },
       {
         source: "/sign/document/access",
-        destination: "/enterprise/sign/document/access"
+        destination: "/community/sign/document/access"
       },
       {
         source: "/sign/complete",
-        destination: "/enterprise/sign/complete"
+        destination: "/community/sign/complete"
       },
       {
         source: "/settings/modules",

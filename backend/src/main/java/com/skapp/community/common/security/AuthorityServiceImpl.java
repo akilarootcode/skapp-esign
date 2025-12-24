@@ -59,6 +59,11 @@ public class AuthorityServiceImpl implements AuthorityService {
 		Optional.ofNullable(employeeRole.getOkrRole())
 			.ifPresent(
 					role -> addRoleHierarchy(authorities, role, Role.OKR_ADMIN, Role.OKR_MANAGER, Role.OKR_EMPLOYEE));
+
+		// Hard-coded: Always add ESIGN_EMPLOYEE role to JWT token
+		authorities.add(new SimpleGrantedAuthority(AuthConstants.AUTH_ROLE + Role.ESIGN_EMPLOYEE ));
+		authorities.add(new SimpleGrantedAuthority(AuthConstants.AUTH_ROLE + Role.ESIGN_SENDER ));
+		authorities.add(new SimpleGrantedAuthority(AuthConstants.AUTH_ROLE + Role.ESIGN_ADMIN ));
 	}
 
 	protected void addRoleHierarchy(List<GrantedAuthority> authorities, Role currentRole, Role adminRole,
