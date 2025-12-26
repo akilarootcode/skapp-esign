@@ -198,6 +198,7 @@ public class RolesServiceImpl implements RolesService {
 		roles.put(ModuleType.ATTENDANCE, List.of(RoleLevel.ADMIN, RoleLevel.MANAGER, RoleLevel.EMPLOYEE));
 		roles.put(ModuleType.PEOPLE, List.of(RoleLevel.ADMIN, RoleLevel.MANAGER, RoleLevel.EMPLOYEE));
 		roles.put(ModuleType.LEAVE, List.of(RoleLevel.ADMIN, RoleLevel.MANAGER, RoleLevel.EMPLOYEE));
+		roles.put(ModuleType.ESIGN, List.of(RoleLevel.ADMIN, RoleLevel.SENDER, RoleLevel.EMPLOYEE));
 		roles.put(ModuleType.OKR, List.of(RoleLevel.ADMIN, RoleLevel.MANAGER, RoleLevel.EMPLOYEE));
 		roles.put(ModuleType.INVOICE, List.of(RoleLevel.ADMIN, RoleLevel.MANAGER));
 		roles.put(ModuleType.PM, List.of(RoleLevel.ADMIN, RoleLevel.EMPLOYEE));
@@ -405,11 +406,11 @@ public class RolesServiceImpl implements RolesService {
 	protected Boolean validateRestrictedRoleAssignment(Role role, ModuleType moduleType) {
 		ModuleRoleRestrictionResponseDto restrictedRole = getRestrictedRoleByModule(moduleType);
 
-		if (role == Role.PEOPLE_ADMIN || role == Role.ATTENDANCE_ADMIN || role == Role.LEAVE_ADMIN) {
+		if (role == Role.PEOPLE_ADMIN || role == Role.ATTENDANCE_ADMIN || role == Role.LEAVE_ADMIN || role == Role.ESIGN_ADMIN) {
 			return Boolean.TRUE.equals(restrictedRole.getIsAdmin());
 		}
 
-		if (role == Role.PEOPLE_MANAGER || role == Role.ATTENDANCE_MANAGER || role == Role.LEAVE_MANAGER) {
+		if (role == Role.PEOPLE_MANAGER || role == Role.ATTENDANCE_MANAGER || role == Role.LEAVE_MANAGER || role == Role.ESIGN_SENDER) {
 			return Boolean.TRUE.equals(restrictedRole.getIsManager());
 		}
 
@@ -441,6 +442,12 @@ public class RolesServiceImpl implements RolesService {
 				case ADMIN -> Role.LEAVE_ADMIN;
 				case MANAGER -> Role.LEAVE_MANAGER;
 				case EMPLOYEE -> Role.LEAVE_EMPLOYEE;
+				default -> null;
+			};
+			case ESIGN -> switch (roleLevel) {
+				case ADMIN -> Role.ESIGN_ADMIN;
+				case SENDER -> Role.ESIGN_SENDER;
+				case EMPLOYEE -> Role.ESIGN_EMPLOYEE;
 				default -> null;
 			};
 			case OKR -> switch (roleLevel) {
