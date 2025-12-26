@@ -64,7 +64,7 @@ public class DocumentProcessingServiceImpl implements DocumentProcessingService 
 
 	private static final String DEFAULT_LABEL = "Signed by";
 
-	private static final String FONT_PATH = "enterprise/fonts/Poppins/Poppins-Regular.ttf";
+	private static final String FONT_PATH = "community/fonts/Poppins/Poppins-Regular.ttf";
 
 	public static final int DPI = 96;
 
