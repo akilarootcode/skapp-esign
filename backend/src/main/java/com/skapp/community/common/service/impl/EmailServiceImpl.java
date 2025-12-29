@@ -134,8 +134,7 @@ public class EmailServiceImpl implements EmailService {
         if (enumTranslationsMap == null) {
             enumTranslationsMap = new HashMap<>();
 
-            loadEnumTranslationsFromPath("community/templates/common/enum-translations.yml");
-            loadEnumTranslationsFromPath("enterprise/templates/common/enum-translations.yml");
+            loadEnumTranslationsFromPath();
 
             log.info("Enum translations loaded. Map size: {}", enumTranslationsMap.size());
             if (!enumTranslationsMap.isEmpty()) {
@@ -156,14 +155,13 @@ public class EmailServiceImpl implements EmailService {
         if (templateDetailsMap == null) {
             templateDetailsMap = new HashMap<>();
 
-            addTemplatesFromPath("community/templates/email/email-templates.yml");
-            addTemplatesFromPath("enterprise/templates/email/email-templates.yml");
+            addTemplatesFromPath();
         }
 
     }
 
-	protected void addTemplatesFromPath(String path) {
-		try (InputStream inputStream = new ClassPathResource(path).getInputStream()) {
+	protected void addTemplatesFromPath() {
+		try (InputStream inputStream = new ClassPathResource("community/templates/email/email-templates.yml").getInputStream()) {
 			Map<String, Map<String, List<EmailTemplateMetadata>>> templates = yamlMapper.readValue(inputStream,
 					new TypeReference<>() {
 					});
@@ -185,12 +183,12 @@ public class EmailServiceImpl implements EmailService {
 			}
 		}
 		catch (IOException e) {
-			log.warn("Failed to load templates from {}: {}", path, e.getMessage());
+			log.warn("Failed to load templates from {}: {}", "community/templates/email/email-templates.yml", e.getMessage());
 		}
 	}
 
-	protected void loadEnumTranslationsFromPath(String path) {
-		try (InputStream inputStream = new ClassPathResource(path).getInputStream()) {
+	protected void loadEnumTranslationsFromPath() {
+		try (InputStream inputStream = new ClassPathResource("community/templates/common/enum-translations.yml").getInputStream()) {
 			Map<String, Map<String, Map<String, String>>> translations = yamlMapper.readValue(inputStream,
 					new TypeReference<>() {
 					});
@@ -220,7 +218,7 @@ public class EmailServiceImpl implements EmailService {
 			}
 		}
 		catch (IOException e) {
-			log.warn("Failed to load enum translations from {}: {}", path, e.getMessage());
+			log.warn("Failed to load enum translations from {}: {}", "community/templates/common/enum-translations.yml", e.getMessage());
 		}
 	}
 
@@ -260,14 +258,11 @@ public class EmailServiceImpl implements EmailService {
 
 	protected String buildTemplatePath(String module, String templateId) {
         return findExistingPath(
-                String.format("community/templates/email/%s/%s/%s.html", EMAIL_LANGUAGE, module, templateId),
                 String.format("community/templates/email/%s/%s/%s.html", EMAIL_LANGUAGE, module, templateId));
 	}
 
 	protected String buildMainTemplatePath(EmailTemplates emailMainTemplate) {
         return findExistingPath(
-                String.format("community/templates/email/%s/%s.html", EMAIL_LANGUAGE,
-                        emailMainTemplate.getTemplateId()),
                 String.format("community/templates/email/%s/%s.html", EMAIL_LANGUAGE,
                         emailMainTemplate.getTemplateId()));
 	}

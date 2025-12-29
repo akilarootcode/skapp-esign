@@ -123,9 +123,9 @@ public class EpCommonConstants {
 
 	public static final int CACHED_S3_SIGNED_URL_DURATION = 8640; // 6 days
 
-	public static final String PRD_CONFIG_PATH = "enterprise/validations/email-validation-prd.yml";
+	public static final String PRD_CONFIG_PATH = "community/validations/email-validation-prd.yml";
 
-	public static final String NON_PRD_CONFIG_PATH = "enterprise/validations/email-validation-non-prd.yml";
+	public static final String NON_PRD_CONFIG_PATH = "community/validations/email-validation-non-prd.yml";
 
 	public static final String S3_PROFILE_PIC_THUMBNAIL_PATH = "profilePictures/thumbnail/";
 

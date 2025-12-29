@@ -866,8 +866,8 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 	private String generateSignatureCertificateHtml(SignatureCertificateResponseDto responseDto) {
 		try {
 			ClassPathResource resource = new ClassPathResource(
-					"enterprise/templates/pdf/en/esignature/signature-certificate-v1.html");
-			String template = new String(Files.readAllBytes(Paths.get(resource.getURI())), StandardCharsets.UTF_8);
+					"community/templates/pdf/en/esignature/signature-certificate-v1.html");
+			String template = Files.readString(Paths.get(resource.getURI()));
 
 			// Replace basic document information
 			template = template.replace("{{documentName}}", EsignUtil.escapeHtml(responseDto.getName()));
