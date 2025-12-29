@@ -1,0 +1,14 @@
+package com.skapp.community.common.service;
+
+import com.skapp.community.common.payload.response.ResponseEntityDto;
+import com.skapp.community.common.payload.response.ValidationResult;
+
+public interface ValidationService {
+
+	ResponseEntityDto validateBusinessEmail(String email);
+
+	ValidationResult validateEmail(String email);
+
+	void checkBusinessEmailValidity(String email);
+
+}

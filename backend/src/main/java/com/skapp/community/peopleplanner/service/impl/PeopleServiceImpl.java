@@ -14,15 +14,9 @@ import com.skapp.community.common.payload.response.NotificationSettingsResponseD
 import com.skapp.community.common.payload.response.PageDto;
 import com.skapp.community.common.payload.response.ResponseEntityDto;
 import com.skapp.community.common.repository.UserDao;
-import com.skapp.community.common.service.BulkContextService;
-import com.skapp.community.common.service.EncryptionDecryptionService;
-import com.skapp.community.common.service.UserService;
-import com.skapp.community.common.service.UserVersionService;
+import com.skapp.community.common.service.*;
 import com.skapp.community.common.service.impl.AsyncEmailServiceImpl;
-import com.skapp.community.common.type.LoginMethod;
-import com.skapp.community.common.type.NotificationSettingsType;
-import com.skapp.community.common.type.Role;
-import com.skapp.community.common.type.VersionType;
+import com.skapp.community.common.type.*;
 import com.skapp.community.common.util.CommonModuleUtils;
 import com.skapp.community.common.util.DateTimeUtils;
 import com.skapp.community.common.util.MessageUtil;
@@ -205,6 +199,10 @@ public class PeopleServiceImpl implements PeopleService {
 
 	private final EmployeeVisaDao employeeVisaDao;
 
+    private final CacheService cacheService;
+
+    private final ValidationService validationService;
+
 	@Value("${encryptDecryptAlgorithm.secret}")
 	private String encryptSecret;
 
@@ -293,15 +291,17 @@ public class PeopleServiceImpl implements PeopleService {
 	}
 
 	protected void invalidateUserCache() {
-		// This method is a placeholder for enterprise cache invalidation logic
+        CacheKeys userCacheKey = CacheKeys.TENANT_ALL_USERS_CACHE_KEY;
+        cacheService.invalidate(userCacheKey.getKey());
 	}
 
 	protected void invalidateUserAuthPicCache() {
-		// This method is a placeholder for enterprise cache invalidation logic
+        CacheKeys userAuthPicCacheKey = CacheKeys.TENANT_ALL_USERS_AUTH_PICS_CACHE_KEY;
+        cacheService.invalidate(userAuthPicCacheKey.getKey());
 	}
 
 	protected void enterpriseValidations(String email) {
-		// This method is a placeholder for any enterprise-specific validations
+        validationService.checkBusinessEmailValidity(email);
 	}
 
 	private CreateEmployeeRequestDto createEmployeeRequest(EmployeeQuickAddDto dto) {

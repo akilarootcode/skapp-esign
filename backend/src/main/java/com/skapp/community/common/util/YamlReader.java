@@ -1,0 +1,27 @@
+package com.skapp.community.common.util;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.skapp.community.common.exception.ModuleException;
+import com.skapp.community.common.constant.CommonMessageConstant;
+import lombok.experimental.UtilityClass;
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.InputStream;
+
+@UtilityClass
+public class YamlReader {
+
+	private static final ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
+
+	public static <T> T read(String path, Class<T> clazz) {
+		try (InputStream inputStream = new ClassPathResource(path).getInputStream()) {
+			return yamlMapper.readValue(inputStream, clazz);
+		}
+		catch (Exception e) {
+			throw new ModuleException(CommonMessageConstant.EP_COMMON_ERROR_YAML_READ_FAILED,
+					new String[] { path, e.getMessage() });
+		}
+	}
+
+}
