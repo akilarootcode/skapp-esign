@@ -25,6 +25,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -69,15 +70,15 @@ public class SecurityConfig {
 
 		http.cors(Customizer.withDefaults());
 		http.csrf(AbstractHttpConfigurer::disable)
-			.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-			.exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
-			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/v1/auth/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**",
-						"/v1/app-setup-status", "/robots.txt", "/ws/**", "/v1/auth/forgot/password",
-						"/v1/people/search/email-exists", "/health")
-				.permitAll()
-				.anyRequest()
-				.authenticated());
+				.sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+				.exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/v1/auth/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**",
+								"/v1/app-setup-status", "/robots.txt", "/ws/**", "/v1/auth/forgot/password",
+								"/v1/people/search/email-exists", "/health")
+						.permitAll()
+						.anyRequest()
+						.authenticated());
 
 		http.addFilterBefore(exceptionLoggingFilter, UsernamePasswordAuthenticationFilter.class);
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -89,10 +90,14 @@ public class SecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration
-			.setAllowedOrigins(Arrays.asList("https://skapp.dev", "http://localhost:3000", "http://localhost:8008"));
+		configuration.setAllowedOrigins(Arrays.asList(
+				"https://skapp.dev",
+				"http://skapp.dev",
+				"http://localhost:3000",
+				"http://localhost:8008"
+		));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-		configuration.setAllowedHeaders(Arrays.asList("*"));
+		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowCredentials(true);
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
