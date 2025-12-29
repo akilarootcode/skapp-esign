@@ -171,7 +171,10 @@ export default withAuth(
     if (
       currentPath === ROUTES.SIGN.DOCUMENT_ACCESS ||
       currentPath.startsWith(ROUTES.SIGN.SIGN) ||
-      currentPath.startsWith(ROUTES.SIGN.INFO)
+      currentPath.startsWith(ROUTES.SIGN.INFO) ||
+      currentPath === "/community/sign/document/access" ||
+      currentPath.startsWith("/community/sign/sign") ||
+      currentPath.startsWith("/community/sign/info")
     ) {
       return NextResponse.next();
     }
