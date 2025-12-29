@@ -1,9 +1,13 @@
 package com.skapp.community.esignature.repository.impl;
 
 import com.skapp.community.common.model.User_;
+import com.skapp.community.esignature.model.AddressBook_;
+import com.skapp.community.esignature.model.Recipient_;
+import com.skapp.community.esignature.model.Envelope_;
 import com.skapp.community.esignature.model.AddressBook;
 import com.skapp.community.esignature.model.Envelope;
 import com.skapp.community.esignature.model.EnvelopeSetting;
+import com.skapp.community.esignature.model.EnvelopeSetting_;
 import com.skapp.community.esignature.model.Recipient;
 import com.skapp.community.esignature.payload.request.EnvelopeInboxFilterDto;
 import com.skapp.community.esignature.payload.request.EnvelopeSentFilterDto;
