@@ -3,10 +3,13 @@ package com.skapp.community.common.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.skapp.community.common.model.Organization;
 import com.skapp.community.common.payload.email.EmailTemplateMetadata;
 import com.skapp.community.common.payload.request.TestEmailServerRequestDto;
+import com.skapp.community.common.repository.OrganizationDao;
 import com.skapp.community.common.service.AsyncEmailSender;
 import com.skapp.community.common.service.EmailService;
+import com.skapp.community.common.type.EmailBodyTemplates;
 import com.skapp.community.common.type.EmailMainTemplates;
 import com.skapp.community.common.type.EmailTemplates;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,8 @@ public class EmailServiceImpl implements EmailService {
 	private static final String EMAIL_LANGUAGE = "en";
 
 	private final AsyncEmailSender asyncEmailSender;
+
+    private final OrganizationDao organizationDao;
 
 	private final ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
 
@@ -91,10 +96,31 @@ public class EmailServiceImpl implements EmailService {
 	 * @param emailTemplate Email template.
 	 * @param placeholders Placeholders to replace.
 	 */
-	protected void setTemplatePlaceholderData(EmailTemplates emailTemplate, Map<String, String> placeholders,
-			EmailTemplateMetadata templateDetails, String module) {
-		placeholders.put("subject", templateDetails.getSubject());
-	}
+    protected void setTemplatePlaceholderData(EmailTemplates emailTemplate, Map<String, String> placeholders,
+                                              EmailTemplateMetadata templateDetails, String module) {
+        placeholders.put("module", module);
+        placeholders.put("subject", templateDetails.getSubject());
+        if (emailTemplate != EmailBodyTemplates.COMMON_MODULE_EMAIL_VERIFY
+                && emailTemplate != EmailBodyTemplates.COMMON_MODULE_GOOGLE_SSO_CREATION_TENANT_URL
+                && emailTemplate != EmailBodyTemplates.COMMON_MODULE_MICROSOFT_SSO_CREATION_TENANT_URL
+                && emailTemplate != EmailBodyTemplates.COMMON_MODULE_CREDENTIAL_BASED_CREATION_TENANT_URL
+                && emailTemplate != EmailBodyTemplates.DASHBOARD_MODULE_NEW_ORGANIZATION_CREATED
+                && emailTemplate != EmailBodyTemplates.DASHBOARD_MODULE_NEW_ORGANIZATION_STARTED_CORE_FREE_TRIAL
+                && emailTemplate != EmailBodyTemplates.DASHBOARD_MODULE_TRIAL_ORGANIZATION_CONVERTED_TO_CORE
+                && emailTemplate != EmailBodyTemplates.DASHBOARD_MODULE_ORGANIZATION_CANCELLED_CORE
+                && emailTemplate != EmailBodyTemplates.GUEST_MODULE_INVITATION) {
+            Optional<Organization> organization = organizationDao.findTopByOrderByOrganizationIdDesc();
+            organization.ifPresent(value -> {
+                placeholders.put("appUrl", value.getAppUrl());
+                placeholders.put("organizationName", value.getOrganizationName());
+            });
+        }
+
+        if (emailTemplate == EmailBodyTemplates.GUEST_MODULE_INVITATION) {
+            Optional<Organization> organization = organizationDao.findTopByOrderByOrganizationIdDesc();
+            organization.ifPresent(value -> placeholders.put("organizationName", value.getOrganizationName()));
+        }
+    }
 
 	private String setSubjectPlaceholders(String subject, Map<String, String> placeholders) {
 		for (Map.Entry<String, String> entry : placeholders.entrySet()) {
@@ -104,13 +130,19 @@ public class EmailServiceImpl implements EmailService {
 		return subject;
 	}
 
-	protected void getEnumTranslationsStream() {
-		if (enumTranslationsMap == null) {
-			enumTranslationsMap = new HashMap<>();
+    protected void getEnumTranslationsStream() {
+        if (enumTranslationsMap == null) {
+            enumTranslationsMap = new HashMap<>();
 
-			loadEnumTranslationsFromPath("community/templates/common/enum-translations.yml");
-		}
-	}
+            loadEnumTranslationsFromPath("community/templates/common/enum-translations.yml");
+            loadEnumTranslationsFromPath("enterprise/templates/common/enum-translations.yml");
+
+            log.info("Enum translations loaded. Map size: {}", enumTranslationsMap.size());
+            if (!enumTranslationsMap.isEmpty()) {
+                log.info("Sample enum translations: {}", enumTranslationsMap);
+            }
+        }
+    }
 
 	protected String getLocalizedEnumValue(String enumKey, String enumValue) {
 		getEnumTranslationsStream();
@@ -120,13 +152,15 @@ public class EmailServiceImpl implements EmailService {
 			.orElse(enumValue);
 	}
 
-	protected void loadTemplateDetails() {
-		if (templateDetailsMap == null) {
-			templateDetailsMap = new HashMap<>();
+    public void loadTemplateDetails() {
+        if (templateDetailsMap == null) {
+            templateDetailsMap = new HashMap<>();
 
-			addTemplatesFromPath("community/templates/email/email-templates.yml");
-		}
-	}
+            addTemplatesFromPath("community/templates/email/email-templates.yml");
+            addTemplatesFromPath("enterprise/templates/email/email-templates.yml");
+        }
+
+    }
 
 	protected void addTemplatesFromPath(String path) {
 		try (InputStream inputStream = new ClassPathResource(path).getInputStream()) {
@@ -225,13 +259,17 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	protected String buildTemplatePath(String module, String templateId) {
-		return findExistingPath(
-				String.format("community/templates/email/%s/%s/%s.html", EMAIL_LANGUAGE, module, templateId));
+        return findExistingPath(
+                String.format("community/templates/email/%s/%s/%s.html", EMAIL_LANGUAGE, module, templateId),
+                String.format("community/templates/email/%s/%s/%s.html", EMAIL_LANGUAGE, module, templateId));
 	}
 
 	protected String buildMainTemplatePath(EmailTemplates emailMainTemplate) {
-		return findExistingPath(String.format("community/templates/email/%s/%s.html", EMAIL_LANGUAGE,
-				emailMainTemplate.getTemplateId()));
+        return findExistingPath(
+                String.format("community/templates/email/%s/%s.html", EMAIL_LANGUAGE,
+                        emailMainTemplate.getTemplateId()),
+                String.format("community/templates/email/%s/%s.html", EMAIL_LANGUAGE,
+                        emailMainTemplate.getTemplateId()));
 	}
 
 	protected String findExistingPath(String... paths) {
@@ -262,5 +300,15 @@ public class EmailServiceImpl implements EmailService {
 		}
 		return placeholders;
 	}
+
+    @Override
+    public String obtainSendGridBatchId() {
+        return asyncEmailSender.getSendGridEmailBatchId();
+    }
+
+    @Override
+    public void cancelScheduledEmail(String batchId, String status) {
+        asyncEmailSender.cancelScheduledEmails(batchId, status);
+    }
 
 }

@@ -7,7 +7,6 @@ import com.skapp.community.common.exception.ModuleException;
 import com.skapp.community.common.model.User;
 import com.skapp.community.common.payload.response.ResponseEntityDto;
 import com.skapp.community.common.service.EmailService;
-import com.skapp.community.common.service.EpEmailService;
 import com.skapp.community.common.service.UserService;
 import com.skapp.community.common.type.EmailBodyTemplates;
 import com.skapp.community.common.type.EmailButtonText;
@@ -54,8 +53,6 @@ public class RecipientServiceImpl implements RecipientService {
 	private final EsignMapper eSignMapper;
 
 	private final EmailService emailService;
-
-	private final EpEmailService epEmailService;
 
 	private final UserService userService;
 
@@ -315,7 +312,7 @@ public class RecipientServiceImpl implements RecipientService {
 		int scheduledEmailCount = 1;
 
 		// Obtain SendGrid batch ID for tracking scheduled emails
-		String obtainedBatchId = epEmailService.obtainSendGridBatchId();
+		String obtainedBatchId = emailService.obtainSendGridBatchId();
 		emailFields.setBatchId(obtainedBatchId);
 
 		int reminderCount = emailDataDto.getReminderDays() == 1 ? emailCount : 1;
@@ -403,7 +400,7 @@ public class RecipientServiceImpl implements RecipientService {
 			Recipient recipient = recipientOptional.get();
 
 			if (recipient.getReminderBatchId() != null && MemberRole.SIGNER == recipient.getMemberRole()) {
-				epEmailService.cancelScheduledEmail(recipient.getReminderBatchId(),
+				emailService.cancelScheduledEmail(recipient.getReminderBatchId(),
 						CommonConstants.SENDGRID_CANCEL_SCHEDULED_MAIL);
 
 				RecipientUpdateDto recipientUpdateDto = initializerecipientDtoData(null, null,
