@@ -21,7 +21,7 @@ public class EsignConfigController {
 	@Operation(summary = "Update global eSign configuration settings.",
 			description = "This endpoint allows updating specific fields of the global eSign configuration, "
 					+ "such as expiration days, reminder days, and date format, without requiring a full replacement of the existing configuration.")
-	@PreAuthorize("hasAnyRole('ROLE_ESIGN_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ESIGN_ADMIN', 'ESIGN_EMPLOYEE')")
 	@PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseEntityDto> updateEsignConfig(@RequestBody EsignConfigDto dto) {
 
