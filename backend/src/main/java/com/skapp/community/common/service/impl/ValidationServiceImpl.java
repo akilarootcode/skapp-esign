@@ -1,16 +1,16 @@
 package com.skapp.community.common.service.impl;
 
-import com.skapp.community.common.component.ProfileActivator;
-import com.skapp.community.common.exception.ValidationException;
-import com.skapp.community.common.payload.response.ResponseEntityDto;
-import com.skapp.community.common.util.MessageUtil;
-import com.skapp.community.common.util.Validation;
 import com.skapp.community.common.component.EmailValidationProperties;
+import com.skapp.community.common.component.ProfileActivator;
 import com.skapp.community.common.constant.CommonMessageConstant;
 import com.skapp.community.common.constant.EpCommonConstants;
+import com.skapp.community.common.exception.ValidationException;
 import com.skapp.community.common.payload.response.EmailValidationResultDto;
+import com.skapp.community.common.payload.response.ResponseEntityDto;
 import com.skapp.community.common.payload.response.ValidationResult;
 import com.skapp.community.common.service.ValidationService;
+import com.skapp.community.common.util.MessageUtil;
+import com.skapp.community.common.util.Validation;
 import com.skapp.community.common.util.YamlReader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

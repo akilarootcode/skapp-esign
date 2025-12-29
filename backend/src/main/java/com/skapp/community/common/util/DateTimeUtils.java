@@ -3,14 +3,7 @@ package com.skapp.community.common.util;
 import com.skapp.community.common.constant.CommonMessageConstant;
 import com.skapp.community.common.exception.ModuleException;
 
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Year;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
@@ -34,12 +27,12 @@ public class DateTimeUtils {
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
 		.withZone(ZoneId.of("UTC"));
 
+	public static final String TIMESTAMP_POSTFIX = "_";
+
 	// Default UTC ZoneId
 	private static final ZoneId UTC_ZONE_ID = ZoneOffset.UTC;
 
 	private static final DateTimeFormatter AM_PM_FORMATTER = DateTimeFormatter.ofPattern("hh:mm a");
-
-	public static final String TIMESTAMP_POSTFIX = "_";
 
 	private static final DateTimeFormatter ESIGN_CERT_FORMATTER = DateTimeFormatter
 		.ofPattern("MM/dd/yyyy | hh:mm:ss a");

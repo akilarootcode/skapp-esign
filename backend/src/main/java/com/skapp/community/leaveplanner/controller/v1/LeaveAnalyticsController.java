@@ -1,19 +1,7 @@
 package com.skapp.community.leaveplanner.controller.v1;
 
 import com.skapp.community.common.payload.response.ResponseEntityDto;
-import com.skapp.community.leaveplanner.payload.EmployeeLeaveHistoryFilterDto;
-import com.skapp.community.leaveplanner.payload.EmployeesOnLeaveFilterDto;
-import com.skapp.community.leaveplanner.payload.LeaveEntitlementEmployeeDto;
-import com.skapp.community.leaveplanner.payload.LeaveEntitlementsFilterDto;
-import com.skapp.community.leaveplanner.payload.LeaveRequestFilterDto;
-import com.skapp.community.leaveplanner.payload.LeaveTrendFilterDto;
-import com.skapp.community.leaveplanner.payload.LeaveUtilizationFilterDto;
-import com.skapp.community.leaveplanner.payload.ManagerLeaveTrendFilterDto;
-import com.skapp.community.leaveplanner.payload.ManagerTeamResourceAvailabilityDto;
-import com.skapp.community.leaveplanner.payload.OrganizationLeaveTrendForTheYearFilterDto;
-import com.skapp.community.leaveplanner.payload.TeamFilterDto;
-import com.skapp.community.leaveplanner.payload.TeamLeaveHistoryFilterDto;
-import com.skapp.community.leaveplanner.payload.TeamLeaveTrendForTheYearFilterDto;
+import com.skapp.community.leaveplanner.payload.*;
 import com.skapp.community.leaveplanner.service.LeaveAnalyticsService;
 import com.skapp.community.peopleplanner.payload.request.EmployeeFilterDto;
 import jakarta.validation.Valid;
@@ -22,11 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

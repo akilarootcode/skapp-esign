@@ -7,12 +7,7 @@ import com.skapp.community.common.util.DateTimeUtils;
 import com.skapp.community.common.util.Validation;
 import com.skapp.community.peopleplanner.constant.PeopleConstants;
 import com.skapp.community.peopleplanner.constant.PeopleMessageConstant;
-import com.skapp.community.peopleplanner.payload.request.EmployeeDetailsDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeEducationDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeFamilyDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeQuickAddDto;
-import com.skapp.community.peopleplanner.payload.request.EmploymentVisaDto;
-import com.skapp.community.peopleplanner.payload.request.ProbationPeriodDto;
+import com.skapp.community.peopleplanner.payload.request.*;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDate;
@@ -20,15 +15,7 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
-import static com.skapp.community.common.util.Validation.ADDRESS_REGEX;
-import static com.skapp.community.common.util.Validation.ALPHANUMERIC_REGEX;
-import static com.skapp.community.common.util.Validation.COUNTRY_CODE_PATTERN;
-import static com.skapp.community.common.util.Validation.EMAIL_REGEX;
-import static com.skapp.community.common.util.Validation.LETTERS_AND_SPACE_REGEX;
-import static com.skapp.community.common.util.Validation.NUMERIC_REGEX;
-import static com.skapp.community.common.util.Validation.PHONE_NUMBER_PATTERN;
-import static com.skapp.community.common.util.Validation.VALID_IDENTIFICATION_NUMBER_REGEXP;
-import static com.skapp.community.common.util.Validation.VALID_NIN_NUMBER_REGEXP;
+import static com.skapp.community.common.util.Validation.*;
 
 @UtilityClass
 public class Validations {

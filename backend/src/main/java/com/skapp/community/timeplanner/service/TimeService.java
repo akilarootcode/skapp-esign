@@ -6,21 +6,7 @@ import com.skapp.community.peopleplanner.payload.request.EmployeeTimeRequestFilt
 import com.skapp.community.peopleplanner.payload.request.ManagerEmployeeLogFilterDto;
 import com.skapp.community.timeplanner.model.TimeConfig;
 import com.skapp.community.timeplanner.model.TimeRequest;
-import com.skapp.community.timeplanner.payload.request.AddTimeRecordDto;
-import com.skapp.community.timeplanner.payload.request.EditTimeRequestDto;
-import com.skapp.community.timeplanner.payload.request.EmployeeAttendanceSummaryFilterDto;
-import com.skapp.community.timeplanner.payload.request.IndividualWorkHourFilterDto;
-import com.skapp.community.timeplanner.payload.request.ManagerAttendanceSummaryFilterDto;
-import com.skapp.community.timeplanner.payload.request.ManagerTimeRecordFilterDto;
-import com.skapp.community.timeplanner.payload.request.ManagerTimeRequestFilterDto;
-import com.skapp.community.timeplanner.payload.request.ManualEntryRequestDto;
-import com.skapp.community.timeplanner.payload.request.TeamTimeRecordFilterDto;
-import com.skapp.community.timeplanner.payload.request.TimeConfigDto;
-import com.skapp.community.timeplanner.payload.request.TimeRecordFilterDto;
-import com.skapp.community.timeplanner.payload.request.TimeRequestAvailabilityRequestDto;
-import com.skapp.community.timeplanner.payload.request.TimeRequestManagerPatchDto;
-import com.skapp.community.timeplanner.payload.request.UpdateIncompleteTimeRecordsRequestDto;
-import com.skapp.community.timeplanner.payload.request.UpdateTimeRequestsFilterDto;
+import com.skapp.community.timeplanner.payload.request.*;
 import com.skapp.community.timeplanner.payload.response.UtilizationPercentageDto;
 import org.springframework.transaction.annotation.Transactional;
 

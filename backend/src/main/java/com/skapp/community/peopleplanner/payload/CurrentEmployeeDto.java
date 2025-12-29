@@ -1,10 +1,6 @@
 package com.skapp.community.peopleplanner.payload;
 
-import com.skapp.community.peopleplanner.model.EmployeeManager;
-import com.skapp.community.peopleplanner.model.EmployeePeriod;
-import com.skapp.community.peopleplanner.model.EmployeeProgression;
-import com.skapp.community.peopleplanner.model.EmployeeRole;
-import com.skapp.community.peopleplanner.model.EmployeeTeam;
+import com.skapp.community.peopleplanner.model.*;
 import com.skapp.community.peopleplanner.type.EmploymentAllocation;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

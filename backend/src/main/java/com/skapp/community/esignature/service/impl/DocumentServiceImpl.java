@@ -51,6 +51,12 @@ import static com.skapp.community.common.util.DateTimeUtils.getCurrentUtcDateTim
 @RequiredArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
 
+	public static final String SKAPP_SIGN_ENVELOPE_TEXT = "Skapp Sign Envelope ID: ";
+
+	public static final String UPLOAD_DOCUMENT_URL_PATH = "/eSign/envelop/process/documents/";
+
+	public static final String HTTPS_PROTOCOL = "https://";
+
 	private static final int BUFFER_SIZE = 8192; // 8KB buffer
 
 	private static final String SIGNATURE_ALGORITHM = "SHA3-256withECDSA";
@@ -58,12 +64,6 @@ public class DocumentServiceImpl implements DocumentService {
 	private static final String KEY_ALGORITHM = "EC";
 
 	private static final String SECURITY_PROVIDER = "BC";
-
-	public static final String SKAPP_SIGN_ENVELOPE_TEXT = "Skapp Sign Envelope ID: ";
-
-	public static final String UPLOAD_DOCUMENT_URL_PATH = "/eSign/envelop/process/documents/";
-
-	public static final String HTTPS_PROTOCOL = "https://";
 
 	private final DocumentRepository documentRepository;
 
@@ -1511,12 +1511,6 @@ public class DocumentServiceImpl implements DocumentService {
 		documentVersionField.setDocumentVersion(version);
 	}
 
-	private record DocumentVersionFieldBulk(List<DocumentVersionField> documentVersionFields, List<Field> fields) {
-	}
-
-	private record LatestDocumentData(byte[] fileBytes, DocumentVersion documentVersion) {
-	}
-
 	private String getDocumentFilePath(Long id) {
 
 		AddressBook currentAddressBookUser = getCurrentAddressBookUser(getCurrentUsername());
@@ -1544,6 +1538,12 @@ public class DocumentServiceImpl implements DocumentService {
 			throw new ModuleException(EsignMessageConstant.ESIGN_ERROR_DOCUMENT_FILE_PATH_NOT_FOUND);
 		}
 		return documentVersion.getFilePath();
+	}
+
+	private record DocumentVersionFieldBulk(List<DocumentVersionField> documentVersionFields, List<Field> fields) {
+	}
+
+	private record LatestDocumentData(byte[] fileBytes, DocumentVersion documentVersion) {
 	}
 
 }

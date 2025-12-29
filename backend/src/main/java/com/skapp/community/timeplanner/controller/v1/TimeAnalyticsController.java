@@ -1,11 +1,7 @@
 package com.skapp.community.timeplanner.controller.v1;
 
 import com.skapp.community.common.payload.response.ResponseEntityDto;
-import com.skapp.community.timeplanner.payload.request.AttendanceDashboardSummaryFilterDto;
-import com.skapp.community.timeplanner.payload.request.AverageHoursWorkedTrendFilterDto;
-import com.skapp.community.timeplanner.payload.request.ClockInClockOutTrendFilterDto;
-import com.skapp.community.timeplanner.payload.request.ClockInSummaryFilterDto;
-import com.skapp.community.timeplanner.payload.request.LateArrivalTrendFilterDto;
+import com.skapp.community.timeplanner.payload.request.*;
 import com.skapp.community.timeplanner.service.TimeAnalyticsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

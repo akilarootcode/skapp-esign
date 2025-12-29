@@ -1,18 +1,8 @@
 package com.skapp.community.peopleplanner.payload.response;
 
 import com.skapp.community.common.type.EmployeeUserRole;
-import com.skapp.community.peopleplanner.payload.request.EmployeeEducationDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeEmergencyDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeFamilyDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeePersonalInfoDto;
-import com.skapp.community.peopleplanner.payload.request.EmploymentVisaDto;
-import com.skapp.community.peopleplanner.payload.request.JobFamilyDto;
-import com.skapp.community.peopleplanner.payload.request.JobTitleDto;
-import com.skapp.community.peopleplanner.type.AccountStatus;
-import com.skapp.community.peopleplanner.type.EEO;
-import com.skapp.community.peopleplanner.type.EmploymentAllocation;
-import com.skapp.community.peopleplanner.type.Ethnicity;
-import com.skapp.community.peopleplanner.type.Gender;
+import com.skapp.community.peopleplanner.payload.request.*;
+import com.skapp.community.peopleplanner.type.*;
 import lombok.Getter;
 import lombok.Setter;
 

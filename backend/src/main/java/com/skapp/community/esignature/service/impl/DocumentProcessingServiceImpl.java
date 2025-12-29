@@ -34,15 +34,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DocumentProcessingServiceImpl implements DocumentProcessingService {
 
+	public static final int DPI = 96;
+
+	public static final String PNG = "png";
+
 	private static final float DEFAULT_FONT_SIZE = 12f;
 
 	private static final float UUID_FONT_SIZE = 10f;
 
+	// sign by template params
 	private static final float UUID_X_POSITION = 40;
 
 	private static final float UUID_Y_POSITION = 20;
-
-	// sign by template params
 
 	private static final float BORDER_THICKNESS = 1.0f;
 
@@ -65,10 +68,6 @@ public class DocumentProcessingServiceImpl implements DocumentProcessingService 
 	private static final String DEFAULT_LABEL = "Signed by";
 
 	private static final String FONT_PATH = "community/fonts/Poppins/Poppins-Regular.ttf";
-
-	public static final int DPI = 96;
-
-	public static final String PNG = "png";
 
 	private final MessageUtil messageUtil;
 
@@ -545,12 +544,6 @@ public class DocumentProcessingServiceImpl implements DocumentProcessingService 
 		}
 	}
 
-	private record BorderDimensions(float x, float y, float width, float height) {
-	}
-
-	private record TextDimensions(float width, float height) {
-	}
-
 	private byte[] renderPageToImage(PDFRenderer pdfRenderer, int pageNumber) throws IOException {
 		BufferedImage bim = pdfRenderer.renderImageWithDPI(pageNumber, DPI);
 		try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -587,6 +580,12 @@ public class DocumentProcessingServiceImpl implements DocumentProcessingService 
 					specificPage != null ? EsignMessageConstant.ESIGN_ERROR_FAILED_TO_CONVERT_PDF_DOCUMENT_TO_IMAGE
 							: EsignMessageConstant.ESIGN_ERROR_FAILED_TO_CONVERT_PDF_DOCUMENT_TO_IMAGE_LIST);
 		}
+	}
+
+	private record BorderDimensions(float x, float y, float width, float height) {
+	}
+
+	private record TextDimensions(float width, float height) {
 	}
 
 }

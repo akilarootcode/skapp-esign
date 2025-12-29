@@ -19,6 +19,13 @@ public interface EsignMapper {
 
 	String COMPLETE_VIA_SKAPP_REGEX = "^Complete via Skapp\\s*-?\\s*";
 
+	@Named("cleanSubject")
+	static String cleanSubject(String subject) {
+		if (subject == null)
+			return null;
+		return subject.replaceFirst(COMPLETE_VIA_SKAPP_REGEX, "");
+	}
+
 	ExternalUser externalUserDtoToExternalUser(ExternalUserDto externalUserDto);
 
 	@Named("externalUserToExternalUserResponseDto")
@@ -130,12 +137,5 @@ public interface EsignMapper {
 	@Mapping(source = "XPosition", target = "xposition")
 	@Mapping(source = "YPosition", target = "yposition")
 	FieldSignDto fieldToFieldSignDto(Field field);
-
-	@Named("cleanSubject")
-	static String cleanSubject(String subject) {
-		if (subject == null)
-			return null;
-		return subject.replaceFirst(COMPLETE_VIA_SKAPP_REGEX, "");
-	}
 
 }

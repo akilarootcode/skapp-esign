@@ -110,10 +110,11 @@ VALUES (default, 'TUESDAY',
         '[{"hours": 4.0, "timeBlock": "MORNING_HOURS"},{"hours": 4.0, "timeBlock": "EVENING_HOURS"}]', 8.0, false, 8,
         30);
 
-INSERT INTO `time_record`(time_record_id, created_by, created_date, last_modified_by, last_modified_date, date,
-                          day_of_week,
-                          clock_in_time, clock_out_time, is_manual, worked_hours, break_hours, leave_hours, employee_id,
-                          is_completed)
+INSERT INTO ` time_record `(time_record_id, created_by, created_date, last_modified_by, last_modified_date, date,
+                            day_of_week,
+                            clock_in_time, clock_out_time, is_manual, worked_hours, break_hours, leave_hours,
+                            employee_id,
+                            is_completed)
 VALUES (default, '1402452a-39c0-4a8d-a50d-3e4bfa71a15d', CURRENT_TIMESTAMP,
         '1402452a-39c0-4a8d-a50d-3e4bfa71a15d', '2025-02-26 08:51:49.263000',
         CURRENT_TIMESTAMP, 'MONDAY', 1708912800000, 1708948800000, false, 6.5, 3.5, 0, 1,

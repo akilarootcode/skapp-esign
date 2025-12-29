@@ -10,7 +10,7 @@ public class EsignConstants {
 
 	/**
 	 * Regex pattern that allows specific characters in input strings.
-	 *
+	 * <p>
 	 * Allowed characters include: - Letters from all languages (Unicode category \p{L}) -
 	 * Combining diacritical marks (Unicode category \p{M}) - Numbers (Unicode category
 	 * \p{N}) - Latin-1 Supplement characters: - À-Ö, Ø-ö, ø-ÿ (\u00C0–\u00D6,

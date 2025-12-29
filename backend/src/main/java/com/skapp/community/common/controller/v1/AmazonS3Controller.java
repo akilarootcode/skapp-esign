@@ -1,9 +1,9 @@
 package com.skapp.community.common.controller.v1;
 
-import com.skapp.community.common.payload.response.ResponseEntityDto;
 import com.skapp.community.common.payload.request.AmazonS3DeleteItemRequestDto;
 import com.skapp.community.common.payload.request.AmazonS3SignedUrlRequestDto;
 import com.skapp.community.common.payload.request.AmazonS3SignedUrlValidatedRequestDto;
+import com.skapp.community.common.payload.response.ResponseEntityDto;
 import com.skapp.community.common.service.AmazonS3Service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

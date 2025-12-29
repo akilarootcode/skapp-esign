@@ -12,10 +12,10 @@ import java.util.Base64;
 @Component
 public class AESKeyLoader {
 
+	private static final int[] VALID_KEY_SIZES = { 16, 24, 32 };
+
 	@Value("${esign.private-key.aes-secret-key}")
 	private char[] aesSecretKey;
-
-	private static final int[] VALID_KEY_SIZES = { 16, 24, 32 };
 
 	public SecretKey getAESKeyFromEnv() {
 		if (aesSecretKey == null || aesSecretKey.length == 0) {

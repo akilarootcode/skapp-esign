@@ -7,11 +7,9 @@ import com.skapp.community.leaveplanner.payload.LeaveReportDto;
 import com.skapp.community.leaveplanner.payload.response.EmployeeCustomEntitlementReportExportDto;
 import com.skapp.community.leaveplanner.payload.response.EmployeeCustomEntitlementResponseDto;
 import com.skapp.community.leaveplanner.payload.response.EmployeeLeaveEntitlementReportExportDto;
-import com.skapp.community.leaveplanner.payload.response.EntitlementBasicDetailsDto;
 import com.skapp.community.peopleplanner.model.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;

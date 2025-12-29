@@ -63,13 +63,13 @@ public class DocumentLinkServiceImpl implements DocumentLinkService {
 
 	public static final String PERMISSION = "permission";
 
-	private static final String URL_PATH = "/sign/document/access?uuid=";
-
-	private static final String ROLE_DOC_ACCESS = "ROLE_DOC_ACCESS";
-
 	public static final String STATE_STRING = "&state=";
 
 	public static final String HTTPS_PROTOCOL = "https://";
+
+	private static final String URL_PATH = "/sign/document/access?uuid=";
+
+	private static final String ROLE_DOC_ACCESS = "ROLE_DOC_ACCESS";
 
 	private final DocumentLinkRepository documentLinkRepository;
 

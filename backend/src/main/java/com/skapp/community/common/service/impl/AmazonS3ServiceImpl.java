@@ -3,11 +3,11 @@ package com.skapp.community.common.service.impl;
 import com.skapp.community.common.constant.CommonConstants;
 import com.skapp.community.common.constant.CommonMessageConstant;
 import com.skapp.community.common.exception.ModuleException;
-import com.skapp.community.common.payload.response.ResponseEntityDto;
 import com.skapp.community.common.payload.request.AmazonS3DeleteItemRequestDto;
 import com.skapp.community.common.payload.request.AmazonS3SignedUrlRequestDto;
 import com.skapp.community.common.payload.request.AmazonS3SignedUrlValidatedRequestDto;
 import com.skapp.community.common.payload.response.AmazonS3SignedUrlResponseDto;
+import com.skapp.community.common.payload.response.ResponseEntityDto;
 import com.skapp.community.common.service.AmazonS3FileValidationService;
 import com.skapp.community.common.service.AmazonS3Service;
 import com.skapp.community.common.type.AmazonS3ActionType;
@@ -41,10 +41,10 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 
 	private final S3Presigner s3Presigner;
 
+	private final AmazonS3FileValidationService amazonS3FileValidationService;
+
 	@Value("${aws.s3.bucket-name}")
 	private String bucketName;
-
-	private final AmazonS3FileValidationService amazonS3FileValidationService;
 
 	@Override
 	public InputStream downloadFile(String bucketName, String objectKey) {

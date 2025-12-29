@@ -28,31 +28,9 @@ import com.skapp.community.leaveplanner.type.ManagerType;
 import com.skapp.community.peopleplanner.constant.PeopleConstants;
 import com.skapp.community.peopleplanner.constant.PeopleMessageConstant;
 import com.skapp.community.peopleplanner.mapper.PeopleMapper;
-import com.skapp.community.peopleplanner.model.Employee;
-import com.skapp.community.peopleplanner.model.EmployeeEducation;
-import com.skapp.community.peopleplanner.model.EmployeeEmergency;
-import com.skapp.community.peopleplanner.model.EmployeeFamily;
-import com.skapp.community.peopleplanner.model.EmployeeManager;
-import com.skapp.community.peopleplanner.model.EmployeePeriod;
-import com.skapp.community.peopleplanner.model.EmployeePersonalInfo;
-import com.skapp.community.peopleplanner.model.EmployeeProgression;
-import com.skapp.community.peopleplanner.model.EmployeeRole;
-import com.skapp.community.peopleplanner.model.EmployeeTeam;
-import com.skapp.community.peopleplanner.model.EmployeeVisa;
-import com.skapp.community.peopleplanner.model.JobFamily;
-import com.skapp.community.peopleplanner.model.JobTitle;
-import com.skapp.community.peopleplanner.model.Team;
+import com.skapp.community.peopleplanner.model.*;
 import com.skapp.community.peopleplanner.payload.CurrentEmployeeDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeBulkDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeDataValidationDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeDetailsDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeExportFilterDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeFilterDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeProgressionsDto;
-import com.skapp.community.peopleplanner.payload.request.EmployeeQuickAddDto;
-import com.skapp.community.peopleplanner.payload.request.NotificationSettingsPatchRequestDto;
-import com.skapp.community.peopleplanner.payload.request.PermissionFilterDto;
-import com.skapp.community.peopleplanner.payload.request.ProbationPeriodDto;
+import com.skapp.community.peopleplanner.payload.request.*;
 import com.skapp.community.peopleplanner.payload.request.employee.CreateEmployeeRequestDto;
 import com.skapp.community.peopleplanner.payload.request.employee.EmployeeEmploymentDetailsDto;
 import com.skapp.community.peopleplanner.payload.request.employee.EmployeePersonalDetailsDto;
@@ -62,38 +40,9 @@ import com.skapp.community.peopleplanner.payload.request.employee.employment.Emp
 import com.skapp.community.peopleplanner.payload.request.employee.employment.EmployeeEmploymentBasicDetailsManagerDetailsDto;
 import com.skapp.community.peopleplanner.payload.request.employee.employment.EmployeeEmploymentCareerProgressionDetailsDto;
 import com.skapp.community.peopleplanner.payload.request.employee.employment.EmployeeEmploymentVisaDetailsDto;
-import com.skapp.community.peopleplanner.payload.request.employee.personal.EmployeeExtraInfoDto;
-import com.skapp.community.peopleplanner.payload.request.employee.personal.EmployeePersonalEducationalDetailsDto;
-import com.skapp.community.peopleplanner.payload.request.employee.personal.EmployeePersonalFamilyDetailsDto;
-import com.skapp.community.peopleplanner.payload.request.employee.personal.EmployeePersonalGeneralDetailsDto;
-import com.skapp.community.peopleplanner.payload.request.employee.personal.EmployeePersonalSocialMediaDetailsDto;
-import com.skapp.community.peopleplanner.payload.response.AnalyticsSearchResponseDto;
-import com.skapp.community.peopleplanner.payload.response.CreateEmployeeResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeAllDataExportResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeBulkErrorResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeBulkResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeCountDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeCredentialsResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeDataExportResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeDataValidationResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeDetailedResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeManagerDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeManagerResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeePeriodResponseDto;
-import com.skapp.community.peopleplanner.payload.response.EmployeeTeamDto;
-import com.skapp.community.peopleplanner.payload.response.PrimarySecondaryOrTeamSupervisorResponseDto;
-import com.skapp.community.peopleplanner.payload.response.TeamEmployeeResponseDto;
-import com.skapp.community.peopleplanner.repository.EmployeeDao;
-import com.skapp.community.peopleplanner.repository.EmployeeEducationDao;
-import com.skapp.community.peopleplanner.repository.EmployeeFamilyDao;
-import com.skapp.community.peopleplanner.repository.EmployeeManagerDao;
-import com.skapp.community.peopleplanner.repository.EmployeePeriodDao;
-import com.skapp.community.peopleplanner.repository.EmployeeProgressionDao;
-import com.skapp.community.peopleplanner.repository.EmployeeTeamDao;
-import com.skapp.community.peopleplanner.repository.EmployeeVisaDao;
-import com.skapp.community.peopleplanner.repository.JobFamilyDao;
-import com.skapp.community.peopleplanner.repository.JobTitleDao;
-import com.skapp.community.peopleplanner.repository.TeamDao;
+import com.skapp.community.peopleplanner.payload.request.employee.personal.*;
+import com.skapp.community.peopleplanner.payload.response.*;
+import com.skapp.community.peopleplanner.repository.*;
 import com.skapp.community.peopleplanner.service.EmployeeValidationService;
 import com.skapp.community.peopleplanner.service.PeopleEmailService;
 import com.skapp.community.peopleplanner.service.PeopleService;
@@ -123,16 +72,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -146,6 +86,10 @@ import java.util.stream.Collectors;
 public class PeopleServiceImpl implements PeopleService {
 
 	protected final UserService userService;
+
+	protected final ApplicationEventPublisher applicationEventPublisher;
+
+	protected final UserVersionService userVersionService;
 
 	private final MessageUtil messageUtil;
 
@@ -184,10 +128,6 @@ public class PeopleServiceImpl implements PeopleService {
 	private final BulkContextService bulkContextService;
 
 	private final AsyncEmailServiceImpl asyncEmailServiceImpl;
-
-	protected final ApplicationEventPublisher applicationEventPublisher;
-
-	protected final UserVersionService userVersionService;
 
 	private final EmployeeValidationService employeeValidationService;
 

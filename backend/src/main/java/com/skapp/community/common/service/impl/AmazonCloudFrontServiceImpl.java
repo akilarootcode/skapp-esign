@@ -3,8 +3,8 @@ package com.skapp.community.common.service.impl;
 import com.skapp.community.common.constant.CommonMessageConstant;
 import com.skapp.community.common.exception.ModuleException;
 import com.skapp.community.common.model.User;
-import com.skapp.community.common.service.UserService;
 import com.skapp.community.common.service.AmazonCloudFrontService;
+import com.skapp.community.common.service.UserService;
 import com.skapp.community.esignature.constant.EsignMessageConstant;
 import com.skapp.community.esignature.model.AddressBook;
 import com.skapp.community.esignature.repository.AddressBookDao;
@@ -38,6 +38,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AmazonCloudFrontServiceImpl implements AmazonCloudFrontService {
 
+	public static final String HTTPS_PROTOCOL = "https://";
+
+	public static final String DOCUMENT_S3_PATH_URL = "/envelop/process/documents/";
+
+	public static final String WILDCARD_PATH = "/*";
+
 	private static final String KEY_ALGORITHM = "RSA";
 
 	private static final String COOKIE_POLICY = "CloudFront-Policy";
@@ -46,11 +52,13 @@ public class AmazonCloudFrontServiceImpl implements AmazonCloudFrontService {
 
 	private static final String COOKIE_KEY_PAIR_ID = "CloudFront-Key-Pair-Id";
 
-	public static final String HTTPS_PROTOCOL = "https://";
+	private final CloudFrontUtilities cloudFrontUtilities;
 
-	public static final String DOCUMENT_S3_PATH_URL = "/envelop/process/documents/";
+	private final UserService userService;
 
-	public static final String WILDCARD_PATH = "/*";
+	private final DocumentService documentService;
+
+	private final AddressBookDao addressBookDao;
 
 	@Value("${aws.cloudfront.s3-default.key-pair-id}")
 	private String keyPairId;
@@ -64,13 +72,10 @@ public class AmazonCloudFrontServiceImpl implements AmazonCloudFrontService {
 	@Value("${aws.cloudfront.s3-default.domain-name}")
 	private String cloudFrontDomain;
 
-	private final CloudFrontUtilities cloudFrontUtilities;
-
-	private final UserService userService;
-
-	private final DocumentService documentService;
-
-	private final AddressBookDao addressBookDao;
+	public static String decodeBase64ToString(String base64) {
+		byte[] decodedBytes = Base64.getDecoder().decode(base64);
+		return new String(decodedBytes, StandardCharsets.UTF_8);
+	}
 
 	@Override
 	public Map<String, String> generateCloudFrontDocumentSignedCookies() {
@@ -150,11 +155,6 @@ public class AmazonCloudFrontServiceImpl implements AmazonCloudFrontService {
 		cookieMap.put(COOKIE_SIGNATURE, cookies.signatureHeaderValue());
 		cookieMap.put(COOKIE_KEY_PAIR_ID, cookies.keyPairIdHeaderValue());
 		return cookieMap;
-	}
-
-	public static String decodeBase64ToString(String base64) {
-		byte[] decodedBytes = Base64.getDecoder().decode(base64);
-		return new String(decodedBytes, StandardCharsets.UTF_8);
 	}
 
 	private PrivateKey loadPrivateKeyFromString(String pemString) {

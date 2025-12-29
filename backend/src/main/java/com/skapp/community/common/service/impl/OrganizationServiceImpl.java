@@ -47,23 +47,23 @@ import static com.skapp.community.common.util.Validation.isValidThemeColor;
 @Slf4j
 public class OrganizationServiceImpl implements OrganizationService {
 
-	private final OrganizationDao organizationDao;
-
-	private final CommonMapper commonMapper;
-
-	private final MessageUtil messageUtil;
-
 	protected final AttendanceConfigService attendanceConfigService;
 
 	protected final LeaveTypeService leaveTypeService;
 
 	protected final LeaveCycleService leaveCycleService;
 
-	private final UserService userService;
-
 	protected final OrganizationConfigDao organizationConfigDao;
 
 	protected final ObjectMapper objectMapper;
+
+	private final OrganizationDao organizationDao;
+
+	private final CommonMapper commonMapper;
+
+	private final MessageUtil messageUtil;
+
+	private final UserService userService;
 
 	private final EncryptionDecryptionService encryptionDecryptionService;
 

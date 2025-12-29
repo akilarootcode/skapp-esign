@@ -14,15 +14,10 @@ import com.skapp.community.common.payload.response.PageDto;
 import com.skapp.community.common.payload.response.ResponseEntityDto;
 import com.skapp.community.common.repository.OrganizationDao;
 import com.skapp.community.common.repository.UserDao;
+import com.skapp.community.common.service.AmazonS3Service;
 import com.skapp.community.common.service.UserService;
 import com.skapp.community.common.type.Role;
 import com.skapp.community.common.util.DateTimeUtils;
-import com.skapp.community.peopleplanner.constant.PeopleConstants;
-import com.skapp.community.peopleplanner.model.Employee;
-import com.skapp.community.peopleplanner.model.EmployeeRole;
-import com.skapp.community.peopleplanner.repository.EmployeeRoleDao;
-import com.skapp.community.peopleplanner.type.AccountStatus;
-import com.skapp.community.common.service.AmazonS3Service;
 import com.skapp.community.esignature.constant.EsignConstants;
 import com.skapp.community.esignature.constant.EsignMessageConstant;
 import com.skapp.community.esignature.mapper.EsignMapper;
@@ -36,6 +31,11 @@ import com.skapp.community.esignature.repository.projection.EnvelopeSentData;
 import com.skapp.community.esignature.service.*;
 import com.skapp.community.esignature.type.*;
 import com.skapp.community.esignature.util.EsignUtil;
+import com.skapp.community.peopleplanner.constant.PeopleConstants;
+import com.skapp.community.peopleplanner.model.Employee;
+import com.skapp.community.peopleplanner.model.EmployeeRole;
+import com.skapp.community.peopleplanner.repository.EmployeeRoleDao;
+import com.skapp.community.peopleplanner.type.AccountStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -68,17 +68,19 @@ import static com.skapp.community.esignature.util.EnvelopeUuidGenerator.generate
 @RequiredArgsConstructor
 public class EnvelopeServiceImpl implements EnvelopeService {
 
+	public static final String HTTPS_PROTOCOL = "https://";
+
+	private static final int LEAP_DAY = 29;
+
+	private static final Month FEBRUARY = Month.FEBRUARY;
+
+	private static final Month MARCH = Month.MARCH;
+
+	private static final int FIRST_DAY = 1;
+
 	private final UserDao userDao;
 
 	private final EmployeeRoleDao employeeRoleDao;
-
-	@Value("${aws.s3.bucket-name}")
-	private String bucketName;
-
-	@Value("${aws.cloudfront.s3-default.domain-name}")
-	private String cloudFrontDomain;
-
-	public static final String HTTPS_PROTOCOL = "https://";
 
 	private final EsignMapper eSignMapper;
 
@@ -112,13 +114,39 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 	private final UserKeyService userKeyService;
 
-	private static final int LEAP_DAY = 29;
+	@Value("${aws.s3.bucket-name}")
+	private String bucketName;
 
-	private static final Month FEBRUARY = Month.FEBRUARY;
+	@Value("${aws.cloudfront.s3-default.domain-name}")
+	private String cloudFrontDomain;
 
-	private static final Month MARCH = Month.MARCH;
+	private static void validateSigningOrder(List<RecipientDto> recipientDtos) {
+		// Validate signing orders are not zero and are unique
+		Set<Integer> signingOrders = new HashSet<>();
+		for (RecipientDto recipientDto : recipientDtos) {
+			if (recipientDto.getSigningOrder() <= 0) {
+				throw new ValidationException(EsignMessageConstant.ESIGN_ERROR_SIGNING_ORDER_CANNOT_BE_ZERO);
+			}
 
-	private static final int FIRST_DAY = 1;
+			if (!signingOrders.add(recipientDto.getSigningOrder())) {
+				throw new ValidationException(EsignMessageConstant.ESIGN_ERROR_DUPLICATE_SIGNING_ORDER);
+			}
+		}
+	}
+
+	private static void formatDeletedEmail(List<RecipientResponseDto> recipientResponseDtos) {
+		// Clean up deleted external user email addresses
+		recipientResponseDtos.forEach(dto -> {
+			if (dto.getAddressBook() != null && dto.getAddressBook().getEmail() != null
+					&& dto.getAddressBook().getEmail().startsWith(PeopleConstants.DELETED_PREFIX)) {
+
+				String originalEmail = dto.getAddressBook().getEmail();
+				String cleanedEmail = originalEmail
+					.replaceFirst(Pattern.quote(PeopleConstants.DELETED_PREFIX) + "\\d+_", "");
+				dto.getAddressBook().setEmail(cleanedEmail);
+			}
+		});
+	}
 
 	@Override
 	@Transactional
@@ -403,20 +431,6 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 			return recipient;
 		}).toList();
-	}
-
-	private static void validateSigningOrder(List<RecipientDto> recipientDtos) {
-		// Validate signing orders are not zero and are unique
-		Set<Integer> signingOrders = new HashSet<>();
-		for (RecipientDto recipientDto : recipientDtos) {
-			if (recipientDto.getSigningOrder() <= 0) {
-				throw new ValidationException(EsignMessageConstant.ESIGN_ERROR_SIGNING_ORDER_CANNOT_BE_ZERO);
-			}
-
-			if (!signingOrders.add(recipientDto.getSigningOrder())) {
-				throw new ValidationException(EsignMessageConstant.ESIGN_ERROR_DUPLICATE_SIGNING_ORDER);
-			}
-		}
 	}
 
 	private List<Field> buildFieldsForRecipient(List<FieldDto> fieldDtos, Recipient recipient) {
@@ -1013,20 +1027,6 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 		envelopeInboxInfoResponseDto.setDocuments(documentDetails);
 		return envelopeInboxInfoResponseDto;
-	}
-
-	private static void formatDeletedEmail(List<RecipientResponseDto> recipientResponseDtos) {
-		// Clean up deleted external user email addresses
-		recipientResponseDtos.forEach(dto -> {
-			if (dto.getAddressBook() != null && dto.getAddressBook().getEmail() != null
-					&& dto.getAddressBook().getEmail().startsWith(PeopleConstants.DELETED_PREFIX)) {
-
-				String originalEmail = dto.getAddressBook().getEmail();
-				String cleanedEmail = originalEmail
-					.replaceFirst(Pattern.quote(PeopleConstants.DELETED_PREFIX) + "\\d+_", "");
-				dto.getAddressBook().setEmail(cleanedEmail);
-			}
-		});
 	}
 
 	public List<DocumentDetailResponseDto> getDocumentDetails(Envelope envelope) {

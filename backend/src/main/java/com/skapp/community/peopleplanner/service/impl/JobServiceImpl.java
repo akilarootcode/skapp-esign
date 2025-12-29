@@ -11,11 +11,7 @@ import com.skapp.community.peopleplanner.model.Employee;
 import com.skapp.community.peopleplanner.model.JobFamily;
 import com.skapp.community.peopleplanner.model.JobFamilyTitle;
 import com.skapp.community.peopleplanner.model.JobTitle;
-import com.skapp.community.peopleplanner.payload.request.JobFamilyDto;
-import com.skapp.community.peopleplanner.payload.request.JobTitleDto;
-import com.skapp.community.peopleplanner.payload.request.TransferJobFamilyRequestDto;
-import com.skapp.community.peopleplanner.payload.request.TransferJobTitleRequestDto;
-import com.skapp.community.peopleplanner.payload.request.UpdateJobFamilyRequestDto;
+import com.skapp.community.peopleplanner.payload.request.*;
 import com.skapp.community.peopleplanner.payload.response.JobFamilyResponseDetailDto;
 import com.skapp.community.peopleplanner.payload.response.JobFamilyResponseDto;
 import com.skapp.community.peopleplanner.payload.response.JobTitleResponseDetailDto;
@@ -29,12 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service

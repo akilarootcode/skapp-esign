@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.skapp.community.common.exception.ModuleException;
-import com.skapp.community.peopleplanner.type.AccountStatus;
 import com.skapp.community.esignature.constant.EsignMessageConstant;
 import com.skapp.community.esignature.type.DocumentPermissionType;
+import com.skapp.community.peopleplanner.type.AccountStatus;
 
 import java.io.IOException;
 

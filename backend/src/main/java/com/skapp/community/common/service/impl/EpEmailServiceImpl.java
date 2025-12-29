@@ -4,14 +4,16 @@ import com.skapp.community.common.model.Organization;
 import com.skapp.community.common.payload.email.EmailTemplateMetadata;
 import com.skapp.community.common.repository.OrganizationDao;
 import com.skapp.community.common.service.AsyncEmailSender;
+import com.skapp.community.common.service.EpEmailService;
 import com.skapp.community.common.type.EmailBodyTemplates;
 import com.skapp.community.common.type.EmailTemplates;
-import com.skapp.community.common.service.EpEmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Primary
