@@ -1,0 +1,81 @@
+en:
+  common:
+    - id: common-module-email-verify
+      subject: Verify your account!
+
+    - id: common-module-password-reset-otp
+      subject: Verify your account!
+
+    - id: common-module-google-sso-creation-tenant-url
+      subject: Welcome to Skapp!
+
+    - id: common-module-microsoft-sso-creation-tenant-url
+      subject: Welcome to Skapp!
+
+    - id: common-module-credential-based-creation-tenant-url
+      subject: Welcome to Skapp!
+
+  esignature:
+    - id: esignature-module-document-signer-email
+      subject: ""
+
+    - id: esignature-module-document-viewer-email
+      subject: "View -"
+
+    - id: esignature-module-document-signer-email-reminder
+      subject: "REMINDER - "
+
+    - id: esignature-module-document-voided-reciever
+      subject: "Voided - "
+
+    - id: esignature-module-document-voided-sender
+      subject: "Voided - "
+
+    - id: esignature-module-document-declined-reciever
+      subject: "Declined - "
+
+    - id: esignature-module-document-declined-sender
+      subject: "Declined - "
+
+    - id: esignature-module-document-completed-receiver
+      subject: "Completed - "
+
+    - id: esignature-module-document-completed-sender
+      subject: "Completed -"
+
+  payment:
+    - id: "payment-stripe-welcome-to-skapp-core-free-trial"
+      subject: "Welcome to Skapp Core free trial!"
+
+    - id: "payment-stripe-congratulations-on-upgrading-to-skapp-core"
+      subject: "Congratulations on upgrading to Skapp Core!"
+
+    - id: "payment-stripe-cancel-subscription"
+      subject: "Your Skapp Core subscription has been cancelled"
+
+  dashboard:
+    - id: dashboard-module-new-organization-created
+      subject: 🎉 New Organization Signed Up for Skapp
+
+    - id: dashboard-module-new-organization-started-core-free-trial
+      subject: 🚀 New Organization Started Skapp Core 14-Day Free Trial
+
+    - id: dashboard-module-trial-organization-converted-to-core
+      subject: ✅ Trial Organization Converted to Skapp Core Subscription
+
+    - id: dashboard-module-organization-cancelled-core
+      subject: ❌ Organization Cancelled Skapp Core Subscription
+
+    - id: dashboard-module-support-request-applied
+      subject: 📢 New support request!
+
+  invoice:
+    - id: invoice-module-customer-invoice-email
+      subject: Invoice Reminder - Payment Due
+
+  guest:
+    - id: guest-module-email-verify
+      subject: Verify your account!
+
+    - id: guest-module-invitation
+      subject: "{{adminName}} invited you to {{tenantId}} space"

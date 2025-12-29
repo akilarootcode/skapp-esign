@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Release Note</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <style>
+        @page {
+            margin: 40px;
+            @bottom-right {
+                content: "Page " counter(page) " / " counter(pages);
+                font-family: 'Poppins', Arial, Helvetica, sans-serif;
+                font-size: 12px;
+                color: #555;
+            }
+        }
+
+        body {
+            font-family: 'Poppins', Arial, Helvetica, sans-serif;
+            margin: 0;
+            color: #1a1a1a;
+            background: #fff;
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .header table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .header-left {
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .header-right {
+            text-align: right;
+            vertical-align: top;
+            width: 150px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 40px;
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 16px 0;
+        }
+
+        .project-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .release-date {
+            font-size: 14px;
+            color: #777;
+            margin-top: 4px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 18px;
+            background: #f3f4f6;
+            color: #374151;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        .divider {
+            border-top: 1px solid #e5e7eb;
+            margin: 20px 0;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin: 28px 0 14px 0;
+            font-size: 16px;
+        }
+
+        .summary {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fff;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .work-item {
+            padding: 14px 18px;
+            border-top: 1px solid #f1f1f1;
+            font-size: 14px;
+        }
+
+        .work-item:first-child {
+            border-top: none;
+        }
+
+        .work-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .work-code {
+            font-weight: 500;
+            color: #333;
+            padding-left: 12px;
+            padding-right: 14px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .work-desc {
+            color: #444;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .approver {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            background: #fff;
+        }
+
+        .approver table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .approver-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            text-align: center;
+            line-height: 42px;
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .approver-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #111;
+        }
+
+        .approver-date {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .approver-role {
+            text-align: center;
+            font-size: 14px;
+            color: #444;
+            padding-left: 20px;
+            vertical-align: middle;
+        }
+
+        .status {
+            padding: 6px 14px;
+            border-radius: 18px;
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-block;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .status.approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status.pending {
+            background: #fef9c3;
+            color: #92400e;
+        }
+
+        .status.declined {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .remarks {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-bottom: 16px;
+            background: #fff;
+        }
+
+        .remarks h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+        }
+
+        .remarks p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="header">
+        <table>
+            <tr>
+                <td class="header-left">
+                    <h1>Release Note</h1>
+                    <div class="project-title">Project {{projectTitle}} – {{versionName}}</div>
+                    <div class="release-date">Release Date : {{releaseDate}}</div>
+                </td>
+                <td class="header-right">
+                    <img src="{{logo}}" class="logo" alt="Logo"/>
+                    <div>
+                        <span class="badge">{{environment}}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title">Summary</div>
+    <div class="summary">
+        {{description}}
+    </div>
+
+    <div class="section-title">Work Items</div>
+    <div class="card">
+        {{#workItems}}
+        <div class="work-item">
+            <img src="{{workIcon}}" class="work-icon" /><span class="work-code">{{workCode}}</span><span class="work-desc">{{workDescription}}</span>
+        </div>
+        {{/workItems}}
+    </div>
+
+    {{#hasApprovers}}
+    <div class="section-title">Approvers</div>
+
+    <div class="divider"></div>
+
+    {{#approvers}}
+    <div class="approver">
+        <table>
+            <tr>
+                <td style="width: 60px; vertical-align: middle;">
+                    <span class="approver-avatar">A</span>
+                </td>
+                <td style="vertical-align: middle;">
+                    <div class="approver-name">{{approverName}}</div>
+                    <div class="approver-date">{{approverActionDate}}</div>
+                </td>
+                <td class="approver-role" style="vertical-align: middle;">
+                    {{approverRole}}
+                </td>
+                <td style="text-align: right; vertical-align: middle; width: 120px;">
+                    <span class="status {{statusClass}}">{{statusText}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    {{#hasRemarks}}
+    <div class="remarks">
+        <h4>Remarks</h4>
+        <p>{{remarks}}</p>
+    </div>
+    {{/hasRemarks}}
+    {{/approvers}}
+    {{/hasApprovers}}
+</div>
+</body>
+</html>

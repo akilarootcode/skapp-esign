@@ -1,0 +1,14 @@
+email:
+  validation:
+    personalDomains:
+      - abc.com
+
+    tempEmailDomains:
+      - dummy.com
+
+    tempEmailPatterns:
+      - ".*\\.temp\\..*"
+      - ".*\\.temporary\\..*"
+      - ".*\\.disposable\\..*"
+      - "temp.*\\..*"
+      - ".*\\.tmpmail\\..*"

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Invoice</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+</head>
+<body style="font-family:'Poppins',Arial,sans-serif;font-size:14px;background:#fff;padding:0">
+<table style="width:100%;background:#fff;border-radius:8px;padding:0;border-collapse:collapse;">
+    <!-- Header -->
+    <tr>
+        <td style="font-size:24px;font-weight:700;text-align:left;">Invoice</td>
+        <td style="text-align:right;">
+            {{#invoiceLogo}}
+            <img src="{{invoiceLogo}}" alt="Company Logo" style="height:60px;" />
+            {{/invoiceLogo}}
+        </td>
+    </tr>
+
+    <!-- Metadata -->
+    <tr>
+        <td colspan="2" style="padding-top:30px;padding-bottom:40px;">
+            <table style="width:100%;border-collapse:collapse;">
+                <tr>
+                    <td style="font-weight:600;width:120px;">Invoice number</td>
+                    <td style="padding-left:15px;">{{invoiceId}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600;width:120px;">Date Issued</td>
+                    <td style="padding-left:15px;">{{invoiceDate}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600;width:120px;">Date due</td>
+                    <td style="padding-left:15px;">{{dueDate}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600;width:120px;">Customer VAT ID</td>
+                    <td style="padding-left:15px;">{{customerVatId}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <!-- Bill Info -->
+    <tr>
+        <td colspan="2" style="padding-bottom:40px;">
+            <table style="width:70%;border-collapse:collapse;">
+                <tr>
+                    <td style="vertical-align:top;">
+                        <strong style="font-weight:600">From</strong><br />
+                        <span style="white-space:pre-line;">{{payTo}}</span>
+                    </td>
+                    <td style="vertical-align:top;padding-left:30px;">
+                        <strong style="font-weight:600">Bill to</strong><br />
+                        <span style="white-space:pre-line;">{{billedTo}}</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <!-- Amount Due -->
+    <tr>
+        <td colspan="2" style="font-size:20px;font-weight:600;padding-bottom:40px;margin-left:10px">
+            {{payableTotalAmount}} due {{dueDate}}
+        </td>
+    </tr>
+
+    <!-- Items -->
+    <tr>
+        <td colspan="2">
+            <table style="width:100%;border-collapse:collapse;">
+                <thead>
+                <tr>
+                    <th style="text-align:left;padding:6px;padding-left:0;border-bottom:2px solid #ccc;width:50%;font-weight:600;">Description</th>
+                    <th style="text-align:center;padding:6px;padding-left:0;border-bottom:2px solid #ccc;width:8%;font-weight:600;">Qty</th>
+                    <th style="text-align:center;padding:6px;padding-left:0;border-bottom:2px solid #ccc;width:8%;font-weight:600;">Unit</th>
+                    <th style="text-align:right;padding:6px;padding-left:0;border-bottom:2px solid #ccc;width:18%;font-weight:600;">Unit Price</th>
+                    <th style="text-align:right;padding:6px;padding-left:0;border-bottom:2px solid #ccc;width:20%;font-weight:600;">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#invoiceItems}}
+                <tr>
+                    <td style="padding:6px;padding-left:0;border-bottom:1px solid #eee;">{{description}}</td>
+                    <td style="padding:6px;padding-left:0;border-bottom:1px solid #eee;text-align:center;">{{quantity}}</td>
+                    <td style="padding:6px;padding-left:0;border-bottom:1px solid #eee;text-align:center;">{{quantityType}}</td>
+                    <td style="padding:6px;padding-left:0;border-bottom:1px solid #eee;text-align:right;">{{unitPrice}}</td>
+                    <td style="padding:6px;padding-left:0;border-bottom:1px solid #eee;text-align:right;">{{amount}}</td>
+                </tr>
+                {{/invoiceItems}}
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+<!--    &lt;!&ndash; Expenses &ndash;&gt;-->
+<!--    {{#hasExpenses}}-->
+<!--    <tr>-->
+<!--        <td colspan="2" style="padding-top:16px;">-->
+<!--            <table style="width:100%;border-collapse:collapse;">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th style="text-align:left;padding:6px;border-bottom:2px solid #ccc;">Expense Description</th>-->
+<!--                    <th style="text-align:right;padding:6px;border-bottom:2px solid #ccc;">Amount</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                {{#invoiceExpenses}}-->
+<!--                <tr>-->
+<!--                    <td style="padding:6px;border-bottom:1px solid #eee;">{{description}}</td>-->
+<!--                    <td style="padding:6px;border-bottom:1px solid #eee;text-align:right;">{{amount}}</td>-->
+<!--                </tr>-->
+<!--                {{/invoiceExpenses}}-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    {{/hasExpenses}}-->
+
+    <!-- Summary -->
+    <tr>
+        <td colspan="2" style="padding-top:16px;">
+            <table style="width:250px;margin-left:auto;border-collapse:collapse;">
+                <tr style="border-bottom:1px solid #ddd;">
+                    <td style="padding:6px;">Subtotal</td>
+                    <td style="padding:6px;text-align:right;">{{subTotalAmount}}</td>
+                </tr>
+<!--                {{#hasExpenses}}-->
+<!--                <tr>-->
+<!--                    <td style="padding:6px;">Expenses</td>-->
+<!--                    <td style="padding:6px;text-align:right;">{{expenseTotal}}</td>-->
+<!--                </tr>-->
+<!--                {{/hasExpenses}}-->
+                {{#hasDiscount}}
+                <tr>
+                    <td style="padding:6px;">Discount</td>
+                    <td style="padding:6px;text-align:right;">-{{discountValue}}</td>
+                </tr>
+                {{/hasDiscount}}
+                {{#hasTax}}
+                <tr>
+                    <td style="padding:6px;">Tax</td>
+                    <td style="padding:6px;text-align:right;">{{taxTotal}}</td>
+                </tr>
+                {{/hasTax}}
+                <tr>
+                    <td style="padding:6px;font-weight:600;">Total</td>
+                    <td style="padding:6px;text-align:right;font-weight:600;">{{payableTotalAmount}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <!-- Payment Terms -->
+    {{#invoiceTerms}}
+    <tr>
+        <td colspan="2" style="padding-top:32px;">
+            <strong style="font-weight:600;">Payment Terms</strong><br />
+            <p>{{invoiceTerms}}</p>
+        </td>
+    </tr>
+    {{/invoiceTerms}}
+
+    <!-- Notes -->
+    {{#invoiceNotes}}
+    <tr>
+        <td colspan="2" style="padding-top:32px;">
+            <strong style="font-weight:600;">Notes</strong><br />
+            <p>{{invoiceNotes}}</p>
+        </td>
+    </tr>
+    {{/invoiceNotes}}
+
+    <!-- Made with Skapp -->
+    {{#skappBranding}}
+    <tr>
+        <td colspan="2" style="padding-top:48px; font-size:14px; line-height:24px;">
+            <span style="vertical-align:middle; display:inline-block;">Made with</span>
+            <img src="http://images.skapp.com/logo-with-name-1.png" alt="Skapp Logo" style="height:28px; margin-left:8px; vertical-align:middle;" />
+        </td>
+    </tr>
+    {{/skappBranding}}
+
+    <!-- Footer -->
+    <tr>
+        <td colspan="2" style="padding-top:32px;padding-bottom:16px;font-size:12px;color:#666;border-top:1px solid #eee;">
+            {{invoiceId}} · {{payableTotalAmount}} due {{dueDate}}
+        </td>
+    </tr>
+
+</table>
+</body>
+</html>
