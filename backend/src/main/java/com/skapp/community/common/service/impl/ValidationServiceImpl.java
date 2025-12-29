@@ -25,7 +25,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	private final MessageUtil messageUtil;
 
-    private final ProfileActivator profileActivator;
+	private final ProfileActivator profileActivator;
 
 	private EmailValidationProperties getProperties() {
 		String configPath = profileActivator.isEpPrdProfile() ? EpCommonConstants.PRD_CONFIG_PATH
@@ -80,8 +80,7 @@ public class ValidationServiceImpl implements ValidationService {
 		}
 
 		if (matchesTempEmailPattern(domain, properties)) {
-			return new ValidationResult(false,
-					CommonMessageConstant.EP_COMMON_ERROR_DISPOSABLE_EMAIL.getMessageKey());
+			return new ValidationResult(false, CommonMessageConstant.EP_COMMON_ERROR_DISPOSABLE_EMAIL.getMessageKey());
 		}
 
 		return new ValidationResult(true, null);

@@ -406,11 +406,13 @@ public class RolesServiceImpl implements RolesService {
 	protected Boolean validateRestrictedRoleAssignment(Role role, ModuleType moduleType) {
 		ModuleRoleRestrictionResponseDto restrictedRole = getRestrictedRoleByModule(moduleType);
 
-		if (role == Role.PEOPLE_ADMIN || role == Role.ATTENDANCE_ADMIN || role == Role.LEAVE_ADMIN || role == Role.ESIGN_ADMIN) {
+		if (role == Role.PEOPLE_ADMIN || role == Role.ATTENDANCE_ADMIN || role == Role.LEAVE_ADMIN
+				|| role == Role.ESIGN_ADMIN) {
 			return Boolean.TRUE.equals(restrictedRole.getIsAdmin());
 		}
 
-		if (role == Role.PEOPLE_MANAGER || role == Role.ATTENDANCE_MANAGER || role == Role.LEAVE_MANAGER || role == Role.ESIGN_SENDER) {
+		if (role == Role.PEOPLE_MANAGER || role == Role.ATTENDANCE_MANAGER || role == Role.LEAVE_MANAGER
+				|| role == Role.ESIGN_SENDER) {
 			return Boolean.TRUE.equals(restrictedRole.getIsManager());
 		}
 

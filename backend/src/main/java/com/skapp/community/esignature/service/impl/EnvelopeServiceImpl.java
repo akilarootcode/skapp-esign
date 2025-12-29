@@ -137,11 +137,12 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 			addressBook.setType(UserType.INTERNAL);
 			addressBook.setIsActive(true);
 			addressBook = addressBookDao.save(addressBook);
-			
+
 			// Generate and store cryptographic keys for signing
 			userKeyService.generateAndStoreKeys(addressBook);
 			log.info("createNewEnvelope: AddressBook and keys created for user {}", currentUser.getUserId());
-		} else {
+		}
+		else {
 			addressBook = addressBookOptional.get();
 		}
 
@@ -597,7 +598,8 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 		Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
 
-		boolean isAllSentEnvelopes = esignRole != null && (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
+		boolean isAllSentEnvelopes = esignRole != null
+				&& (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
 
 		Page<Envelope> envelopePage = envelopeDao.getAllSentEnvelopes(currentUser.getUserId(), envelopeSentFilterDto,
 				isAllSentEnvelopes);
@@ -627,7 +629,8 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_USER_NOT_FOUND);
 		}
 		Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
-		boolean isAllCount = esignRole != null && (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
+		boolean isAllCount = esignRole != null
+				&& (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
 
 		Map<EnvelopeStatus, Long> envelopeStatusLongMap = envelopeDao.countEnvelopesByStatus(currentUser.getUserId(),
 				isAllCount);
@@ -682,7 +685,8 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 		Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
 
-		boolean isAllSentEnvelopes = esignRole != null && (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
+		boolean isAllSentEnvelopes = esignRole != null
+				&& (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
 
 		if (!isAllSentEnvelopes && (Optional.ofNullable(addressBook)
 			.map(AddressBook::getInternalUser)
@@ -810,7 +814,8 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 			}
 
 			Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
-			boolean isAdmin = esignRole != null && (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
+			boolean isAdmin = esignRole != null
+					&& (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
 
 			// Admins have automatic access, other users need validation
 			if (!isAdmin) {

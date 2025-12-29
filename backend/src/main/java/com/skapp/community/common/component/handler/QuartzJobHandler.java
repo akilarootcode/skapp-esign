@@ -36,11 +36,12 @@ public class QuartzJobHandler implements Job {
 				return;
 			}
 
-            if (entityType == QuartzEntityType.ENVELOPE) {
-                envelopeService.expireEnvelope(entityId);
-            } else {
-                log.warn("No handler implemented for entity type: {}", entityType);
-            }
+			if (entityType == QuartzEntityType.ENVELOPE) {
+				envelopeService.expireEnvelope(entityId);
+			}
+			else {
+				log.warn("No handler implemented for entity type: {}", entityType);
+			}
 
 		}
 		catch (Exception e) {

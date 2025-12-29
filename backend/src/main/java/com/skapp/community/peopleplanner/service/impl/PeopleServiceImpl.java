@@ -199,9 +199,9 @@ public class PeopleServiceImpl implements PeopleService {
 
 	private final EmployeeVisaDao employeeVisaDao;
 
-    private final CacheService cacheService;
+	private final CacheService cacheService;
 
-    private final ValidationService validationService;
+	private final ValidationService validationService;
 
 	@Value("${encryptDecryptAlgorithm.secret}")
 	private String encryptSecret;
@@ -291,17 +291,17 @@ public class PeopleServiceImpl implements PeopleService {
 	}
 
 	protected void invalidateUserCache() {
-        CacheKeys userCacheKey = CacheKeys.TENANT_ALL_USERS_CACHE_KEY;
-        cacheService.invalidate(userCacheKey.getKey());
+		CacheKeys userCacheKey = CacheKeys.TENANT_ALL_USERS_CACHE_KEY;
+		cacheService.invalidate(userCacheKey.getKey());
 	}
 
 	protected void invalidateUserAuthPicCache() {
-        CacheKeys userAuthPicCacheKey = CacheKeys.TENANT_ALL_USERS_AUTH_PICS_CACHE_KEY;
-        cacheService.invalidate(userAuthPicCacheKey.getKey());
+		CacheKeys userAuthPicCacheKey = CacheKeys.TENANT_ALL_USERS_AUTH_PICS_CACHE_KEY;
+		cacheService.invalidate(userAuthPicCacheKey.getKey());
 	}
 
 	protected void enterpriseValidations(String email) {
-        validationService.checkBusinessEmailValidity(email);
+		validationService.checkBusinessEmailValidity(email);
 	}
 
 	private CreateEmployeeRequestDto createEmployeeRequest(EmployeeQuickAddDto dto) {

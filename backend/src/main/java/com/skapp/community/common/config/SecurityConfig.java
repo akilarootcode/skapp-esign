@@ -90,7 +90,8 @@ public class SecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("https://skapp.dev", "http://localhost:3000", "http://localhost:8008"));
+		configuration
+			.setAllowedOrigins(Arrays.asList("https://skapp.dev", "http://localhost:3000", "http://localhost:8008"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
 		configuration.setAllowCredentials(true);

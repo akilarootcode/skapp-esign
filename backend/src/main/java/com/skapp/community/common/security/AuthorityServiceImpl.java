@@ -60,9 +60,9 @@ public class AuthorityServiceImpl implements AuthorityService {
 			.ifPresent(
 					role -> addRoleHierarchy(authorities, role, Role.OKR_ADMIN, Role.OKR_MANAGER, Role.OKR_EMPLOYEE));
 
-        Optional.ofNullable(employeeRole.getEsignRole())
-                .ifPresent(role -> addRoleHierarchy(authorities, role, Role.ESIGN_ADMIN, Role.ESIGN_SENDER,
-                        Role.ESIGN_EMPLOYEE));
+		Optional.ofNullable(employeeRole.getEsignRole())
+			.ifPresent(role -> addRoleHierarchy(authorities, role, Role.ESIGN_ADMIN, Role.ESIGN_SENDER,
+					Role.ESIGN_EMPLOYEE));
 	}
 
 	protected void addRoleHierarchy(List<GrantedAuthority> authorities, Role currentRole, Role adminRole,

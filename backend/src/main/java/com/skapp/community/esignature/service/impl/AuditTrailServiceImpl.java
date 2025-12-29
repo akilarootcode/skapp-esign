@@ -98,7 +98,8 @@ public class AuditTrailServiceImpl implements AuditTrailService {
 			auditTrail.setAddressBookUser(addressBookUser);
 
 			Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
-			isAuthorized = esignRole != null && (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
+			isAuthorized = esignRole != null
+					&& (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
 		}
 		else if (recipient.getEnvelope().equals(envelope)) {
 			isAuthorized = true;
