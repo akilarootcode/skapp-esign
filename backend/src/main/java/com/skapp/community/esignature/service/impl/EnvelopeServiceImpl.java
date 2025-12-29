@@ -110,6 +110,8 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 	private final OrganizationDao organizationDao;
 
+	private final UserKeyService userKeyService;
+
 	private static final int LEAP_DAY = 29;
 
 	private static final Month FEBRUARY = Month.FEBRUARY;
@@ -126,8 +128,22 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 		Optional<AddressBook> addressBookOptional = addressBookDao.findByInternalUser(currentUser);
 
-		AddressBook addressBook = addressBookOptional.filter(AddressBook::getIsActive)
-			.orElseThrow(() -> new ModuleException(EsignMessageConstant.ESIGN_ERROR_ADDRESS_BOOK_USER_NOT_FOUND));
+		AddressBook addressBook;
+		if (addressBookOptional.isEmpty() || !addressBookOptional.get().getIsActive()) {
+			// Auto-create AddressBook entry for internal user on first envelope creation
+			log.info("createNewEnvelope: Creating new AddressBook entry for user {}", currentUser.getUserId());
+			addressBook = new AddressBook();
+			addressBook.setInternalUser(currentUser);
+			addressBook.setType(UserType.INTERNAL);
+			addressBook.setIsActive(true);
+			addressBook = addressBookDao.save(addressBook);
+			
+			// Generate and store cryptographic keys for signing
+			userKeyService.generateAndStoreKeys(addressBook);
+			log.info("createNewEnvelope: AddressBook and keys created for user {}", currentUser.getUserId());
+		} else {
+			addressBook = addressBookOptional.get();
+		}
 
 		if (envelopeDetailDto.getEnvelopeSettingDto().getExpirationDate() == null) {
 			throw new ValidationException(EsignMessageConstant.ESIGN_ERROR_VALIDATION_ENTER_ENVELOPE_EXPIRES_AT);
@@ -581,7 +597,7 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 		Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
 
-		boolean isAllSentEnvelopes = esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN);
+		boolean isAllSentEnvelopes = esignRole != null && (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
 
 		Page<Envelope> envelopePage = envelopeDao.getAllSentEnvelopes(currentUser.getUserId(), envelopeSentFilterDto,
 				isAllSentEnvelopes);
@@ -610,8 +626,8 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 		if (currentUser == null) {
 			throw new ModuleException(CommonMessageConstant.COMMON_ERROR_USER_NOT_FOUND);
 		}
-		boolean isAllCount = currentUser.getEmployee().getEmployeeRole().getEsignRole().equals(Role.ESIGN_ADMIN)
-				|| currentUser.getEmployee().getEmployeeRole().getEsignRole().equals(Role.SUPER_ADMIN);
+		Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
+		boolean isAllCount = esignRole != null && (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
 
 		Map<EnvelopeStatus, Long> envelopeStatusLongMap = envelopeDao.countEnvelopesByStatus(currentUser.getUserId(),
 				isAllCount);
@@ -666,7 +682,7 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 		Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
 
-		boolean isAllSentEnvelopes = esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN);
+		boolean isAllSentEnvelopes = esignRole != null && (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
 
 		if (!isAllSentEnvelopes && (Optional.ofNullable(addressBook)
 			.map(AddressBook::getInternalUser)
@@ -794,7 +810,7 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 			}
 
 			Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
-			boolean isAdmin = esignRole.equals(Role.ESIGN_ADMIN);
+			boolean isAdmin = esignRole != null && (esignRole.equals(Role.ESIGN_ADMIN) || esignRole.equals(Role.SUPER_ADMIN));
 
 			// Admins have automatic access, other users need validation
 			if (!isAdmin) {
@@ -1040,7 +1056,7 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 		Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
 		log.debug("voidEnvelope: Current user ID: {}, Role: {}", currentUser.getUserId(), esignRole);
 
-		if (esignRole.equals(Role.ESIGN_SENDER)) {
+		if (esignRole != null && esignRole.equals(Role.ESIGN_SENDER)) {
 			AddressBook owner = envelope.getOwner();
 			if (!owner.getInternalUser().getUserId().equals(currentUser.getUserId())) {
 				log.error("voidEnvelope: Unauthorized access by user ID: {}", currentUser.getUserId());
@@ -1111,7 +1127,7 @@ public class EnvelopeServiceImpl implements EnvelopeService {
 
 			Role esignRole = currentUser.getEmployee().getEmployeeRole().getEsignRole();
 
-			if (esignRole.equals(Role.ESIGN_SENDER)) {
+			if (esignRole != null && esignRole.equals(Role.ESIGN_SENDER)) {
 				AddressBook owner = envelope.getOwner();
 				if (!owner.getInternalUser().getUserId().equals(currentUser.getUserId())) {
 					throw new ModuleException(CommonMessageConstant.COMMON_ERROR_UNAUTHORIZED_ACCESS);
